@@ -10,12 +10,27 @@ async function main() {
     await deployer.getAddress()
   );
 
+  const lfxTotalSupply = 21_000_000_000;
   const lfxTokenContract = await ethers.getContractFactory('LFX');
-  const lfxToken = await lfxTokenContract.deploy(1);
+  const lfxToken = await lfxTokenContract.deploy(lfxTotalSupply);
   const lfxTokenAddress = await lfxToken.getAddress();
   await lfxToken.waitForDeployment();
 
+  // LFX Vault
+  const LfxVault = await ethers.getContractFactory('LfxVault');
+  const lfxVault = await LfxVault.deploy(lfxTokenAddress);
+  const lfxVaultAddress = await lfxVault.getAddress();
+  await lfxVault.waitForDeployment();
+
+  // Lotte App
+  const Lotte = await ethers.getContractFactory('Lotte');
+  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
+  const lotteAddress = await lotte.getAddress();
+  await lotte.waitForDeployment();
+
   console.log('LFX Token deployed to:', lfxTokenAddress);
+  console.log('LFX Vault deployed to:', lfxVaultAddress);
+  console.log('Lotte App deployed to:', lotteAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -25,7 +25,11 @@ const deployContract = async () => {
   // LFX Vault
   const LfxVault = await ethers.getContractFactory('LfxVault', owner);
   const lfxVault = await LfxVault.deploy(lfxTokenAddress);
-  const lfxVaultAddress = await lfx.getAddress();
+  const lfxVaultAddress = await lfxVault.getAddress();
+
+  // Lotte App
+  const Lotte = await ethers.getContractFactory('Lotte', owner);
+  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
 
   // owner inits with 5000 LFX
   // owner transfers 4000 LFX to wallet1
@@ -33,11 +37,9 @@ const deployContract = async () => {
   await lfx.connect(owner).transfer(wallet1.address, 50000);
   await lfx.connect(owner).transfer(wallet2.address, 50000);
 
-  const Lotte = await ethers.getContractFactory('Lotte', owner);
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
-
   return {
     lotte,
+    validWithdrawTime,
     lfx, // lfxToken
     lfxTokenAddress,
     lfxTotalSupply,
@@ -49,7 +51,6 @@ const deployContract = async () => {
     wallet2,
     wallet3,
     wallet4,
-    validWithdrawTime,
   };
 };
 
