@@ -1,0 +1,14 @@
+{
+  "tabWidth": 2,
+  "singleQuote": true,
+  "semi": true,
+  "printWidth": 80,
+  "importOrder": [
+    "^(.*).css$",
+    "<THIRD_PARTY_MODULES>",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true
+}

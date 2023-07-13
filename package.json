@@ -1,0 +1,19 @@
+{
+  "name": "hardhat-project",
+  "scripts": {
+    "node": "npx hardhat node",
+    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost",
+    "test:lotte": "npx hardhat test --grep \"Lotte\"",
+    "test:lotte-draw": "npx hardhat test --grep \"Lotte: Draw\"",
+    "test:token": "npx hardhat test --grep \"LfxToken\"",
+    "test": "npx hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@openzeppelin/test-helpers": "^0.5.16",
+    "hardhat": "^2.16.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.2"
+  }
+}
