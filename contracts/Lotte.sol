@@ -46,6 +46,8 @@ contract Lotte {
     uint public systemFeeRate = 280;
     // the draw fee rate, 5% of system fees by default
     uint public drawFeeRate = 500;
+    // the burn rate, 0.5% of system fees by default
+    uint public burnRate = 50;
     // rate for the referrer, 0.7% by default
     uint public refRateLayer1 = 70;
     // rate for the referrer, 0.3% by default
@@ -92,7 +94,7 @@ contract Lotte {
         totalTicket = 0;
     }
 
-    function _isAddress(address _a) private returns (bool) {
+    function _isAddress(address _a) private pure returns (bool) {
         return _a != address(0);
     }
 
@@ -102,9 +104,9 @@ contract Lotte {
         token.transfer(to, amount);
     }
 
-    function _burn5pSystemFees() private {
+    function _burnSomeOfSystemFees() private {
         uint amount = balanceOf[vaultAddress];
-        uint burnAmount = (amount * 50) / 10000;
+        uint burnAmount = (amount * burnRate) / 10000;
         _burn(vaultAddress, burnAmount);
 
         // burn 0.5% of the total system fees
@@ -131,6 +133,10 @@ contract Lotte {
 
     function setDrawFeeRate(uint _drawFeeRate) external isOwner {
         drawFeeRate = _drawFeeRate;
+    }
+
+    function setBurnRate(uint _burnRate) external isOwner {
+        burnRate = _burnRate;
     }
 
     function setRefRateLayer1(uint _refRateLayer1) external isOwner {
@@ -183,7 +189,7 @@ contract Lotte {
                 keccak256(
                     abi.encodePacked(
                         block.timestamp,
-                        block.difficulty,
+                        block.prevrandao,
                         msg.sender
                     )
                 )
@@ -277,7 +283,7 @@ contract Lotte {
         }
 
         // burn 5% of system fees
-        _burn5pSystemFees();
+        _burnSomeOfSystemFees();
         // the revenue will be send to the vault immediately
         // so the investors can withdraw it anytime
         _withdrawAllToVault();
