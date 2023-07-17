@@ -605,7 +605,9 @@ describe('Lotte: Draw', () => {
     expect(await lotte.lastDrawTimestamp()).to.greaterThanOrEqual(blockTime);
 
     const lastDraw = await lotte.getLastDraw();
-    expect(lastDraw.winningNumber).to.greaterThanOrEqual(0).lessThanOrEqual(1440);
+    expect(lastDraw.winningNumber)
+      .to.greaterThanOrEqual(0)
+      .lessThanOrEqual(1440);
     expect(await lotte.totalTicket()).to.equal(0);
     expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
     // vault should be receive 2800 LFX - 0.5% after burn
