@@ -598,13 +598,14 @@ describe('Lotte: Draw', () => {
 
     // after drawing
     const blockTime = validWithdrawTime + 7;
-    expect(await lotte.lastDrawTime()).to.lessThanOrEqual(blockTime);
+    expect(await lotte.lastDrawTimestamp()).to.lessThanOrEqual(blockTime);
 
     await time.increaseTo(blockTime);
     expect(await lotte.connect(wallet1).draw()).to.be;
-    expect(await lotte.lastDrawAddress()).to.equal(wallet1.address);
-    expect(await lotte.lastDrawTime()).to.greaterThanOrEqual(blockTime);
+    expect(await lotte.lastDrawTimestamp()).to.greaterThanOrEqual(blockTime);
 
+    const lastDraw = await lotte.getLastDraw();
+    expect(lastDraw.winningNumber).to.greaterThanOrEqual(0).lessThanOrEqual(1440);
     expect(await lotte.totalTicket()).to.equal(0);
     expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
     // vault should be receive 2800 LFX - 0.5% after burn

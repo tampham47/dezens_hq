@@ -9,15 +9,12 @@ import 'hardhat/console.sol';
 
 // This is the main building block for smart contracts.
 contract Lotte {
-  address private immutable potAddress = address(0);
-
   struct Ticket {
+    // the owner of the ticket
     address owner;
-    // [0, 1440]
     // ticket: [00, 23]-[00, 59], it will be 1440 different tickets, e.g.
     // 0023, 0159, 0012, 0000, 0001, 0002, 0003, 0004, 0005, 0006
-    // 0100, 0101, 0102, 0103, 0104, 0105, 0106, 0107, 0108, 0109
-    // 0200, 0201, 0202, 0203, 0204, 0205, 0206, 0207, 0208, 0209
+    // ticket will be converted to uint, e.g. 0023 -> 23, 0159 -> 159
     uint ticket;
   }
 
@@ -28,11 +25,17 @@ contract Lotte {
     address[] winnerList;
   }
 
+  // An address type variable is used to store ethereum accounts.
+  address public owner;
+
+  // Address to store pot balance
+  address private immutable potAddress = address(0);
+
   IERC20 public immutable token;
   address public immutable vaultAddress;
 
-  uint public lastDrawTime;
-  address public lastDrawAddress;
+  uint public round;
+  uint public lastDrawTimestamp;
 
   // 100 LFX per ticket
   uint public ticketPrice = 100;
@@ -42,26 +45,28 @@ contract Lotte {
   // total token in the contract
   uint public totalSupply;
 
-  // the system fee rate, 2.8% by default
+  // the system fee rate, 2.8% of the ticket
   uint public systemFeeRate = 280;
-  // the draw fee rate, 5% of system fees by default
+  // the draw fee rate, 5% of system fees
   uint public drawFeeRate = 500;
-  // the burn rate, 0.5% of system fees by default
+  // the burn rate, 0.5% of system fees
   uint public burnRate = 50;
-  // rate for the referrer, 0.7% by default
-  uint public refRateLayer1 = 70;
-  // rate for the referrer, 0.3% by default
-  uint public refRateLayer2 = 30;
-  // rate for the referrer, 0.2% by default
-  uint public refRateLayer3 = 20;
 
-  // An address type variable is used to store ethereum accounts.
-  address public owner;
+  // rate for the referrer, 0.7% of the ticket
+  uint public refRateLayer1 = 70;
+  // rate for the referrer, 0.3% of the ticket
+  uint public refRateLayer2 = 30;
+  // rate for the referrer, 0.2% of the ticket
+  uint public refRateLayer3 = 20;
 
   // store who is the referrer of the user
   mapping(address => address) public ref;
 
+  // store ticket data
   mapping(uint256 => Ticket) ticketData;
+
+  // store historical data
+  mapping(uint => Draw) public drawData;
 
   // store the balance of that the winner can withdraw
   // if after the draw, the winner does not withdraw, the balance will be added
@@ -75,9 +80,11 @@ contract Lotte {
 
   constructor(address _token, address _vaultAddress) {
     owner = msg.sender;
+    round = 0;
+
     token = IERC20(_token);
     vaultAddress = _vaultAddress;
-    lastDrawTime = block.timestamp;
+    lastDrawTimestamp = block.timestamp;
   }
 
   function _mint(address _to, uint _amount) private {
@@ -92,6 +99,7 @@ contract Lotte {
 
   function _resetAndStartNewRound() private {
     totalTicket = 0;
+    round++;
   }
 
   function _isAddress(address _a) private pure returns (bool) {
@@ -177,6 +185,7 @@ contract Lotte {
         ticketData[i].ticket == ticketNumber &&
         ticketData[i].owner != address(0)
       ) {
+        drawData[round].winnerList.push(ticketData[i].owner);
         _mint(ticketData[i].owner, amount);
       }
     }
@@ -249,7 +258,7 @@ contract Lotte {
 
   function draw() external {
     require(
-      block.timestamp - lastDrawTime >= 24 hours,
+      block.timestamp - lastDrawTimestamp >= 24 hours,
       'Lotte: not enough time to draw'
     );
     require(totalTicket > 7, 'Lotte: total ticket should be more than 7');
@@ -263,20 +272,21 @@ contract Lotte {
       uint totalPot = balanceOf[potAddress];
       uint winnerAmount = totalPot / winnerCount;
 
+      drawData[round].winningNumber = winningNumber;
+      drawData[round].winnerCount = winnerCount;
+      drawData[round].winnerCount = winnerCount;
+
       _burn(potAddress, totalPot);
       _distributeRewardByTicketNumber(winningNumber, winnerAmount);
+    } else {
+      drawData[round].winningNumber = winningNumber;
     }
 
-    // draw rewards for whom took the action
-    // the one draw for the previus time will receive 5% of the system fees
-    // the new one will be assigned to lastDrawAddress,
-    // so then he/she are able to share fees for the next time
-    if (lastDrawAddress != address(0)) {
-      uint systemFees = balanceOf[vaultAddress];
-      uint reward = (systemFees / 10000) * drawFeeRate;
-      _burn(vaultAddress, reward);
-      _mint(lastDrawAddress, reward);
-    }
+    // rewards 5% of the system fees for whom took the action
+    uint systemFees = balanceOf[vaultAddress];
+    uint reward = (systemFees / 10000) * drawFeeRate;
+    _burn(vaultAddress, reward);
+    _mint(msg.sender, reward);
 
     // burn 5% of system fees
     _burnSomeOfSystemFees();
@@ -287,8 +297,7 @@ contract Lotte {
     // reset the round
     _resetAndStartNewRound();
 
-    lastDrawAddress = msg.sender;
-    lastDrawTime = block.timestamp;
+    lastDrawTimestamp = block.timestamp;
   }
 
   function withdraw(uint256 amount) external {
@@ -322,6 +331,10 @@ contract Lotte {
     }
 
     return result;
+  }
+
+  function getLastDraw() public view returns (Draw memory) {
+    return drawData[round - 1];
   }
 
   function getTicketListByAddress(
