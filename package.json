@@ -7,6 +7,7 @@
     "test:lotte-draw": "npx hardhat test --grep \"Lotte: Draw\"",
     "test:token": "npx hardhat test --grep \"LfxToken\"",
     "test:vault": "npx hardhat test --grep \"LfxVault\"",
+    "test:airdrop": "npx hardhat test --grep \"LfxAirdrop\"",
     "test": "npx hardhat test"
   },
   "devDependencies": {
