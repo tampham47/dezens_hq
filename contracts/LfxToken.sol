@@ -8,8 +8,7 @@ contract LFX is ERC20 {
     _mint(msg.sender, amount);
   }
 
-  function burn(uint amount) external returns (bool) {
+  function burn(uint amount) public {
     _burn(msg.sender, amount);
-    return true;
   }
 }
