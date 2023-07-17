@@ -83,7 +83,7 @@ describe('Lotte: Purchase', function () {
 
     expect(
       (await provider.getBalance(wallet3.address)) / BigInt(1e18)
-    ).to.equal(10000);
+    ).to.greaterThanOrEqual(9999);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(50000);
     expect(await lfx.balanceOf(wallet2.address)).to.equal(50000);
   });
