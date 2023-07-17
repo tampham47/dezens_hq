@@ -192,7 +192,7 @@ contract Lotte {
   }
 
   // create a number that return random number in range [0, 1440]
-  function getRandom() public view returns (uint) {
+  function getRandom() public view virtual returns (uint) {
     return
       (uint(
         keccak256(
@@ -274,7 +274,7 @@ contract Lotte {
 
       drawData[round].winningNumber = winningNumber;
       drawData[round].winnerCount = winnerCount;
-      drawData[round].winnerCount = winnerCount;
+      drawData[round].winnerAmount = winnerAmount;
 
       _burn(potAddress, totalPot);
       _distributeRewardByTicketNumber(winningNumber, winnerAmount);

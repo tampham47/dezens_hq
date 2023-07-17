@@ -4,6 +4,7 @@
     "node": "npx hardhat node",
     "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost",
     "test:lotte": "npx hardhat test --grep \"Lotte\"",
+    "test:mock-lotte": "npx hardhat test --grep \"MockLotte\"",
     "test:lotte-draw": "npx hardhat test --grep \"Lotte: Draw\"",
     "test:token": "npx hardhat test --grep \"LfxToken\"",
     "test:vault": "npx hardhat test --grep \"LfxVault\"",
