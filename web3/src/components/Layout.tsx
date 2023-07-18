@@ -1,6 +1,6 @@
-import React from "react";
-import { createGlobalStyle } from "styled-components";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import {
   EthereumClient,
@@ -11,11 +11,10 @@ import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { fantom, fantomTestnet, localhost } from 'wagmi/chains';
 
+import { Footer } from './Footer';
+import { NavBar } from './NavBar';
 
-import { Footer } from "./Footer";
-import { NavBar } from "./NavBar";
-
-import "../css/normalize.css";
+import '../css/normalize.css';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -75,10 +74,11 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  const name = "Gatsby";
-  const title = "Gatsby Starter Blog";
-  const description = "A starter blog demonstrating what Gatsby can do.";
-  const link = "example.com";
+  const name = 'Lotte.Fan';
+  const title = 'Lotte.Fan';
+  const description = 'Buy Lottery on Fantom';
+  const link = 'https://lotte.fan';
+  const cover = '/images/icon.png'
 
   return (
     <main>
@@ -97,13 +97,13 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <meta property="og:title" content={name} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={link} />
-        <meta property="og:image" content="/tw-social.png" />
+        <meta property="og:image" content={cover} />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={name} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:url" content={link} />
-        <meta name="twitter:image" content="/tw-social.png" />
+        <meta name="twitter:image" content={cover} />
         <meta name="twitter:site" content={name} />
         <meta property="og:image:width" content="1500" />
         <meta property="og:image:height" content="500" />
@@ -118,7 +118,6 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
         </>
       </WagmiConfig>
-
     </main>
   );
 };

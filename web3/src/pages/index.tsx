@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
-import { Card } from "../components/Card";
-import { Container } from "../components/Grid";
-import { Layout } from "../components/Layout";
-import { graphql } from "gatsby";
-import { normalizeNotionFrontMatter } from "../utils/normalizeNotionBlog";
+import { Card } from '../components/Card';
+import { Container } from '../components/Grid';
+import { Layout } from '../components/Layout';
+import { graphql } from 'gatsby';
+import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -83,7 +83,7 @@ export const pageQuery = graphql`
 `;
 
 const BlogTemplate = ({ data }: any) => {
-  console.log("data", data);
+  console.log('data', data);
 
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
@@ -95,13 +95,13 @@ const BlogTemplate = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === "published");
+    .filter((i: any) => i.status === 'published');
 
   return (
     <Layout>
       <ScRoot>
         <Helmet titleTemplate="%s">
-          <title>Gatsby</title>
+          <title>Lotte.Fan</title>
         </Helmet>
 
         <Container>

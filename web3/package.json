@@ -13,7 +13,7 @@
     "build": "env-cmd -f .env gatsby build",
     "serve": "env-cmd -f .env gatsby serve",
     "clean": "env-cmd -f .env gatsby clean",
-    "deploy": "yarn run clean && yarn run build && surge ./public https://gatsby-notion-starter.surge.sh",
+    "deploy": "yarn run clean && yarn run build && surge ./public https://lotte.fan",
     "typecheck": "tsc --noEmit"
   },
   "license": "0BSD",
