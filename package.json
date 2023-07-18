@@ -2,16 +2,17 @@
   "name": "hardhat-project",
   "scripts": {
     "node": "npx hardhat node",
+    "new-wallet": "npx @yerofey/cryptowallet-cli",
     "deploy:local": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network localhost",
     "deploy:test": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network testnet",
-    "new-wallet": "npx @yerofey/cryptowallet-cli",
-    "test:lotte": "npx hardhat test --grep \"Lotte\"",
-    "test:mock-lotte": "npx hardhat test --grep \"MockLotte\"",
-    "test:lotte-draw": "npx hardhat test --grep \"Lotte: Draw\"",
-    "test:token": "npx hardhat test --grep \"LfxToken\"",
-    "test:vault": "npx hardhat test --grep \"LfxVault\"",
-    "test:airdrop": "npx hardhat test --grep \"LfxAirdrop\"",
-    "test": "npx hardhat test"
+    "deploy:mainnet": "env-cmd -f .env.prod npx hardhat run scripts/deploy.ts --network testnet",
+    "test:lotte": "env-cmd -f .env npx hardhat test --grep \"Lotte\"",
+    "test:mock-lotte": "env-cmd -f .env npx hardhat test --grep \"MockLotte\"",
+    "test:lotte-draw": "env-cmd -f .env npx hardhat test --grep \"Lotte: Draw\"",
+    "test:token": "env-cmd -f .env npx hardhat test --grep \"LfxToken\"",
+    "test:vault": "env-cmd -f .env npx hardhat test --grep \"LfxVault\"",
+    "test:airdrop": "env-cmd -f .env npx hardhat test --grep \"LfxAirdrop\"",
+    "test": "env-cmd -f .env npx hardhat test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",

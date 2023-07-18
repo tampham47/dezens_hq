@@ -1,7 +1,8 @@
 # Todos
 
 - Apply 1e18 to numbers
-- Working with wallet connect
+- Add system event into contracts
+- Working with wallet connects
 
 ## Sample Hardhat Project
 
