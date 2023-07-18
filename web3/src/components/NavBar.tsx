@@ -1,11 +1,12 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { Link } from "gatsby";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { Link } from 'gatsby';
+import { Web3Button } from '@web3modal/react';
 
-import { Container } from "./Grid";
+import { Container } from './Grid';
 
 const ScHeader = styled.header`
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   position: fixed;
   left: 0;
   right: 0;
@@ -17,7 +18,16 @@ const ScHeader = styled.header`
 const ScNavBar = styled.nav`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 64px;
+`;
+const ScNavBarLeft = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const ScNavBarRight = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const ScLogo = styled(Link)`
@@ -82,11 +92,16 @@ export const NavBar = () => {
       <ScHeader>
         <Container>
           <ScNavBar>
-            <ScLogo to="/">
-              <img src="/images/icon.png" loading="eager" />
-              Gatsby
-            </ScLogo>
-            <ScNavLink to="/blog/">Blog</ScNavLink>
+            <ScNavBarLeft>
+              <ScLogo to="/">
+                <img src="/images/icon.png" loading="eager" />
+                Lotte.Fan
+              </ScLogo>
+              <ScNavLink to="/blog/">Blog</ScNavLink>
+            </ScNavBarLeft>
+            <ScNavBarRight>
+              <Web3Button />
+            </ScNavBarRight>
           </ScNavBar>
         </Container>
       </ScHeader>

@@ -2,6 +2,16 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet";
 
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from '@web3modal/ethereum';
+import { Web3Modal } from '@web3modal/react';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { fantom, fantomTestnet, localhost } from 'wagmi/chains';
+
+
 import { Footer } from "./Footer";
 import { NavBar } from "./NavBar";
 
@@ -53,6 +63,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const chains = [fantom, fantomTestnet, localhost];
+const projectId = 'c08bda26db91f19c077f6e936e169bc0';
+
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, chains }),
+  publicClient,
+});
+const ethereumClient = new EthereumClient(wagmiConfig, chains);
+
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   const name = "Gatsby";
   const title = "Gatsby Starter Blog";
@@ -89,9 +110,15 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
       </Helmet>
       <GlobalStyle />
 
-      <NavBar />
-      {children}
-      <Footer />
+      <WagmiConfig config={wagmiConfig}>
+        <>
+          <NavBar />
+          {children}
+          <Footer />
+          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        </>
+      </WagmiConfig>
+
     </main>
   );
 };
