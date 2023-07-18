@@ -82,7 +82,7 @@ export const pageQuery = graphql`
   }
 `;
 
-const BlogTemplate = ({ data }: any) => {
+const Stake = ({ data }: any) => {
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
       const frontmatter = normalizeNotionFrontMatter(node.frontmatter);
@@ -99,13 +99,13 @@ const BlogTemplate = ({ data }: any) => {
     <Layout>
       <ScRoot>
         <Helmet>
-          <title>Blog | Lotte.Fan</title>
+          <title>Stake | Lotte.Fan</title>
         </Helmet>
 
         <Container>
           <ScMain>
-            <h2>Blog</h2>
-
+            <h2>Stake</h2>
+            
             <ScPostList>
               {posts.map((i) => (
                 <Card key={i.id} post={i} />
@@ -118,4 +118,4 @@ const BlogTemplate = ({ data }: any) => {
   );
 };
 
-export default BlogTemplate;
+export default Stake;

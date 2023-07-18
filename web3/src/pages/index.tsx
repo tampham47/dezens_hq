@@ -135,6 +135,7 @@ const BlogTemplate = ({ data }: any) => {
 
         <Container>
           <ScMain>
+            <h2>News</h2>
             <ScPostList>
               {posts.map((i) => (
                 <Card key={i.id} post={i} />

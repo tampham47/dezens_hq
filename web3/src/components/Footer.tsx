@@ -31,7 +31,7 @@ export const Footer = () => {
     <ScMain>
       <Container>
         <ScContent>
-          <div>@2023 Gatsby</div>
+          <div>@2023 Lotte.Fan</div>
         </ScContent>
       </Container>
     </ScMain>
