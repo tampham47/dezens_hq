@@ -65,8 +65,8 @@ const ScLinkComp = css`
   &:hover {
     text-decoration: none;
     opacity: 0.75;
-    color: #d8e9a8;
-    background: #1e5128;
+    color: black;
+    background: #ffd24c;
   }
 
   > span {
