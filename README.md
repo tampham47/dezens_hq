@@ -1,4 +1,9 @@
-# Sample Hardhat Project
+# Todos
+
+- Apply 1e18 to numbers
+- Working with wallet connect
+
+## Sample Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
 

@@ -2,7 +2,9 @@
   "name": "hardhat-project",
   "scripts": {
     "node": "npx hardhat node",
-    "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost",
+    "deploy:local": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network localhost",
+    "deploy:test": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network testnet",
+    "new-wallet": "npx @yerofey/cryptowallet-cli",
     "test:lotte": "npx hardhat test --grep \"Lotte\"",
     "test:mock-lotte": "npx hardhat test --grep \"MockLotte\"",
     "test:lotte-draw": "npx hardhat test --grep \"Lotte: Draw\"",

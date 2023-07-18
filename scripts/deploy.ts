@@ -10,7 +10,7 @@ async function main() {
     await deployer.getAddress()
   );
 
-  const lfxTotalSupply = 21_000_000_000;
+  const lfxTotalSupply = 21_000_000_000 * 1e18;
   const lfxTokenContract = await ethers.getContractFactory('LFX');
   const lfxToken = await lfxTokenContract.deploy(lfxTotalSupply);
   const lfxTokenAddress = await lfxToken.getAddress();
@@ -22,6 +22,16 @@ async function main() {
   const lfxVaultAddress = await lfxVault.getAddress();
   await lfxVault.waitForDeployment();
 
+  const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
+  const lfxAirdrop = await LfxAirdropContract.deploy(
+    lfxTokenAddress,
+    2,
+    100,
+    1,
+    100
+  );
+  const lfxAirdropAddress = await lfxAirdrop.getAddress();
+
   // Lotte App
   const Lotte = await ethers.getContractFactory('Lotte');
   const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
@@ -29,6 +39,7 @@ async function main() {
   await lotte.waitForDeployment();
 
   console.log('LFX Token deployed to:', lfxTokenAddress);
+  console.log('LFX Airdrop deployed to:', lfxAirdropAddress);
   console.log('LFX Vault deployed to:', lfxVaultAddress);
   console.log('Lotte App deployed to:', lotteAddress);
 }
