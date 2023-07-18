@@ -22,7 +22,7 @@ const ScRoot = styled.div`
 const ScFeature = styled.div`
   margin-bottom: 3rem;
   text-align: center;
-  max-width: 800px;
+  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
 

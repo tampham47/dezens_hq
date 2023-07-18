@@ -1,8 +1,9 @@
-import path from "path";
+import path from 'path';
+import webpack from 'webpack';
+import { createRemoteFileNode } from 'gatsby-source-filesystem';
 
-import { Post } from "./src/types/Post";
-import { normalizeNotionFrontMatter } from "./src/utils/normalizeNotionBlog";
-import { createRemoteFileNode } from "gatsby-source-filesystem";
+import { Post } from './src/types/Post';
+import { normalizeNotionFrontMatter } from './src/utils/normalizeNotionBlog';
 
 export const createSchemaCustomization = ({ actions }: any) => {
   const { createTypes } = actions;
@@ -20,10 +21,10 @@ export const onCreateNode = async ({
   createNodeId,
   getCache,
 }: any) => {
-  if (node.internal.type === "MarkdownRemark") {
+  if (node.internal.type === 'MarkdownRemark') {
     const cover = node.frontmatter.cover[0];
 
-    if (cover.file.url.startsWith("http")) {
+    if (cover.file.url.startsWith('http')) {
       const fileNode = await createRemoteFileNode({
         url: cover.file.url,
         parentNodeId: node.id,
@@ -35,7 +36,7 @@ export const onCreateNode = async ({
       if (fileNode) {
         createNodeField({
           node: node,
-          name: "coverImageLocal",
+          name: 'coverImageLocal',
           value: fileNode.id,
         });
       }
@@ -109,7 +110,7 @@ export const createPages = ({ actions, graphql }: any) => {
           markdown: true,
         };
       })
-      .filter((i: any) => i.status === "published");
+      .filter((i: any) => i.status === 'published');
 
     return allPosts.forEach((post: Post) => {
       createPage({
@@ -120,5 +121,20 @@ export const createPages = ({ actions, graphql }: any) => {
         },
       });
     });
+  });
+};
+
+export const onCreateWebpackConfig = ({ actions }: any) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
+        resource.request = resource.request.replace(/^node:/, '');
+      }),
+    ],
+    resolve: {
+      fallback: {
+        crypto: false,
+      },
+    },
   });
 };

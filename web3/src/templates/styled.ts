@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ScMain = styled.div`
   margin-top: 2rem;
@@ -14,20 +14,20 @@ export const ScMain = styled.div`
 export const ScCategoryText = styled.div`
   font-size: 14px;
   color: #868f97;
-  max-width: 640px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
 `;
 
 export const ScHeaderWrapper = styled.div`
-  max-width: 640px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 3rem;
 `;
 
 export const ScHeader = styled.h1`
-  max-width: 640px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
   font-size: 24px;
@@ -41,7 +41,7 @@ export const ScHeader = styled.h1`
 
 export const ScContent = styled.section`
   font-size: 20px;
-  max-width: 640px;
+  max-width: 820px;
   margin-left: auto;
   margin-right: auto;
   font-size: 16px;

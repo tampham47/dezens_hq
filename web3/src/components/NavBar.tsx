@@ -51,7 +51,7 @@ const ScLinkComp = css`
   font-size: 14px;
   line-height: 1.4;
   line-height: 40px;
-  margin-right: 24px;
+  margin-right: 16px;
   transition: all 0.3s;
   display: block;
   user-select: none;
@@ -97,6 +97,8 @@ export const NavBar = () => {
                 <img src="/images/icon.png" loading="eager" />
                 Lotte.Fan
               </ScLogo>
+              <ScNavLink to="/blog/">Stake</ScNavLink>
+              <ScNavLink to="/blog/">Airdrop</ScNavLink>
               <ScNavLink to="/blog/">Blog</ScNavLink>
             </ScNavBarLeft>
             <ScNavBarRight>
