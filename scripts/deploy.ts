@@ -1,6 +1,35 @@
 // @ts-nocheck
 
+import path from 'path';
 import { ethers } from 'hardhat';
+
+function saveContractAddress(contractName: string, contractAddress: string) {
+  const fs = require('fs');
+  const contractsDir = path.join(
+    __dirname,
+    '..',
+    'web3',
+    'src',
+    'contracts',
+    process.env.NODE_ENV
+  );
+
+  if (!fs.existsSync(contractsDir)) {
+    fs.mkdirSync(contractsDir);
+  }
+
+  fs.writeFileSync(
+    path.join(contractsDir, `${contractName}.json`),
+    JSON.stringify({ Token: contractAddress }, undefined, 2)
+  );
+
+  const TokenArtifact = artifacts.readArtifactSync(contractName);
+
+  fs.writeFileSync(
+    path.join(contractsDir, `Artifact${contractName}.json`),
+    JSON.stringify(TokenArtifact, null, 2)
+  );
+}
 
 async function main() {
   // ethers is available in the global scope
@@ -42,6 +71,11 @@ async function main() {
   console.log('LFX Airdrop Address :', lfxAirdropAddress);
   console.log('LFX Vault Address   :', lfxVaultAddress);
   console.log('Lotte App Address   :', lotteAddress);
+
+  saveContractAddress('LFX', lfxTokenAddress);
+  saveContractAddress('LfxVault', lfxVaultAddress);
+  saveContractAddress('LfxAirdrop', lfxAirdropAddress);
+  saveContractAddress('Lotte', lotteAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

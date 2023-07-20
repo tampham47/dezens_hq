@@ -1,11 +1,11 @@
 {
   "name": "hardhat-project",
   "scripts": {
-    "node": "npx hardhat node",
     "new-wallet": "npx @yerofey/cryptowallet-cli",
-    "deploy:local": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network localhost",
-    "deploy:test": "env-cmd -f .env npx hardhat run scripts/deploy.ts --network testnet",
-    "deploy:mainnet": "env-cmd -f .env.prod npx hardhat run scripts/deploy.ts --network testnet",
+    "node": "env-cmd -f .env npx hardhat node",
+    "deploy:local": "NODE_ENV=local env-cmd -f .env npx hardhat run scripts/deploy.ts --network localhost",
+    "deploy:test": "NODE_ENV=test env-cmd -f .env npx hardhat run scripts/deploy.ts --network testnet",
+    "deploy:mainnet": "NODE_ENV=mainnet env-cmd -f .env.prod npx hardhat run scripts/deploy.ts --network testnet",
     "test:lotte": "env-cmd -f .env npx hardhat test --grep \"Lotte\"",
     "test:mock-lotte": "env-cmd -f .env npx hardhat test --grep \"MockLotte\"",
     "test:lotte-draw": "env-cmd -f .env npx hardhat test --grep \"Lotte: Draw\"",

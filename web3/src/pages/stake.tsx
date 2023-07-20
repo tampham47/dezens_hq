@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import { graphql } from 'gatsby';
 
 import { Card } from '../components/Card';
 import { Container } from '../components/Grid';
 import { Layout } from '../components/Layout';
-import { graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
+import { Stake } from '../containers/Stake';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -82,7 +83,7 @@ export const pageQuery = graphql`
   }
 `;
 
-const Stake = ({ data }: any) => {
+const StakePage = ({ data }: any) => {
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
       const frontmatter = normalizeNotionFrontMatter(node.frontmatter);
@@ -95,6 +96,10 @@ const Stake = ({ data }: any) => {
     })
     .filter((i: any) => i.status === 'published');
 
+  useEffect(() => {
+    console.log('StakePage', posts);
+  }, []);
+
   return (
     <Layout>
       <ScRoot>
@@ -105,10 +110,12 @@ const Stake = ({ data }: any) => {
         <Container>
           <ScMain>
             <h2>Stake</h2>
-            
+
+            <Stake />
+
             <ScPostList>
               {posts.map((i) => (
-                <Card key={i.id} post={i} />
+                <Card key={i.slug} post={i} />
               ))}
             </ScPostList>
           </ScMain>
@@ -118,4 +125,4 @@ const Stake = ({ data }: any) => {
   );
 };
 
-export default Stake;
+export default StakePage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 
@@ -7,6 +7,7 @@ import { Container } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
+import airdrop from '../apis/lfx-airdrop';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -83,7 +84,26 @@ export const pageQuery = graphql`
 `;
 
 const Airdrop = ({ data }: any) => {
-  console.log('data', data);
+  const [count, setCount] = useState<number>();
+  const [depositAmount, setDepositAmount] = useState<number>();
+  const [isWithdrawable, setIsWithdrawable] = useState<boolean>(false);
+
+  useEffect(() => {
+    airdrop.getParticipantsCount().then((res) => {
+      console.log('getParticipantsCount', res);
+      setCount(Number(res));
+    });
+
+    airdrop.getDepositAmount().then((res) => {
+      console.log('getDepositAmount', res);
+      setDepositAmount(Number(res / BigInt(Math.pow(10, 18))));
+    });
+
+    airdrop.getIsWithdrawable().then((res) => {
+      console.log('getIsWithdrawable', res);
+      setIsWithdrawable(res);
+    });
+  });
 
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
@@ -106,7 +126,10 @@ const Airdrop = ({ data }: any) => {
 
         <Container>
           <ScMain>
-            <h2>Airdrop</h2>
+            <h2>
+              Airdrop {count} - {depositAmount} -{' '}
+              {isWithdrawable ? 'TRUE' : 'FALSE'}
+            </h2>
 
             <ScPostList>
               {posts.map((i) => (

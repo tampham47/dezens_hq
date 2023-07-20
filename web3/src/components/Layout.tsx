@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const chains = [fantom, fantomTestnet, localhost];
+const chains = [fantom, fantomTestnet, { ...localhost, id: 31337 }];
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -78,7 +78,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   const title = 'Lotte.Fan';
   const description = 'Buy Lottery on Fantom';
   const link = 'https://lotte.fan';
-  const cover = '/images/icon.png'
+  const cover = '/images/icon.png';
 
   return (
     <main>

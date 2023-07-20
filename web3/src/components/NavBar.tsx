@@ -19,6 +19,11 @@ const ScHeader = styled.header`
 const ScMenuController = styled.input`
   visibility: hidden;
   width: 0;
+  flex: 1;
+
+  @media screen and (min-width: 1024px) {
+    flex: none;
+  }
 `;
 const ScNavBarContent = styled.div`
   position: absolute;
@@ -130,6 +135,7 @@ const ScMenuButton = styled.button`
   border: 0;
   color: white;
   cursor: pointer;
+  margin-left: 8px;
   margin-right: -12px;
 
   @media screen and (min-width: 1024px) {
