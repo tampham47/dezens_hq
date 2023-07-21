@@ -16,13 +16,16 @@ contract LfxAirdrop {
   // the timestamp contract created
   uint public initTimestamp;
 
+  // maximum total deposit amount
+  uint public maxTotalSupply;
+  // total LFX token has been depositted
   uint public totalSupply;
 
-  // expected participants count
-  uint public participantsCount;
+  // maximum number of participants
+  uint public maxParticipant;
+  // if this number reach to 0, the withdrawable will be enabled
+  uint public participantCount;
 
-  // expected deposit amount
-  uint public depositAmount;
   uint public minDepositAmount;
   uint public maxDepositAmount;
 
@@ -35,10 +38,12 @@ contract LfxAirdrop {
   // balanceOf[0] is the balance of the winner of the current round
   mapping(address => uint256) public balanceOf;
 
+  event Airdrop(address indexed to, uint amount);
+
   constructor(
     address _token,
-    uint _participantsCount,
-    uint _depositAmount,
+    uint _maxParticipant,
+    uint _maxTotalSupply,
     uint _minDepositAmount,
     uint _maxDepositAmount
   ) {
@@ -47,8 +52,9 @@ contract LfxAirdrop {
     isWithdrawable = false;
 
     token = IERC20(_token);
-    participantsCount = _participantsCount;
-    depositAmount = _depositAmount * 1e18;
+    maxParticipant = _maxParticipant;
+    maxTotalSupply = _maxTotalSupply * 1e18;
+
     minDepositAmount = _minDepositAmount * 1e18;
     maxDepositAmount = _maxDepositAmount * 1e18;
   }
@@ -77,14 +83,13 @@ contract LfxAirdrop {
       'LfxAirdrop: Value must be in range'
     );
 
-    participantsCount -= 1;
-    depositAmount -= msg.value;
+    _mint(msg.sender, msg.value);
 
-    if (participantsCount <= 0 || depositAmount <= 0) {
+    participantCount += 1;
+
+    if (participantCount >= maxParticipant || totalSupply >= maxTotalSupply) {
       isWithdrawable = true;
     }
-
-    _mint(msg.sender, msg.value);
   }
 
   function withdraw() external {
@@ -104,9 +109,28 @@ contract LfxAirdrop {
     _burn(msg.sender, balance);
     // send airdrop token to the user
     token.transfer(msg.sender, tokenAmount);
+    emit Airdrop(msg.sender, tokenAmount);
+
     // send ether back to the user
     address payable to = payable(msg.sender);
     to.transfer(balance);
+  }
+
+  function getInformation()
+    external
+    view
+    returns (uint, bool, uint, uint, uint, uint, uint, uint)
+  {
+    return (
+      initTimestamp,
+      isWithdrawable,
+      maxParticipant,
+      participantCount,
+      maxTotalSupply,
+      totalSupply,
+      minDepositAmount,
+      maxDepositAmount
+    );
   }
 }
 

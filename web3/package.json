@@ -9,7 +9,9 @@
   ],
   "scripts": {
     "develop": "env-cmd -f .env gatsby develop",
-    "start": "env-cmd -f .env gatsby develop",
+    "start:local": "NETWORK=local env-cmd -f .env gatsby develop",
+    "start:test": "NETWORK=test env-cmd -f .env gatsby develop",
+    "start:mainnet": "NETWORK=mainnet env-cmd -f .env gatsby develop",
     "build": "env-cmd -f .env gatsby build",
     "serve": "env-cmd -f .env gatsby serve",
     "clean": "env-cmd -f .env gatsby clean",
