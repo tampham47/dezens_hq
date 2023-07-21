@@ -54,7 +54,6 @@ contract LfxAirdrop {
     token = IERC20(_token);
     maxParticipant = _maxParticipant;
     maxTotalSupply = _maxTotalSupply * 1e18;
-
     minDepositAmount = _minDepositAmount * 1e18;
     maxDepositAmount = _maxDepositAmount * 1e18;
   }
@@ -119,17 +118,18 @@ contract LfxAirdrop {
   function getInformation()
     external
     view
-    returns (uint, bool, uint, uint, uint, uint, uint, uint)
+    returns (bool, uint, uint, uint, uint, uint, uint, uint, uint)
   {
     return (
-      initTimestamp,
       isWithdrawable,
-      maxParticipant,
       participantCount,
-      maxTotalSupply,
       totalSupply,
+      token.balanceOf(address(this)),
+      maxParticipant,
+      maxTotalSupply,
       minDepositAmount,
-      maxDepositAmount
+      maxDepositAmount,
+      initTimestamp
     );
   }
 }

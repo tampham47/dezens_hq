@@ -173,14 +173,14 @@ describe('LfxAirdrop', () => {
       value: ethers.parseEther('50'),
     });
     let [
-      _,
       isWithdrawable,
-      maxParticipant,
       participantCount,
-      maxTotalSupply,
       totalSupply,
+      totalLfxToken,
+      maxParticipant,
+      maxTotalSupply,
       minDepositAmount,
-      maxDepositAmount,
+      maxDepositAmount
     ] = await lfxAirdrop.getInformation();
     expect(isWithdrawable).to.equal(false);
     expect(maxParticipant).to.equal(2);
@@ -189,6 +189,7 @@ describe('LfxAirdrop', () => {
     expect(totalSupply / lamports).to.equal(50);
     expect(minDepositAmount / lamports).to.equal(1);
     expect(maxDepositAmount / lamports).to.equal(100);
+    expect(totalLfxToken / lamports).to.equal(0);
 
     // send
     await wallet2.sendTransaction({
@@ -206,18 +207,19 @@ describe('LfxAirdrop', () => {
       50
     );
     [
-      _,
       isWithdrawable,
-      maxParticipant,
       participantCount,
-      maxTotalSupply,
       totalSupply,
+      totalLfxToken,
+      maxParticipant,
+      maxTotalSupply,
       minDepositAmount,
-      maxDepositAmount,
+      maxDepositAmount
     ] = await lfxAirdrop.getInformation();
     expect(isWithdrawable).to.equal(true);
     expect(participantCount).to.equal(2);
     expect(totalSupply / lamports).to.equal(100);
+    expect(totalLfxToken).to.equal(10000);
 
     // send
     await expect(
@@ -228,6 +230,7 @@ describe('LfxAirdrop', () => {
     ).to.be.revertedWith('LfxAirdrop: The airdrop is already finished');
 
     // withdraw
+
     await expect(lfxAirdrop.connect(wallet1).withdraw())
       .to.emit(lfxAirdrop, 'Airdrop')
       .withArgs(wallet1.address, 5000);
