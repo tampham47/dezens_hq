@@ -27,7 +27,7 @@ const deployContract = async () => {
 
   // Lotte App
   const Lotte = await ethers.getContractFactory('MockLotte', owner);
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
+  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress, 100);
 
   // owner inits with 5000 LFX
   // owner transfers 4000 LFX to wallet1
@@ -58,16 +58,97 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lotte.getRandom()).to.equals(11);
   });
 
-  it('Should be able to return correct value', async () => {
+  it('Should be able to return correct value for no winner', async () => {
     const {
       lotte,
       lfx,
-      lfxTotalSupply,
       lfxVaultAddress,
       validWithdrawTime,
       owner,
       wallet1,
       wallet2,
+      wallet3,
+    } = await loadFixture(deployContract);
+    const lotteContractAddress = await lotte.getAddress();
+
+    // set price to 100, for easier testing
+    expect(await lotte.connect(owner).setTicketPrice(10000)).to.ok;
+    expect(await lotte.ticketPrice()).to.equal(10000);
+    expect(await lfx.balanceOf(wallet1.address)).to.equal(50000);
+
+    // wallet1 approve Lotte contract to spend 100 LFX
+    await lfx.connect(wallet1).approve(lotteContractAddress, 50000);
+    await lfx.connect(wallet2).approve(lotteContractAddress, 50000);
+
+    expect(
+      await lotte
+        .connect(wallet1)
+        .purchase([0, 1, 2, 3, 4], constants.ZERO_ADDRESS)
+    ).to.ok;
+    expect(
+      await lotte
+        .connect(wallet2)
+        .purchase([0, 5, 6, 7, 10], constants.ZERO_ADDRESS)
+    ).to.ok;
+
+    // before drawing
+    expect(await lotte.totalTicket()).to.equal(10);
+    expect(await lotte.totalSupply()).to.equal(100000);
+    expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(2800);
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(0);
+
+    // after drawing
+    const blockTime = validWithdrawTime + 7;
+    expect(await lotte.lastDrawTimestamp()).to.lessThanOrEqual(blockTime);
+
+    await time.increaseTo(blockTime);
+    expect(await lotte.connect(wallet3).draw()).to.be;
+    expect(await lotte.lastDrawTimestamp()).to.greaterThanOrEqual(blockTime);
+    expect(await lotte.balanceOf(wallet3.address)).to.equals(140);
+
+    const lastDraw = await lotte.getLastDraw();
+    expect(lastDraw.winningNumber).to.equals(11);
+    expect(lastDraw.winnerCount).to.equals(0);
+    expect(lastDraw.winnerAmount).to.equals(0);
+    expect(lastDraw.winnerList.length).to.equals(0);
+
+    expect(await lotte.totalTicket()).to.equal(0);
+    expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
+    // vault should be receive 2800 LFX - 5% draw fees - 0.5% after burn
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2646);
+    expect((2800 * 500) / 10000).to.equal(140);
+    expect((2800 * 50) / 10000).to.equal(14);
+    expect(2646 + 14 + 140).to.equal(2800);
+    expect(97200 + 2800).to.equals(100000);
+
+    const [
+      round,
+      totalTicket,
+      totalSupply,
+      totalPot,
+      systemFees,
+      drawFees,
+      burnAmount,
+    ] = await lotte.getInformation();
+    expect(round).to.equal(1);
+    expect(totalTicket).to.equal(0);
+    expect(totalSupply).to.equal(97340);
+    expect(totalPot).to.equal(97200);
+    expect(systemFees).to.equal(0);
+    expect(drawFees).to.equal(0);
+    expect(burnAmount).to.equal(0);
+  });
+
+  it('Should be able to return correct value for 1 winner', async () => {
+    const {
+      lotte,
+      lfx,
+      lfxVaultAddress,
+      validWithdrawTime,
+      owner,
+      wallet1,
+      wallet2,
+      wallet3,
     } = await loadFixture(deployContract);
     const lotteContractAddress = await lotte.getAddress();
 
@@ -102,8 +183,9 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lotte.lastDrawTimestamp()).to.lessThanOrEqual(blockTime);
 
     await time.increaseTo(blockTime);
-    expect(await lotte.connect(wallet1).draw()).to.be;
+    expect(await lotte.connect(wallet3).draw()).to.be;
     expect(await lotte.lastDrawTimestamp()).to.greaterThanOrEqual(blockTime);
+    expect(await lotte.balanceOf(wallet3.address)).to.equals(140);
 
     const lastDraw = await lotte.getLastDraw();
     expect(lastDraw.winningNumber).to.equals(11);
@@ -113,11 +195,11 @@ describe('MockLotte: Draw Winner', () => {
 
     expect(await lotte.totalTicket()).to.equal(0);
     expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
-    // vault should be receive 2800 LFX - 0.5% after burn
-    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2786);
-    expect(await lfx.totalSupply()).to.equal(lfxTotalSupply - 14);
-    expect((2800 * 0.5) / 100).to.equal(14);
-    expect(2786 + 14).to.equal(2800);
+    // vault should be receive 2800 LFX - 5% draw fees - 0.5% after burn
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2646);
+    expect((2800 * 500) / 10000).to.equal(140);
+    expect((2800 * 50) / 10000).to.equal(14);
+    expect(2646 + 14 + 140).to.equal(2800);
     expect(97200 + 2800).to.equals(100000);
   });
 
@@ -125,12 +207,12 @@ describe('MockLotte: Draw Winner', () => {
     const {
       lotte,
       lfx,
-      lfxTotalSupply,
       lfxVaultAddress,
       validWithdrawTime,
       owner,
       wallet1,
       wallet2,
+      wallet3,
     } = await loadFixture(deployContract);
     const lotteContractAddress = await lotte.getAddress();
 
@@ -165,7 +247,26 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lotte.lastDrawTimestamp()).to.lessThanOrEqual(blockTime);
 
     await time.increaseTo(blockTime);
-    expect(await lotte.connect(wallet1).draw()).to.be;
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(0);
+
+    let [
+      round,
+      totalTicket,
+      totalSupply,
+      totalPot,
+      systemFees,
+      drawFees,
+      burnAmount,
+    ] = await lotte.getInformation();
+    expect(round).to.equal(0);
+    expect(totalTicket).to.equal(10);
+    expect(totalSupply).to.equal(100000);
+    expect(totalPot).to.equal(97200);
+    expect(systemFees).to.equal(2800);
+    expect(drawFees).to.equal(140);
+    expect(burnAmount).to.equal(14);
+
+    expect(await lotte.connect(wallet3).draw()).to.be;
     expect(await lotte.lastDrawTimestamp()).to.greaterThanOrEqual(blockTime);
 
     const lastDraw = await lotte.getLastDraw();
@@ -177,14 +278,16 @@ describe('MockLotte: Draw Winner', () => {
 
     expect(await lotte.balanceOf(wallet1.address)).to.equals(48600);
     expect(await lotte.balanceOf(wallet2.address)).to.equals(48600);
+    expect(await lotte.balanceOf(wallet3.address)).to.equals(140);
 
     expect(await lotte.totalTicket()).to.equal(0);
     expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
-    // vault should be receive 2800 LFX - 0.5% after burn
-    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2786);
-    expect(await lfx.totalSupply()).to.equal(lfxTotalSupply - 14);
-    expect((2800 * 0.5) / 100).to.equal(14);
-    expect(2786 + 14).to.equal(2800);
+    // vault should be receive 2800 LFX - 5% draw fees - 0.5% after burn
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2646);
+    expect((2800 * 500) / 10000).to.equal(140);
+    expect((2800 * 50) / 10000).to.equal(14);
+    expect(2646 + 14 + 140).to.equal(2800);
+    expect(48600 + 48600).to.equals(97200);
     expect(97200 + 2800).to.equals(100000);
 
     // withdraw rewards to wallets
@@ -192,5 +295,24 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lfx.balanceOf(wallet1.address)).to.equal(48600);
     expect(await lotte.connect(wallet2).withdraw(48600)).to.be.ok;
     expect(await lfx.balanceOf(wallet2.address)).to.equal(48600);
+    expect(await lotte.connect(wallet3).withdraw(140)).to.be.ok;
+    expect(await lfx.balanceOf(wallet3.address)).to.equal(140);
+
+    [
+      round,
+      totalTicket,
+      totalSupply,
+      totalPot,
+      systemFees,
+      drawFees,
+      burnAmount,
+    ] = await lotte.getInformation();
+    expect(round).to.equal(1);
+    expect(totalTicket).to.equal(0);
+    expect(totalSupply).to.equal(0);
+    expect(totalPot).to.equal(0);
+    expect(systemFees).to.equal(0);
+    expect(drawFees).to.equal(0);
+    expect(burnAmount).to.equal(0);
   });
 });

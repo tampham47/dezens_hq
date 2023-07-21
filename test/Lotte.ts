@@ -29,7 +29,7 @@ const deployContract = async () => {
 
   // Lotte App
   const Lotte = await ethers.getContractFactory('Lotte', owner);
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
+  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress, 100);
 
   // owner inits with 5000 LFX
   // owner transfers 4000 LFX to wallet1
@@ -610,10 +610,63 @@ describe('Lotte: Draw', () => {
       .lessThanOrEqual(1440);
     expect(await lotte.totalTicket()).to.equal(0);
     expect(await lotte.balanceOf(lfxVaultAddress)).to.equal(0);
-    // vault should be receive 2800 LFX - 0.5% after burn
-    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2786);
-    expect(await lfx.totalSupply()).to.equal(lfxTotalSupply - 14);
-    expect((2800 * 0.5) / 100).to.equal(14);
-    expect(2786 + 14).to.equal(2800);
+    // vault should be receive 2800 LFX - 5% draw fees - 0.5% after burn
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(2646);
+    expect((2800 * 500) / 10000).to.equal(140);
+    expect((2800 * 50) / 10000).to.equal(14);
+    expect(2646 + 14 + 140).to.equal(2800);
+    expect(97200 + 2800).to.equals(100000);
+  });
+
+  it('Should be able to call set functions', async () => {
+    const { lotte, owner, wallet0 } = await loadFixture(deployContract);
+
+    await expect(lotte.connect(wallet0).setTicketPrice(100)).to.be.revertedWith(
+      'Lotte: caller is not the owner'
+    );
+
+    let [
+      ticketPrice,
+      systemFeeRate,
+      drawFeeRate,
+      burnRate,
+      refRateLayer1,
+      refRateLayer2,
+      refRateLayer3,
+    ] = await lotte.getConfig();
+
+    expect(ticketPrice).to.equal(100);
+    expect(systemFeeRate).to.equal(280);
+    expect(drawFeeRate).to.equal(500);
+    expect(burnRate).to.equal(50);
+    expect(refRateLayer1).to.equal(70);
+    expect(refRateLayer2).to.equal(30);
+    expect(refRateLayer3).to.equal(20);
+
+    expect(await lotte.connect(owner).setTicketPrice(300)).to.ok;
+    expect(await lotte.connect(owner).setSystemFeeRate(1000)).to.ok;
+    expect(await lotte.connect(owner).setDrawFeeRate(100)).to.ok;
+    expect(await lotte.connect(owner).setBurnRate(100)).to.ok;
+    expect(await lotte.connect(owner).setRefRateLayer1(170)).to.ok;
+    expect(await lotte.connect(owner).setRefRateLayer2(130)).to.ok;
+    expect(await lotte.connect(owner).setRefRateLayer3(120)).to.ok;
+
+    [
+      ticketPrice,
+      systemFeeRate,
+      drawFeeRate,
+      burnRate,
+      refRateLayer1,
+      refRateLayer2,
+      refRateLayer3,
+    ] = await lotte.getConfig();
+
+    expect(ticketPrice).to.equal(300);
+    expect(systemFeeRate).to.equal(1000);
+    expect(drawFeeRate).to.equal(100);
+    expect(burnRate).to.equal(100);
+    expect(refRateLayer1).to.equal(170);
+    expect(refRateLayer2).to.equal(130);
+    expect(refRateLayer3).to.equal(120);
   });
 });

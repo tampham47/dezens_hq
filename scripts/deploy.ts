@@ -62,8 +62,13 @@ async function main() {
   const lfxAirdropAddress = await lfxAirdrop.getAddress();
 
   // Lotte App
+  const ticketPrice = BigInt(10000) * BigInt(1e18);
   const Lotte = await ethers.getContractFactory('Lotte');
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress);
+  const lotte = await Lotte.deploy(
+    lfxTokenAddress,
+    lfxVaultAddress,
+    ticketPrice
+  );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();
 

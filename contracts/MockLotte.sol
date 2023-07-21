@@ -6,8 +6,9 @@ import './Lotte.sol';
 contract MockLotte is Lotte {
   constructor(
     address _token,
-    address _vaultAddress
-  ) Lotte(_token, _vaultAddress) {}
+    address _vaultAddress,
+    uint _ticketPrice
+  ) Lotte(_token, _vaultAddress, _ticketPrice) {}
 
   function getRandom() public pure override returns (uint) {
     return 11;

@@ -38,7 +38,7 @@ contract Lotte {
   uint public lastDrawTimestamp;
 
   // 100 LFX per ticket
-  uint public ticketPrice = 100;
+  uint public ticketPrice;
 
   // total amount of token that users have purchased
   uint public totalTicket;
@@ -78,11 +78,12 @@ contract Lotte {
   // what happens within your contract.
   event Purchase(address indexed _from, address indexed _to, uint256 _value);
 
-  constructor(address _token, address _vaultAddress) {
+  constructor(address _token, address _vaultAddress, uint _ticketPrice) {
     owner = msg.sender;
     round = 0;
 
     token = IERC20(_token);
+    ticketPrice = _ticketPrice;
     vaultAddress = _vaultAddress;
     lastDrawTimestamp = block.timestamp;
   }
@@ -112,11 +113,9 @@ contract Lotte {
     token.transfer(to, amount);
   }
 
-  function _burnSomeOfSystemFees() private {
-    uint amount = balanceOf[vaultAddress];
-    uint burnAmount = (amount * burnRate) / 10000;
+  function _burnSomeOfSystemFees(uint systemFees) private {
+    uint burnAmount = (systemFees * burnRate) / 10000;
     _burn(vaultAddress, burnAmount);
-
     // burn 0.5% of the total system fees
     token.burn(burnAmount);
   }
@@ -284,12 +283,12 @@ contract Lotte {
 
     // rewards 5% of the system fees for whom took the action
     uint systemFees = balanceOf[vaultAddress];
-    uint reward = (systemFees / 10000) * drawFeeRate;
+    uint reward = (systemFees * drawFeeRate) / 10000;
     _burn(vaultAddress, reward);
     _mint(msg.sender, reward);
 
     // burn 5% of system fees
-    _burnSomeOfSystemFees();
+    _burnSomeOfSystemFees(systemFees);
     // the revenue will be send to the vault immediately
     // so the investors can withdraw it anytime
     _withdrawAllToVault();
@@ -356,6 +355,42 @@ contract Lotte {
     }
 
     return result;
+  }
+
+  function getInformation()
+    public
+    view
+    returns (uint, uint, uint, uint, uint, uint, uint)
+  {
+    uint totalPot = balanceOf[potAddress];
+    uint systemFees = balanceOf[vaultAddress];
+    uint drawFees = (systemFees * drawFeeRate) / 10000;
+    uint burnAmount = (systemFees * burnRate) / 10000;
+    return (
+      round,
+      totalTicket,
+      totalSupply,
+      totalPot,
+      systemFees,
+      drawFees,
+      burnAmount
+    );
+  }
+
+  function getConfig()
+    public
+    view
+    returns (uint, uint, uint, uint, uint, uint, uint)
+  {
+    return (
+      ticketPrice,
+      systemFeeRate,
+      drawFeeRate,
+      burnRate,
+      refRateLayer1,
+      refRateLayer2,
+      refRateLayer3
+    );
   }
 }
 
