@@ -67,6 +67,7 @@ describe('LfxVault', () => {
     await lfx.connect(wallet1).approve(lfxVaultAddress, 5000);
     await lfxVault.connect(wallet1).deposit(5000);
 
+    expect(await lfxVault.getTotalInterest()).to.equals(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(20000);
     expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(5000);
     expect(await lfxVault.totalSupply()).to.equal(5000);
@@ -93,16 +94,22 @@ describe('LfxVault', () => {
     // transfer 2000 LFX to the vault
     time.increaseTo(blockTime + aDayInSeconds + 2500);
     await lfx.connect(wallet2).transfer(lfxVaultAddress, 2000);
+    const totalInterest = await lfxVault.connect(wallet1).getTotalInterest();
+    expect(totalInterest).to.greaterThanOrEqual(1950).lessThanOrEqual(2000);
+
     await lfxVault.connect(wallet1).withdraw(15000);
 
     const wallet1Balance = await lfx.balanceOf(wallet1.address);
     const vaultBalance = await lfx.balanceOf(lfxVaultAddress);
     const totalBalance = wallet1Balance + vaultBalance;
 
+    expect(await lfxVault.connect(wallet1).getTotalInterest()).to.equal(0);
     expect(await lfxVault.balanceOf(wallet1.address)).to.equal(0);
+    expect(await lfx.balanceOf(wallet1.address)).to.equal(
+      10000 + 15000 + Number(totalInterest)
+    );
     // there will be some leftover due to calculating timestamp
     // it's dynamic, hence it's hard to get the exact value
-    expect(await lfx.balanceOf(wallet1.address)).to.greaterThan(1500);
     // 25000 from its wallet + 2000 from wallet2
     expect(totalBalance).to.equal(27000);
   });
@@ -211,5 +218,64 @@ describe('LfxVault', () => {
     expect(await lfxVault.connect(wallet1).withdraw(5000)).to.ok;
     expect(await lfxVault.balanceOf(wallet1.address)).to.equal(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(25000);
+  });
+
+  it('Should be able to withdraw all interest', async () => {
+    const { lfx, lfxVault, lfxVaultAddress, wallet1, wallet2 } =
+      await loadFixture(deployContract);
+    const blockTime = Number(await lfxVault.initTimestamp());
+
+    // deposit 5000 LFX
+    time.increaseTo(blockTime + 1000);
+    await lfx.connect(wallet1).approve(lfxVaultAddress, 5000);
+    await lfxVault.connect(wallet1).deposit(5000);
+
+    expect(await lfxVault.getTotalInterest()).to.equals(0);
+    expect(await lfx.balanceOf(wallet1.address)).to.equal(20000);
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(5000);
+    expect(await lfxVault.totalSupply()).to.equal(5000);
+
+    expect(await lfxVault.balanceOf(wallet1.address)).to.equal(5000);
+    expect(await lfxVault.avgDepositTs(wallet1.address)).to.greaterThanOrEqual(
+      1000
+    );
+
+    // deposit 10000 LFX
+    time.increaseTo(blockTime + 2000);
+    await lfx.connect(wallet1).approve(lfxVaultAddress, 10000);
+    await lfxVault.connect(wallet1).deposit(10000);
+
+    expect(await lfx.balanceOf(wallet1.address)).to.equal(10000);
+    expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(15000);
+
+    expect(await lfxVault.totalSupply()).to.equal(15000);
+    expect(await lfxVault.balanceOf(wallet1.address)).to.equal(15000);
+    expect(await lfxVault.avgDepositTs(wallet1.address))
+      .to.greaterThan(1600)
+      .lessThanOrEqual(1700);
+
+    // transfer 2000 LFX to the vault
+    time.increaseTo(blockTime + aDayInSeconds + 3000);
+    await lfx.connect(wallet2).transfer(lfxVaultAddress, 2000);
+    const totalInterest = await lfxVault.connect(wallet1).getTotalInterest();
+    expect(totalInterest).to.equals(1999);
+    expect(await lfx.balanceOf(wallet1.address)).to.equal(10000);
+
+    let [totalSupply, vaultBalance, yieldPerTokenPerDay] =
+      await lfxVault.getInformation();
+    expect(totalSupply).to.equal(15000);
+    expect(vaultBalance).to.equal(17000);
+    // yieldPerTokenPerDay should be div to 1e6 when calculate interest
+    expect(yieldPerTokenPerDay).to.equal(133333);
+
+    await lfxVault.connect(wallet1).withdrawAllInterest();
+    expect(await lfxVault.connect(wallet1).getTotalInterest()).to.equals(0);
+
+    [totalSupply, vaultBalance, yieldPerTokenPerDay] =
+      await lfxVault.getInformation();
+    expect(totalSupply).to.equal(15000);
+    expect(vaultBalance).to.equal(15001);
+    // yieldPerTokenPerDay should be div to 1e6 when calculate interest
+    expect(yieldPerTokenPerDay).to.equal(66);
   });
 });

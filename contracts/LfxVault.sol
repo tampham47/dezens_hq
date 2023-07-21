@@ -36,6 +36,32 @@ contract LfxVault {
     return totalDay;
   }
 
+  function _getTotalInterest() private view returns (uint) {
+    if (
+      block.timestamp < aDayInSeconds + initTimestamp + avgDepositTs[msg.sender]
+    ) {
+      return 0;
+    }
+
+    uint vaultBalance = token.balanceOf(address(this));
+    uint totalDay = _getTotalDays(block.timestamp - initTimestamp);
+
+    // calculate the yield per day per token
+    // 1e6 is used to avoid floating point
+    uint yieldPerTokenPerDay = totalSupply != 0
+      ? ((vaultBalance - totalSupply) * 1e6) / totalSupply / totalDay
+      : 0;
+
+    // calculate the interest based on the average deposit timestamp
+    // reduce 1e6 from previous calculation
+    uint interest = (((balanceOf[msg.sender] * yieldPerTokenPerDay) / 1e6) *
+      _getTotalDays(
+        block.timestamp - initTimestamp - avgDepositTs[msg.sender]
+      ));
+
+    return interest;
+  }
+
   function deposit(uint _amount) external {
     // every second, the vault will get a portion of the yield
     uint tsVaultBlock = block.timestamp - initTimestamp;
@@ -66,15 +92,15 @@ contract LfxVault {
     uint vaultBalance = token.balanceOf(address(this));
     uint totalDay = _getTotalDays(block.timestamp - initTimestamp);
 
-    // calculate the yield per second per token
+    // calculate the yield per day per token
     // 1e6 is used to avoid floating point
-    uint yeildPerTokenPerDay = ((vaultBalance - totalSupply) * 1e6) /
-      totalSupply /
-      totalDay;
+    uint yieldPerTokenPerDay = totalSupply != 0
+      ? ((vaultBalance - totalSupply) * 1e6) / totalSupply / totalDay
+      : 0;
 
     // calculate the interest based on the average deposit timestamp
     // reduce 1e6 from previous calculation
-    uint interest = (((_amount * yeildPerTokenPerDay) / 1e6) *
+    uint interest = (((_amount * yieldPerTokenPerDay) / 1e6) *
       _getTotalDays(
         block.timestamp - initTimestamp - avgDepositTs[msg.sender]
       ));
@@ -86,6 +112,30 @@ contract LfxVault {
 
     _burn(msg.sender, _amount);
     token.transfer(msg.sender, amountToWithdraw);
+  }
+
+  function getTotalInterest() public view returns (uint) {
+    return _getTotalInterest();
+  }
+
+  function withdrawAllInterest() external {
+    uint interest = _getTotalInterest();
+    require(interest > 0, 'LfxVault: no interest to withdraw');
+
+    avgDepositTs[msg.sender] = block.timestamp;
+    token.transfer(msg.sender, interest);
+  }
+
+  function getInformation() external view returns (uint, uint, uint) {
+    uint vaultBalance = token.balanceOf(address(this));
+    uint totalDay = _getTotalDays(block.timestamp - initTimestamp);
+
+    // calculate the yield per day per token
+    uint yieldPerTokenPerDay = totalSupply != 0
+      ? ((vaultBalance - totalSupply) * 1e6) / totalSupply / totalDay
+      : 0;
+
+    return (totalSupply, vaultBalance, yieldPerTokenPerDay);
   }
 }
 
