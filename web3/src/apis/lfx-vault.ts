@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import LfxVaultContract from '../../../artifacts/contracts/LfxVault.sol/LfxVault.json';
+import { contractConfig } from '../contracts';
 
 class LfxVault {
   provider: ethers.Provider;
@@ -7,22 +7,18 @@ class LfxVault {
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider(
-      'https://rpc.testnet.fantom.network'
+      process.env.GATSBY_FANTOM_RPC_URL
     );
 
     this.contract = new ethers.Contract(
-      '0xe7a0de033faccd82d2efa969b3007d1fde35bc14',
-      LfxVaultContract.abi,
+      contractConfig.LfxVault.Token,
+      contractConfig.ArtifactLfxVault.abi,
       this.provider
     );
   }
-
-  deposit = async (amount: BigInt) => {
-    return await this.contract.deposit(amount);
-  };
-
-  withdraw = async (amount: BigInt) => {
-    return await this.contract.withdraw(amount);
+  
+  getInformation = async () => {
+    return await this.contract.getInformation();
   };
 }
 

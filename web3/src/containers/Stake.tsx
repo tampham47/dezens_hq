@@ -2,22 +2,22 @@ import { Contract } from 'ethers';
 import React, { useEffect } from 'react';
 import { useWalletClient } from 'wagmi';
 
-import { getContractConfig } from '../contracts';
+import { contractConfig } from '../contracts';
 
 export const Stake = () => {
   const { data: walletClient } = useWalletClient();
-  const contractConfig = getContractConfig();
+  console.log('Stake walletClient', walletClient);
 
   useEffect(() => {
     if (!walletClient) return;
 
-    (window as any).token = new Contract(
+    (window as any).lfx = new Contract(
       contractConfig.Lfx.Token,
       contractConfig.ArtifactLfx.abi,
       walletClient as any
     );
 
-    (window as any).contract = new Contract(
+    (window as any).vault = new Contract(
       contractConfig.LfxVault.Token,
       contractConfig.ArtifactLfxVault.abi,
       walletClient as any

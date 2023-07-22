@@ -17,7 +17,7 @@ import TestLfxVault from './test/LfxVault.json';
 import TestLotte from './test/Lotte.json';
 
 export const getContractConfig = () => {
-  if (process.env.NETWORK === 'local') {
+  if (process.env.GATSBY_NETWORK === 'local') {
     return {
       ArtifactLfx: LocalArtifactLfx,
       ArtifactLfxAirdrop: LocalArtifactLfxAirdrop,
@@ -30,7 +30,7 @@ export const getContractConfig = () => {
     };
   }
 
-  if ((process.env.NETWORK = 'test')) {
+  if ((process.env.GATSBY_NETWORK === 'test')) {
     return {
       ArtifactLfx: TestArtifactLfx,
       ArtifactLfxAirdrop: TestArtifactLfxAirdrop,
@@ -55,3 +55,5 @@ export const getContractConfig = () => {
     Lotte: LocalLotte,
   };
 };
+
+export const contractConfig = getContractConfig();

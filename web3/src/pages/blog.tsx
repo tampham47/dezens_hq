@@ -75,6 +75,9 @@ export const pageQuery = graphql`
               start(formatString: "MMMM DD, YYYY")
             }
             summary
+            lang {
+              name
+            }
           }
         }
       }
@@ -93,7 +96,7 @@ const BlogTemplate = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published');
+    .filter((i: any) => i.status === 'published' && i.lang === 'en');
 
   return (
     <Layout>

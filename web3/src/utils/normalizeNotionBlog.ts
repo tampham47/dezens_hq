@@ -8,5 +8,6 @@ export const normalizeNotionFrontMatter = (frontmatter: any) => {
     cover: frontmatter.cover[0].file.url,
     date: frontmatter.publish_date.start,
     summary: frontmatter.summary,
+    lang: frontmatter.lang.name,
   };
 };

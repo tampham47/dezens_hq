@@ -1,37 +1,73 @@
 import { ethers } from 'ethers';
-import LfxAirdropContract from '../../../artifacts/contracts/LfxAirdrop.sol/LfxAirdrop.json';
+import { contractConfig } from '../contracts';
+import { getNumber } from './utils';
 
-class LfxAirdrop {
+export type AirdropInfo = {
+  isWithdrawable: number;
+  participantCount: number;
+  totalSupply: number;
+  balanceLfxToken: number;
+  maxParticipant: number;
+  maxTotalSupply: number;
+  minDepositAmount: number;
+  maxDepositAmount: number;
+  initTimestamp: number;
+  estLfxReceivePerFtm: number;
+};
+
+class LfxAirdropClass {
   provider: ethers.Provider;
   contract: ethers.Contract;
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider(
-      'https://rpc.testnet.fantom.network'
+      process.env.GATSBY_FANTOM_RPC_URL
     );
 
     this.contract = new ethers.Contract(
-      '0x06fa88c6ea0cfdac66c1a9fbe8e918d306798d6b',
-      LfxAirdropContract.abi,
+      contractConfig.LfxAirdrop.Token,
+      contractConfig.ArtifactLfxAirdrop.abi,
       this.provider
     );
   }
 
-  getParticipantsCount = async () => {
-    return await this.contract.participantsCount();
+  getInformation = async (): Promise<AirdropInfo> => {
+    const [
+      isWithdrawable,
+      participantCount,
+      totalSupply,
+      balanceLfxToken,
+      maxParticipant,
+      maxTotalSupply,
+      minDepositAmount,
+      maxDepositAmount,
+      initTimestamp,
+    ] = await this.contract.getInformation();
+
+    const totalSupplyNumber = getNumber(totalSupply, 18);
+    const balanceLfxTokenNumber = getNumber(balanceLfxToken, 18);
+
+    return {
+      isWithdrawable,
+      participantCount: getNumber(participantCount, 0),
+      maxParticipant: getNumber(maxParticipant, 0),
+      totalSupply: totalSupplyNumber,
+      balanceLfxToken: balanceLfxTokenNumber,
+      estLfxReceivePerFtm:
+        !balanceLfxTokenNumber || !totalSupplyNumber
+          ? 0
+          : balanceLfxTokenNumber / totalSupplyNumber,
+      maxTotalSupply: getNumber(maxTotalSupply, 18),
+      minDepositAmount: getNumber(minDepositAmount, 18),
+      maxDepositAmount: getNumber(maxDepositAmount, 18),
+      initTimestamp: getNumber(initTimestamp, 0),
+    };
   };
 
-  getIsWithdrawable = async () => {
-    return await this.contract.isWithdrawable();
-  };
-
-  getTotalSupply = async () => {
-    return await this.contract.totalSupply();
-  };
-
-  getDepositAmount = async () => {
-    return await this.contract.depositAmount();
+  balanceOf = async (address: string) => {
+    const balance = await this.contract.balanceOf(address);
+    return getNumber(balance, 18);
   };
 }
 
-export default new LfxAirdrop();
+export const LfxAirdrop = new LfxAirdropClass();

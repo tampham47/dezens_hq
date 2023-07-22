@@ -76,6 +76,9 @@ export const pageQuery = graphql`
               start(formatString: "MMMM DD, YYYY")
             }
             summary
+            lang {
+              name
+            }
           }
         }
       }
@@ -94,7 +97,7 @@ const StakePage = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published');
+    .filter((i: any) => i.status === 'published' && i.lang === 'en');
 
   useEffect(() => {
     console.log('StakePage', posts);

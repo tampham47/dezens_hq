@@ -90,6 +90,9 @@ export const createPages = ({ actions, graphql }: any) => {
                 start(formatString: "MMMM DD, YYYY")
               }
               summary
+              lang {
+                name
+              }
             }
           }
         }

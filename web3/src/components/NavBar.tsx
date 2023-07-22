@@ -95,9 +95,9 @@ const ScLinkComp = css`
   font-weight: bold;
   height: 40px;
   line-height: 40px;
-  padding-left: 24px;
-  padding-right: 24px;
-  border-radius: 6px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 20px;
   border: 1px solid gray;
   margin-bottom: 8px;
 
@@ -116,7 +116,7 @@ const ScLinkComp = css`
     display: inline-block;
     border: none;
     margin-bottom: 0;
-    margin-right: 16px;
+    margin-right: 8px;
 
     > span {
       display: none;
@@ -160,9 +160,8 @@ const ScLogo = styled(Link)`
 `;
 
 const ScMobileOnly = styled.div`
-
-@media screen and (min-width: 1024px) {
-  display: none;
+  @media screen and (min-width: 1024px) {
+    display: none;
   }
 `;
 
@@ -207,6 +206,9 @@ export const NavBar = () => {
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
+                <ScNavLink to="/blog/whitepaper-lotte-fan/">
+                  Whitepaper
+                </ScNavLink>
               </ScNavBarLeft>
 
               <ScNavBarRight>

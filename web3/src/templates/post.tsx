@@ -1,19 +1,19 @@
-import React from "react";
-import styled from "styled-components";
-import { Helmet } from "react-helmet";
-import { graphql } from "gatsby";
-import Img from "gatsby-image";
+import React from 'react';
+import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
+import { graphql } from 'gatsby';
+import Img from 'gatsby-image';
 
-import { Container } from "../components/Grid";
-import { Layout } from "../components/Layout";
+import { Container } from '../components/Grid';
+import { Layout } from '../components/Layout';
 import {
   ScCategoryText,
   ScContent,
   ScHeaderWrapper,
   ScHeader,
   ScMain,
-} from "./styled";
-import { normalizeNotionFrontMatter } from "../utils/normalizeNotionBlog";
+} from './styled';
+import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -120,6 +120,9 @@ export const pageQuery = graphql`
         }
         summary
         title
+        lang {
+          name
+        }
       }
     }
   }

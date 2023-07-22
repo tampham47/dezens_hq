@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 
@@ -7,7 +7,7 @@ import { Container } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
-import airdrop from '../apis/lfx-airdrop';
+import { Airdrop } from '../containers/Airdrop';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -76,6 +76,9 @@ export const pageQuery = graphql`
               start(formatString: "MMMM DD, YYYY")
             }
             summary
+            lang {
+              name
+            }
           }
         }
       }
@@ -83,28 +86,7 @@ export const pageQuery = graphql`
   }
 `;
 
-const Airdrop = ({ data }: any) => {
-  const [count, setCount] = useState<number>();
-  const [depositAmount, setDepositAmount] = useState<number>();
-  const [isWithdrawable, setIsWithdrawable] = useState<boolean>(false);
-
-  useEffect(() => {
-    airdrop.getParticipantsCount().then((res) => {
-      console.log('getParticipantsCount', res);
-      setCount(Number(res));
-    });
-
-    airdrop.getDepositAmount().then((res) => {
-      console.log('getDepositAmount', res);
-      setDepositAmount(Number(res / BigInt(Math.pow(10, 18))));
-    });
-
-    airdrop.getIsWithdrawable().then((res) => {
-      console.log('getIsWithdrawable', res);
-      setIsWithdrawable(res);
-    });
-  });
-
+const AirdropPage = ({ data }: any) => {
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
       const frontmatter = normalizeNotionFrontMatter(node.frontmatter);
@@ -115,7 +97,7 @@ const Airdrop = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published');
+    .filter((i: any) => i.status === 'published' && i.lang === 'en');
 
   return (
     <Layout>
@@ -126,11 +108,9 @@ const Airdrop = ({ data }: any) => {
 
         <Container>
           <ScMain>
-            <h2>
-              Airdrop {count} - {depositAmount} -{' '}
-              {isWithdrawable ? 'TRUE' : 'FALSE'}
-            </h2>
+            <Airdrop />
 
+            <h2>News</h2>
             <ScPostList>
               {posts.map((i) => (
                 <Card key={i.slug} post={i} />
@@ -143,4 +123,4 @@ const Airdrop = ({ data }: any) => {
   );
 };
 
-export default Airdrop;
+export default AirdropPage;

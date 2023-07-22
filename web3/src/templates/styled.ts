@@ -44,17 +44,28 @@ export const ScContent = styled.section`
   max-width: 820px;
   margin-left: auto;
   margin-right: auto;
-  font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 3em;
+    margin-bottom: 1.5em;
+  }
 
   h2,
   h3 {
-    font-size: 24px;
     font-weight: 500;
-    margin-top: 2em;
-    margin-bottom: 1em;
     line-height: 1.2;
     color: #f7f8f8;
+  }
+
+  h2 {
+    font-size: 24px;
   }
 
   h3 {
@@ -63,12 +74,13 @@ export const ScContent = styled.section`
 
   h4,
   h5 {
-    font-size: 18px;
     font-weight: 500;
-    margin-top: 2em;
-    margin-bottom: 1em;
     line-height: 1.2;
     color: #f7f8f8;
+  }
+
+  h4 {
+    font-size: 18px;
   }
 
   h5 {
@@ -78,7 +90,8 @@ export const ScContent = styled.section`
   p {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 
   img {
