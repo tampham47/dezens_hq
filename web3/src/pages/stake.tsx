@@ -20,7 +20,7 @@ const ScMain = styled.div`
 
   @media screen and (min-width: 992px) {
     margin-top: 3rem;
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
   }
 `;
 
@@ -109,7 +109,11 @@ const StakePage = ({ data }: any) => {
         <Container>
           <ScMain>
             <Stake />
+          </ScMain>
+        </Container>
 
+        <Container>
+          <ScMain>
             <h2>News</h2>
             <ScPostList>
               {posts.map((i) => (

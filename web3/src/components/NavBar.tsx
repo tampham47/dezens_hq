@@ -210,6 +210,7 @@ export const NavBar = () => {
                 </ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
                 <ScNavLink to="/vn/">VN</ScNavLink>
+                <ScNavLink to="/ph/">PH</ScNavLink>
               </ScNavBarLeft>
 
               <ScNavBarRight>

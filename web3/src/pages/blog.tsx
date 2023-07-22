@@ -19,7 +19,7 @@ const ScMain = styled.div`
 
   @media screen and (min-width: 992px) {
     margin-top: 3rem;
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
   }
 `;
 

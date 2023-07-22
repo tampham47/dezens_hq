@@ -190,14 +190,14 @@ contract Lotte {
     }
   }
 
-  // create a number that return random number in range [0, 1440]
+  // create a number that return random number in range [0, 1439]
   function getRandom() public view virtual returns (uint) {
     return
       (uint(
         keccak256(
           abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)
         )
-      ) % 1142) - 1;
+      ) % 1141) - 1;
   }
 
   function purchase(uint[] calldata _tickets, address refAddress) external {

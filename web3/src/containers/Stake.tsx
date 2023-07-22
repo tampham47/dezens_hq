@@ -92,7 +92,6 @@ export const Stake = () => {
         spender,
         contractConfig.LfxVault.Token
       );
-      console.log('allowance', allowance, amount, allowance < amount);
 
       if (allowance < amount) {
         await lfxToken.approve(contractConfig.LfxVault.Token, amount);

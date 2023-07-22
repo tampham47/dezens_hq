@@ -1,5 +1,5 @@
-import { Contract } from 'ethers';
 import React, { useEffect, useState } from 'react';
+import { Contract } from 'ethers';
 import { useWalletClient } from 'wagmi';
 import styled from 'styled-components';
 import { Button } from '@mantine/core';
@@ -11,8 +11,6 @@ import { contractConfig } from '../contracts';
 import { LfxAirdrop, AirdropInfo } from '../apis/lfx-airdrop';
 
 const ScMain = styled.div`
-  margin-bottom: 6rem;
-
   p {
     line-height: 1.6;
   }
@@ -150,11 +148,10 @@ export const Airdrop = () => {
               <Button
                 variant="light"
                 color="orange"
-                radius="xl"
                 size="lg"
                 disabled={!airdropInfo?.isWithdrawable}
                 onClick={withdraw}
-                style={{ minWidth: 240 }}
+                style={{ width: '100%' }}
               >
                 Withdraw
               </Button>

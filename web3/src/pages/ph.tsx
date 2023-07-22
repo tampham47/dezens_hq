@@ -7,7 +7,6 @@ import { Container } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
-import { Airdrop } from '../containers/Airdrop';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -86,7 +85,7 @@ export const pageQuery = graphql`
   }
 `;
 
-const AirdropPage = ({ data }: any) => {
+const BlogTemplate = ({ data }: any) => {
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
       const frontmatter = normalizeNotionFrontMatter(node.frontmatter);
@@ -97,24 +96,19 @@ const AirdropPage = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published' && i.lang === 'en');
+    .filter((i: any) => i.status === 'published' && i.lang === 'ph');
 
   return (
     <Layout>
       <ScRoot>
         <Helmet>
-          <title>Airdrop | Lotte.Fan</title>
+          <title>Blog PH | Lotte.Fan</title>
         </Helmet>
 
         <Container>
           <ScMain>
-            <Airdrop />
-          </ScMain>
-        </Container>
+            <h2>Blog PH</h2>
 
-        <Container>
-          <ScMain>
-            <h2>News</h2>
             <ScPostList>
               {posts.map((i) => (
                 <Card key={i.slug} post={i} />
@@ -127,4 +121,4 @@ const AirdropPage = ({ data }: any) => {
   );
 };
 
-export default AirdropPage;
+export default BlogTemplate;
