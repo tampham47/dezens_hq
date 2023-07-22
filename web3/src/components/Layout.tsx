@@ -10,11 +10,14 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { fantom, fantomTestnet, localhost } from 'wagmi/chains';
+import { Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons-react';
 
 import { Footer } from './Footer';
 import { NavBar } from './NavBar';
 
 import '../css/normalize.css';
+import { Container } from './Grid';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -113,6 +116,26 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
       <WagmiConfig config={wagmiConfig}>
         <>
           <NavBar />
+
+          {process.env.GATSBY_NETWORK !== 'mainnet' ? (
+            <Container>
+              <Alert
+                icon={<IconAlertCircle size="1rem" />}
+                color="orange"
+                variant="filled"
+              >
+                You're on Fantom Testnet, please do NOT use your real FTM.{' '}
+                <a
+                  href="https://metaschool.so/rpc/fantomTestnet"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Click here
+                </a>{' '}
+                to learn how to add Fantom Testnet to your Metamask if needed.
+              </Alert>
+            </Container>
+          ) : null}
           {children}
           <Footer />
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
