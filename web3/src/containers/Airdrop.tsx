@@ -91,7 +91,7 @@ export const Airdrop = () => {
     try {
       await lfxAirdrop.withdraw();
     } catch (err) {
-      console.log('err', err);
+      console.log('ERR', err);
     }
   };
 
@@ -169,7 +169,8 @@ export const Airdrop = () => {
               <Alert
                 icon={<IconAlertCircle size="1rem" />}
                 title="Warning!"
-                color="orange" variant="filled"
+                color="orange"
+                variant="filled"
               >
                 The Airdrop is finished, new transfers will be rejected. It's
                 time to withdraw.

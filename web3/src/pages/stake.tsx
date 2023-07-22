@@ -99,10 +99,6 @@ const StakePage = ({ data }: any) => {
     })
     .filter((i: any) => i.status === 'published' && i.lang === 'en');
 
-  useEffect(() => {
-    console.log('StakePage', posts);
-  }, []);
-
   return (
     <Layout>
       <ScRoot>
@@ -112,10 +108,9 @@ const StakePage = ({ data }: any) => {
 
         <Container>
           <ScMain>
-            <h2>Stake</h2>
-
             <Stake />
 
+            <h2>News</h2>
             <ScPostList>
               {posts.map((i) => (
                 <Card key={i.slug} post={i} />

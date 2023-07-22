@@ -67,7 +67,7 @@ describe('LfxVault', () => {
     await lfx.connect(wallet1).approve(lfxVaultAddress, 5000);
     await lfxVault.connect(wallet1).deposit(5000);
 
-    expect(await lfxVault.getTotalInterest()).to.equals(0);
+    expect(await lfxVault.getTotalInterest(wallet1.address)).to.equals(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(20000);
     expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(5000);
     expect(await lfxVault.totalSupply()).to.equal(5000);
@@ -94,7 +94,7 @@ describe('LfxVault', () => {
     // transfer 2000 LFX to the vault
     time.increaseTo(blockTime + aDayInSeconds + 2500);
     await lfx.connect(wallet2).transfer(lfxVaultAddress, 2000);
-    const totalInterest = await lfxVault.connect(wallet1).getTotalInterest();
+    const totalInterest = await lfxVault.getTotalInterest(wallet1.address);
     expect(totalInterest).to.greaterThanOrEqual(1950).lessThanOrEqual(2000);
 
     await lfxVault.connect(wallet1).withdraw(15000);
@@ -103,7 +103,7 @@ describe('LfxVault', () => {
     const vaultBalance = await lfx.balanceOf(lfxVaultAddress);
     const totalBalance = wallet1Balance + vaultBalance;
 
-    expect(await lfxVault.connect(wallet1).getTotalInterest()).to.equal(0);
+    expect(await lfxVault.getTotalInterest(wallet1.address)).to.equal(0);
     expect(await lfxVault.balanceOf(wallet1.address)).to.equal(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(
       10000 + 15000 + Number(totalInterest)
@@ -210,14 +210,14 @@ describe('LfxVault', () => {
     expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(5000);
     expect(await lfxVault.totalSupply()).to.equal(5000);
 
-    await expect(lfxVault.connect(wallet1).withdraw(5000)).to.be.revertedWith(
-      'LfxVault: withdrawal is not allowed before 24 hours'
-    );
-
-    time.increaseTo(blockTime + aDayInSeconds + 1);
-    expect(await lfxVault.connect(wallet1).withdraw(5000)).to.ok;
+    await lfxVault.connect(wallet1).withdraw(5000);
     expect(await lfxVault.balanceOf(wallet1.address)).to.equal(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(25000);
+
+    time.increaseTo(blockTime + aDayInSeconds + 1);
+    await expect(lfxVault.connect(wallet1).withdraw(5000)).to.be.revertedWith(
+      'LfxVault: insufficient balance'
+    );
   });
 
   it('Should be able to withdraw all interest', async () => {
@@ -230,7 +230,7 @@ describe('LfxVault', () => {
     await lfx.connect(wallet1).approve(lfxVaultAddress, 5000);
     await lfxVault.connect(wallet1).deposit(5000);
 
-    expect(await lfxVault.getTotalInterest()).to.equals(0);
+    expect(await lfxVault.getTotalInterest(wallet1.address)).to.equals(0);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(20000);
     expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(5000);
     expect(await lfxVault.totalSupply()).to.equal(5000);
@@ -257,7 +257,7 @@ describe('LfxVault', () => {
     // transfer 2000 LFX to the vault
     time.increaseTo(blockTime + aDayInSeconds + 3000);
     await lfx.connect(wallet2).transfer(lfxVaultAddress, 2000);
-    const totalInterest = await lfxVault.connect(wallet1).getTotalInterest();
+    const totalInterest = await lfxVault.getTotalInterest(wallet1.address);
     expect(totalInterest).to.equals(1999);
     expect(await lfx.balanceOf(wallet1.address)).to.equal(10000);
 
@@ -269,7 +269,7 @@ describe('LfxVault', () => {
     expect(yieldPerTokenPerDay).to.equal(133333);
 
     await lfxVault.connect(wallet1).withdrawAllInterest();
-    expect(await lfxVault.connect(wallet1).getTotalInterest()).to.equals(0);
+    expect(await lfxVault.getTotalInterest(wallet1.address)).to.equals(0);
 
     [totalSupply, vaultBalance, yieldPerTokenPerDay] =
       await lfxVault.getInformation();
