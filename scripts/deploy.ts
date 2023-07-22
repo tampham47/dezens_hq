@@ -24,7 +24,6 @@ function saveContractAddress(contractName: string, contractAddress: string) {
   );
 
   const TokenArtifact = artifacts.readArtifactSync(contractName);
-
   fs.writeFileSync(
     path.join(contractsDir, `Artifact${contractName}.json`),
     JSON.stringify(TokenArtifact, null, 2)
@@ -54,10 +53,10 @@ async function main() {
   const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
   const lfxAirdrop = await LfxAirdropContract.deploy(
     lfxTokenAddress,
-    2,
+    5,
     100,
-    1,
-    100
+    5,
+    50
   );
   const lfxAirdropAddress = await lfxAirdrop.getAddress();
 
