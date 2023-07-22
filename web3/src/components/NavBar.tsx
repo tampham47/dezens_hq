@@ -205,10 +205,11 @@ export const NavBar = () => {
               <ScNavBarLeft>
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
-                <ScNavLink to="/blog/">Blog</ScNavLink>
                 <ScNavLink to="/blog/whitepaper-lotte-fan/">
                   Whitepaper
                 </ScNavLink>
+                <ScNavLink to="/blog/">Blog</ScNavLink>
+                <ScNavLink to="/vn/">VN</ScNavLink>
               </ScNavBarLeft>
 
               <ScNavBarRight>
