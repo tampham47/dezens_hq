@@ -140,10 +140,10 @@ export const Airdrop = () => {
           <ScSection>
             <h3>Your LFX Airdrop</h3>
             <ScBlock>
-              <p>Số FTM của bạn: {userDeposit}FTM</p>
+              <p>FTM deposited: {userDeposit} FTM</p>
               <p>
-                Số LFX ước tính nhận được:{' '}
-                {userDeposit * (airdropInfo?.estLfxReceivePerFtm || 0)}LFX
+                Est LFX received:{' '}
+                {userDeposit * (airdropInfo?.estLfxReceivePerFtm || 0)} LFX
               </p>
             </ScBlock>
             <ScBlock>
@@ -163,7 +163,7 @@ export const Airdrop = () => {
         </ScPersonal>
         <ScContent>
           <ScSection>
-            <h3>Tham gia Airdrop</h3>
+            <h3>LFX Airdrop</h3>
 
             {airdropInfo?.isWithdrawable ? (
               <Alert
@@ -186,30 +186,50 @@ export const Airdrop = () => {
                 </ScQrCode>
               </ScQrCodeWrapper>
               <p>
-                🍍 Contract Address:{' '}
-                <code>{contractConfig.LfxAirdrop.Token}</code>
+                🍍 LFX Token Address: <code>{contractConfig.Lfx.Token}</code> (
+                <a
+                  href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Scan
+                </a>
+                )
               </p>
               <p>
-                🍍 Chỉ deposit FTM - Fantom, việc chuyển bất kỳ token khác sẽ
-                không được ghi nhận.
+                🍍 Airdrop Contract Address:{' '}
+                <code>{contractConfig.LfxAirdrop.Token}</code> (
+                <a
+                  href={`https://testnet.ftmscan.com/address/${contractConfig.LfxAirdrop.Token}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Scan
+                </a>
+                )
               </p>
               <p>
-                🍍 Để nhận LFX Airdrop bạn cần chuyển FTM - Fantom vào địa chỉ
-                ví của smartcontact. Số lượng FTM sẽ được hoàn trả cho bạn sau
-                khi quá trình airdrop kết thúc. Việc deposit FTM để giảm thiểu
-                việc gian lận trong quá trình nhận Airdrop.
+                🍍 Only deposit FTM - Fantom, transferring any other token will
+                not be recognized.
               </p>
               <p>
-                🍍 Mỗi ví chỉ được deposit FTM một lần, số lượng FTM nằm trong [
-                {airdropInfo?.minDepositAmount}, {airdropInfo?.maxDepositAmount}
-                ]. Hệ thống sẽ không chấp nhận việc deposit vượt quá giới hạn
-                này.
+                🍍 To receive the LFX Airdrop, you need to transfer FTM - Fantom
+                to the smart contract wallet address. The amount of FTM will be
+                refunded to you after the airdrop ends. Depositing FTM helps
+                minimize fraud in the airdrop process.
               </p>
               <p>
-                🍍 Airdrop sẽ hoàn thành khi có {airdropInfo?.maxParticipant}{' '}
-                người tham gia, hoặc có {airdropInfo?.maxTotalSupply}FTM được
-                deposit. Sau đó người dùng sẽ được phép rút LFX cũng như FTM về
-                ví của mình.
+                🍍 Each wallet can only deposit FTM once, with the amount of FTM
+                within [{airdropInfo?.minDepositAmount},{' '}
+                {airdropInfo?.maxDepositAmount}
+                ]. The system will not accept deposits exceeding this limit.
+              </p>
+              <p>
+                🍍 The airdrop will be completed when there are{' '}
+                {airdropInfo?.maxParticipant} participants or{' '}
+                {airdropInfo?.maxTotalSupply} FTM is deposited. After that,
+                users will be allowed to withdraw LFX as well as FTM to their
+                wallet.
               </p>
             </ScBlock>
           </ScSection>
@@ -218,23 +238,26 @@ export const Airdrop = () => {
 
       <ScInfo>
         <ScBlock>
-          <h4>Tổng quan LFX Airdrop</h4>
+          <h4>LFX Airdrop Overview</h4>
 
-          <p>Tổng LFX token được airdrop: {airdropInfo?.balanceLfxToken}LFX</p>
           <p>
-            Tổng FTM đã được deposit vào smartcontract:{' '}
-            {airdropInfo?.totalSupply}FTM
+            Total LFX tokens to be airdropped: {airdropInfo?.balanceLfxToken}{' '}
+            LFX
           </p>
           <p>
-            Số lượng FLX nhận được cho mỗi FTM:{' '}
-            {airdropInfo?.estLfxReceivePerFtm || 0}LFX
+            Total FTM deposited into smart contract: {airdropInfo?.totalSupply}{' '}
+            FTM
           </p>
-          <p>Số lượng người tham gia: {airdropInfo?.participantCount}</p>
           <p>
-            Trạng thái:{' '}
-            {airdropInfo?.isWithdrawable ? 'Bắt đầu rút LFX' : 'Đang tiếp tục'}
+            Amount of LFX received per FTM:{' '}
+            {airdropInfo?.estLfxReceivePerFtm || 0} LFX
           </p>
-          <p>Thông tin smartcontract, test cases để audit smartcontract</p>
+          <p>Number of participants: {airdropInfo?.participantCount}</p>
+          <p>Status: {airdropInfo?.isWithdrawable ? 'Completed' : 'Ongoing'}</p>
+          <p>
+            Smart contract information, test cases for auditing the smart
+            contract.
+          </p>
         </ScBlock>
       </ScInfo>
     </ScMain>

@@ -225,14 +225,16 @@ export const Stake = () => {
           <h3>Vault Information</h3>
 
           <p>
-            Contract Address:{' '}
+            Airdrop Contract Address:{' '}
+            <code>{contractConfig.LfxVault.Token}</code> (
             <a
               href={`https://testnet.ftmscan.com/address/${contractConfig.LfxVault.Token}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {contractConfig.LfxVault.Token}
+              Scan
             </a>
+            )
           </p>
           <p>Total Deposit: {vaultInfo?.totalSupply} LFX</p>
           <p>Vault Balance: {vaultInfo?.vaultBalance} LFX</p>
