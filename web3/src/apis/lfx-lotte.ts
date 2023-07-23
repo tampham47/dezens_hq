@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 import { contractConfig } from '../contracts';
 import { getNumber } from './utils';
-import { get } from 'http';
 
 export type LotteInfo = {
   round: number;
@@ -90,6 +89,11 @@ class LfxLotteClass {
 
   getRef = async (address: string) => {
     return await this.contract.ref(address);
+  };
+
+  balanceOf = async (address: string) => {
+    const balance = await this.contract.balanceOf(address);
+    return getNumber(balance, 18);
   };
 }
 

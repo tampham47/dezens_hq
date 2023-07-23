@@ -10,6 +10,7 @@ const provider = ethers.provider;
 
 const deployContract = async () => {
   const NEXT_24_HOURS_IN_SECS = 24 * 60 * 60;
+  const ONE_HOUR_IN_SECS = 60 * 60;
   const validWithdrawTime = (await time.latest()) + NEXT_24_HOURS_IN_SECS;
 
   // Contracts are deployed using the first signer/account by default
@@ -29,7 +30,12 @@ const deployContract = async () => {
 
   // Lotte App
   const Lotte = await ethers.getContractFactory('Lotte', owner);
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress, 100);
+  const lotte = await Lotte.deploy(
+    lfxTokenAddress,
+    lfxVaultAddress,
+    100,
+    ONE_HOUR_IN_SECS
+  );
 
   // owner inits with 5000 LFX
   // owner transfers 4000 LFX to wallet1
@@ -633,6 +639,7 @@ describe('Lotte: Draw', () => {
       refRateLayer1,
       refRateLayer2,
       refRateLayer3,
+      minDrawDuration,
     ] = await lotte.getConfig();
 
     expect(ticketPrice).to.equal(100);
@@ -642,9 +649,11 @@ describe('Lotte: Draw', () => {
     expect(refRateLayer1).to.equal(70);
     expect(refRateLayer2).to.equal(30);
     expect(refRateLayer3).to.equal(20);
+    expect(minDrawDuration).to.equal(60 * 60);
 
     expect(await lotte.connect(owner).setTicketPrice(300)).to.ok;
     expect(await lotte.connect(owner).setSystemFeeRate(1000)).to.ok;
+    expect(await lotte.connect(owner).setMinDrawDuration(1001)).to.ok;
     expect(await lotte.connect(owner).setDrawFeeRate(100)).to.ok;
     expect(await lotte.connect(owner).setBurnRate(100)).to.ok;
     expect(await lotte.connect(owner).setRefRateLayer1(170)).to.ok;
@@ -659,6 +668,7 @@ describe('Lotte: Draw', () => {
       refRateLayer1,
       refRateLayer2,
       refRateLayer3,
+      minDrawDuration,
     ] = await lotte.getConfig();
 
     expect(ticketPrice).to.equal(300);
@@ -668,5 +678,6 @@ describe('Lotte: Draw', () => {
     expect(refRateLayer1).to.equal(170);
     expect(refRateLayer2).to.equal(130);
     expect(refRateLayer3).to.equal(120);
+    expect(minDrawDuration).to.equal(1001);
   });
 });

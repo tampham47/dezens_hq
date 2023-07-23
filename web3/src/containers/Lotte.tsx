@@ -18,6 +18,7 @@ const ScMain = styled.div`
 const ScStack = styled.div`
   h3 {
     margin-top: 0;
+    margin-bottom: 0.5rem;
   }
 
   @media screen and (min-width: 1260px) {
@@ -50,17 +51,8 @@ const ScContent = styled.div`
   }
 `;
 
-const ScInfo = styled(ScContent)`
-  flex: none;
-  margin-right: 0;
-`;
-
-const ScSection = styled.div`
-  margin-bottom: 4rem;
-`;
-
 const ScBlock = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 `;
 
 const ScTicketList = styled.div``;
@@ -79,6 +71,22 @@ const ScTicket = styled.span`
 
 const ScRef = styled.div`
   margin-bottom: 12px;
+`;
+
+const ScDrawWrapper = styled.div`
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+`;
+
+const ScHelper = styled.p`
+  opacity: 0.6;
+`;
+
+const ScRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const wait = async (ts: number) => {
@@ -102,6 +110,7 @@ export const Lotte = () => {
   const [lotteConfig, setLotteConfig] = useState<LotteConfig>();
   const [ticketList, setTicketList] = useState<number[]>([]);
   const [ref, setRef] = useState<string>('');
+  const [balance, setBalance] = useState<number>(0);
 
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxLotte, setLfxLotte] = useState<Contract>();
@@ -109,6 +118,38 @@ export const Lotte = () => {
   const [inputRef, setInputRef] = useState<string>('');
   const [ticketNumber, setTicketNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [drawing, setDrawing] = useState<boolean>(false);
+  const [withdrawing, setWithdrawing] = useState<boolean>(false);
+
+  const draw = async () => {
+    if (!lfxToken || !lfxLotte || !walletClient || !lotteConfig) {
+      return;
+    }
+
+    try {
+      setDrawing(true);
+      await lfxLotte.draw();
+    } catch (err) {
+      console.log('ERR', err);
+    } finally {
+      setDrawing(false);
+    }
+  };
+
+  const withdraw = async () => {
+    if (!lfxToken || !lfxLotte || !walletClient || !lotteConfig) {
+      return;
+    }
+
+    try {
+      setWithdrawing(true);
+      await lfxLotte.withdraw(ethers.parseEther(balance.toString()));
+    } catch (err) {
+      console.log('ERR', err);
+    } finally {
+      setWithdrawing(false);
+    }
+  };
 
   const purchase = async () => {
     if (
@@ -178,9 +219,11 @@ export const Lotte = () => {
       const spender = walletClient.account.address;
       const tickets = await LfxLotte.getTicketByAddress(spender);
       const ref = await LfxLotte.getRef(spender);
+      const balance = await LfxLotte.balanceOf(spender);
 
       setRef(ref);
       setTicketList(tickets);
+      setBalance(balance);
     })();
   }, [walletClient]);
 
@@ -199,8 +242,23 @@ export const Lotte = () => {
       <ScStack>
         <ScPersonal>
           <ScBlock>
+            <h3>Your Balance</h3>
+            <ScRow>
+              <p>{balance} LFX</p>
+              <Button
+                variant="subtle"
+                color="green"
+                onClick={withdraw}
+                loading={withdrawing}
+              >
+                Withdraw
+              </Button>
+            </ScRow>
+          </ScBlock>
+
+          <ScBlock>
             <h3>Your Tickets</h3>
-            {!ticketList.length ? <p>No ticket found</p> : null}
+            {!ticketList.length ? <ScHelper>No ticket found</ScHelper> : null}
             <ScTicketList>
               {ticketList.map((i, index) => (
                 <ScTicket key={index}>{getTicketByNumber(i)}</ScTicket>
@@ -254,7 +312,7 @@ export const Lotte = () => {
         </ScPersonal>
         <ScContent>
           <h3>Lotte Fan Overview</h3>
-          <p>Round: {lotteInfo?.round}</p>
+          <p>Round: #{lotteInfo?.round}</p>
           <p>Total Ticket: {lotteInfo?.totalTicket}</p>
           <p>Ticket Price: {lotteConfig?.ticketPrice} LFX</p>
           <p>Pot: {lotteInfo?.totalPot} LFX</p>
@@ -262,6 +320,18 @@ export const Lotte = () => {
           <p>System Fees: {lotteInfo?.systemFees} LFX</p>
           <p>Draw Rewards: {lotteInfo?.drawFees} LFX</p>
           <p>Burn Amount: {lotteInfo?.burnAmount} LFX</p>
+
+          <ScDrawWrapper>
+            <Button
+              size="xl"
+              color="red"
+              style={{ minWidth: 220 }}
+              onClick={draw}
+              loading={drawing}
+            >
+              Draw
+            </Button>
+          </ScDrawWrapper>
         </ScContent>
       </ScStack>
     </ScMain>

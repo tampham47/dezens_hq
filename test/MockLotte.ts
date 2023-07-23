@@ -8,6 +8,7 @@ import { ethers } from 'hardhat';
 
 const deployContract = async () => {
   const NEXT_24_HOURS_IN_SECS = 24 * 60 * 60;
+  const ONE_HOUR_IN_SECS = 60 * 60;
   const validWithdrawTime = (await time.latest()) + NEXT_24_HOURS_IN_SECS;
 
   // Contracts are deployed using the first signer/account by default
@@ -27,7 +28,12 @@ const deployContract = async () => {
 
   // Lotte App
   const Lotte = await ethers.getContractFactory('MockLotte', owner);
-  const lotte = await Lotte.deploy(lfxTokenAddress, lfxVaultAddress, 100);
+  const lotte = await Lotte.deploy(
+    lfxTokenAddress,
+    lfxVaultAddress,
+    100,
+    ONE_HOUR_IN_SECS
+  );
 
   // owner inits with 5000 LFX
   // owner transfers 4000 LFX to wallet1
@@ -122,7 +128,9 @@ describe('MockLotte: Draw Winner', () => {
     expect(97200 + 2800).to.equals(100000);
 
     const [
+      _,
       round,
+      isDrawable,
       totalTicket,
       totalSupply,
       totalPot,
@@ -131,6 +139,7 @@ describe('MockLotte: Draw Winner', () => {
       burnAmount,
     ] = await lotte.getInformation();
     expect(round).to.equal(1);
+    expect(isDrawable).to.equal(false);
     expect(totalTicket).to.equal(0);
     expect(totalSupply).to.equal(97340);
     expect(totalPot).to.equal(97200);
@@ -250,7 +259,9 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lfx.balanceOf(lfxVaultAddress)).to.equal(0);
 
     let [
+      _,
       round,
+      isDrawable,
       totalTicket,
       totalSupply,
       totalPot,
@@ -259,6 +270,7 @@ describe('MockLotte: Draw Winner', () => {
       burnAmount,
     ] = await lotte.getInformation();
     expect(round).to.equal(0);
+    expect(isDrawable).to.equal(true);
     expect(totalTicket).to.equal(10);
     expect(totalSupply).to.equal(100000);
     expect(totalPot).to.equal(97200);
@@ -299,7 +311,9 @@ describe('MockLotte: Draw Winner', () => {
     expect(await lfx.balanceOf(wallet3.address)).to.equal(140);
 
     [
+      _,
       round,
+      isDrawable,
       totalTicket,
       totalSupply,
       totalPot,
@@ -308,6 +322,7 @@ describe('MockLotte: Draw Winner', () => {
       burnAmount,
     ] = await lotte.getInformation();
     expect(round).to.equal(1);
+    expect(isDrawable).to.equal(false);
     expect(totalTicket).to.equal(0);
     expect(totalSupply).to.equal(0);
     expect(totalPot).to.equal(0);

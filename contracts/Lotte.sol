@@ -40,6 +40,9 @@ contract Lotte {
   // 100 LFX per ticket
   uint public ticketPrice;
 
+  // the minimum duration between 2 draws
+  uint public minDrawDuration;
+
   // total amount of token that users have purchased
   uint public totalTicket;
   // total token in the contract
@@ -78,13 +81,19 @@ contract Lotte {
   // what happens within your contract.
   event Purchase(address indexed _from, address indexed _to, uint256 _value);
 
-  constructor(address _token, address _vaultAddress, uint _ticketPrice) {
+  constructor(
+    address _token,
+    address _vaultAddress,
+    uint _ticketPrice,
+    uint _minDrawDuration
+  ) {
     owner = msg.sender;
     round = 0;
 
     token = IERC20(_token);
-    ticketPrice = _ticketPrice;
     vaultAddress = _vaultAddress;
+    ticketPrice = _ticketPrice;
+    minDrawDuration = _minDrawDuration;
     lastDrawTimestamp = block.timestamp;
   }
 
@@ -132,6 +141,10 @@ contract Lotte {
 
   function setTicketPrice(uint _ticketPrice) external isOwner {
     ticketPrice = _ticketPrice;
+  }
+
+  function setMinDrawDuration(uint _minDrawDuration) external isOwner {
+    minDrawDuration = _minDrawDuration;
   }
 
   function setSystemFeeRate(uint _systemFeeRate) external isOwner {
@@ -257,7 +270,7 @@ contract Lotte {
 
   function draw() external {
     require(
-      block.timestamp - lastDrawTimestamp >= 24 hours,
+      block.timestamp - lastDrawTimestamp >= minDrawDuration,
       'Lotte: not enough time to draw'
     );
     require(totalTicket > 7, 'Lotte: total ticket should be more than 7');
@@ -360,14 +373,19 @@ contract Lotte {
   function getInformation()
     public
     view
-    returns (uint, uint, uint, uint, uint, uint, uint)
+    returns (uint, uint, bool, uint, uint, uint, uint, uint, uint)
   {
     uint totalPot = balanceOf[potAddress];
     uint systemFees = balanceOf[vaultAddress];
     uint drawFees = (systemFees * drawFeeRate) / 10000;
     uint burnAmount = (systemFees * burnRate) / 10000;
+    bool isDrawable = (block.timestamp - lastDrawTimestamp >=
+      minDrawDuration) && (totalTicket > 7);
+
     return (
+      lastDrawTimestamp,
       round,
+      isDrawable,
       totalTicket,
       totalSupply,
       totalPot,
@@ -380,7 +398,7 @@ contract Lotte {
   function getConfig()
     public
     view
-    returns (uint, uint, uint, uint, uint, uint, uint)
+    returns (uint, uint, uint, uint, uint, uint, uint, uint)
   {
     return (
       ticketPrice,
@@ -389,7 +407,8 @@ contract Lotte {
       burnRate,
       refRateLayer1,
       refRateLayer2,
-      refRateLayer3
+      refRateLayer3,
+      minDrawDuration
     );
   }
 }
