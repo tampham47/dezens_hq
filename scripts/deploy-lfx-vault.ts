@@ -16,24 +16,9 @@ async function main() {
   const lfxVaultAddress = await lfxVault.getAddress();
   await lfxVault.waitForDeployment();
 
-  // Lotte App
-  const ticketPrice = BigInt(10000) * BigInt(1e18);
-  const oneHoursInSeconds = 60 * 60;
-  const Lotte = await ethers.getContractFactory('Lotte');
-  const lotte = await Lotte.deploy(
-    contractConfig.Lfx.Token,
-    lfxVaultAddress,
-    ticketPrice,
-    oneHoursInSeconds
-  );
-  const lotteAddress = await lotte.getAddress();
-  await lotte.waitForDeployment();
-
   console.log('LFX Vault Address   :', lfxVaultAddress);
-  console.log('Lotte App Address   :', lotteAddress);
 
   saveContractAddress('LfxVault', lfxVaultAddress);
-  saveContractAddress('Lotte', lotteAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
