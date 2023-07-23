@@ -328,6 +328,7 @@ export const Lotte = () => {
               style={{ minWidth: 220 }}
               onClick={draw}
               loading={drawing}
+              disabled={!lotteInfo?.isDrawable}
             >
               Draw
             </Button>
