@@ -9,6 +9,7 @@ import { VaultInfo } from '../apis/lfx-vault';
 import { LfxVault } from '../apis/lfx-vault';
 import { LfxToken } from '../apis/lfx-token';
 import { getShortAddress } from '../utils/address';
+import { wait } from '../utils/time';
 
 const ScMain = styled.div`
   margin-bottom: 6rem;
@@ -96,6 +97,7 @@ export const Stake = () => {
 
       if (allowance < amount) {
         await lfxToken.approve(contractConfig.LfxVault.Token, amount);
+        await wait(10000);
       }
 
       await lfxVault.deposit(amount);

@@ -183,10 +183,11 @@ export const Airdrop = () => {
                 </ScQrCode>
               </ScQrCodeWrapper>
               <p>
-                🍍 LFX Token Address:{' '}
-                <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
+                🍍 Airdrop Contract Address:{' '}
+                <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>{' '}
+                (
                 <a
-                  href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
+                  href={`https://testnet.ftmscan.com/address/${contractConfig.LfxAirdrop.Token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -195,11 +196,10 @@ export const Airdrop = () => {
                 )
               </p>
               <p>
-                🍍 Airdrop Contract Address:{' '}
-                <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>{' '}
-                (
+                🍍 LFX Token Address:{' '}
+                <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
                 <a
-                  href={`https://testnet.ftmscan.com/address/${contractConfig.LfxAirdrop.Token}`}
+                  href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

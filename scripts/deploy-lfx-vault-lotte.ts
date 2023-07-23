@@ -1,5 +1,6 @@
 import { ethers } from 'hardhat';
 import { saveContractAddress } from './utils/saveContractAddress';
+import { contractConfig } from './addresses';
 
 async function main() {
   // ethers is available in the global scope
@@ -9,26 +10,9 @@ async function main() {
     await deployer.getAddress()
   );
 
-  const lfxTotalSupply = BigInt(21_000_000_000) * BigInt(1e18);
-  const lfxTokenContract = await ethers.getContractFactory('LFX');
-  const lfxToken = await lfxTokenContract.deploy(lfxTotalSupply);
-  const lfxTokenAddress = await lfxToken.getAddress();
-  await lfxToken.waitForDeployment();
-
-  // LFX Airdrop
-  const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
-  const lfxAirdrop = await LfxAirdropContract.deploy(
-    lfxTokenAddress,
-    5,
-    100,
-    5,
-    50
-  );
-  const lfxAirdropAddress = await lfxAirdrop.getAddress();
-
   // LFX Vault
   const LfxVault = await ethers.getContractFactory('LfxVault');
-  const lfxVault = await LfxVault.deploy(lfxTokenAddress);
+  const lfxVault = await LfxVault.deploy(contractConfig.Lfx.Token);
   const lfxVaultAddress = await lfxVault.getAddress();
   await lfxVault.waitForDeployment();
 
@@ -36,20 +20,16 @@ async function main() {
   const ticketPrice = BigInt(10000) * BigInt(1e18);
   const Lotte = await ethers.getContractFactory('Lotte');
   const lotte = await Lotte.deploy(
-    lfxTokenAddress,
+    contractConfig.Lfx.Token,
     lfxVaultAddress,
     ticketPrice
   );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();
 
-  console.log('LFX Token Address   :', lfxTokenAddress);
-  console.log('LFX Airdrop Address :', lfxAirdropAddress);
   console.log('LFX Vault Address   :', lfxVaultAddress);
   console.log('Lotte App Address   :', lotteAddress);
 
-  saveContractAddress('LFX', lfxTokenAddress);
-  saveContractAddress('LfxAirdrop', lfxAirdropAddress);
   saveContractAddress('LfxVault', lfxVaultAddress);
   saveContractAddress('Lotte', lotteAddress);
 }
