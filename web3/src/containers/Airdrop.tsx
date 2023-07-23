@@ -9,6 +9,7 @@ import { IconAlertCircle } from '@tabler/icons-react';
 
 import { contractConfig } from '../contracts';
 import { LfxAirdrop, AirdropInfo } from '../apis/lfx-airdrop';
+import { getShortAddress } from '../utils/address';
 
 const ScMain = styled.div`
   p {
@@ -182,7 +183,8 @@ export const Airdrop = () => {
                 </ScQrCode>
               </ScQrCodeWrapper>
               <p>
-                🍍 LFX Token Address: <code>{contractConfig.Lfx.Token}</code> (
+                🍍 LFX Token Address:{' '}
+                <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
                 <a
                   href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
                   target="_blank"
@@ -194,7 +196,8 @@ export const Airdrop = () => {
               </p>
               <p>
                 🍍 Airdrop Contract Address:{' '}
-                <code>{contractConfig.LfxAirdrop.Token}</code> (
+                <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>{' '}
+                (
                 <a
                   href={`https://testnet.ftmscan.com/address/${contractConfig.LfxAirdrop.Token}`}
                   target="_blank"

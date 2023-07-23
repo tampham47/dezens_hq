@@ -132,7 +132,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
                 >
                   Click here
                 </a>{' '}
-                to learn how to add Fantom Testnet to your Metamask if needed.
+                to learn how to add Fantom Testnet to your Metamask.
               </Alert>
             </Container>
           ) : null}

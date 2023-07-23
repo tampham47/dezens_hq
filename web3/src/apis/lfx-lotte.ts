@@ -87,6 +87,10 @@ class LfxLotteClass {
     const tickets = await this.contract.getTicketListByAddress(address);
     return Object.values(tickets).map((i: any) => getNumber(i, 0));
   };
+
+  getRef = async (address: string) => {
+    return await this.contract.ref(address);
+  };
 }
 
 export const LfxLotte = new LfxLotteClass();

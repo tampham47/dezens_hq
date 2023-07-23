@@ -87,8 +87,6 @@ export const pageQuery = graphql`
 `;
 
 const BlogTemplate = ({ data }: any) => {
-  console.log('data', data);
-
   const posts: any[] = data.allMarkdownRemark.edges
     .map(({ node }: any) => {
       const frontmatter = normalizeNotionFrontMatter(node.frontmatter);

@@ -7,6 +7,7 @@ import { contractConfig } from '../contracts';
 import { Contract, ethers } from 'ethers';
 import { Button, Input } from '@mantine/core';
 import { LfxToken } from '../apis/lfx-token';
+import { getShortAddress } from '../utils/address';
 
 const ScMain = styled.div`
   p {
@@ -62,6 +63,8 @@ const ScBlock = styled.div`
   margin-bottom: 2rem;
 `;
 
+const ScTicketList = styled.div``;
+
 const ScTicket = styled.span`
   display: inline-block;
   padding: 6px 12px;
@@ -71,11 +74,24 @@ const ScTicket = styled.span`
   font-weight: bold;
   min-width: 80px;
   text-align: center;
+  margin-bottom: 6px;
 `;
 
+const ScRef = styled.div`
+  margin-bottom: 12px;
+`;
+
+const wait = async (ts: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(0);
+    }, ts);
+  });
+};
+
 const getTicketByNumber = (ticketNumber: number) => {
-  const aa = Math.floor(ticketNumber / 59);
-  const bb = ticketNumber % 59;
+  const aa = Math.floor(ticketNumber / 60);
+  const bb = ticketNumber % 60;
   return `${aa.toString().padStart(2, '0')}:${bb.toString().padStart(2, '0')}`;
 };
 
@@ -84,11 +100,13 @@ export const Lotte = () => {
 
   const [lotteInfo, setLotteInfo] = useState<LotteInfo>();
   const [lotteConfig, setLotteConfig] = useState<LotteConfig>();
-  const [ticketsBought, setTicketsBought] = useState<number[]>([]);
+  const [ticketList, setTicketList] = useState<number[]>([]);
+  const [ref, setRef] = useState<string>('');
 
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxLotte, setLfxLotte] = useState<Contract>();
 
+  const [inputRef, setInputRef] = useState<string>('');
   const [ticketNumber, setTicketNumber] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -107,6 +125,7 @@ export const Lotte = () => {
       setLoading(true);
       const spender = walletClient.account.address;
       const amount = ethers.parseEther(lotteConfig.ticketPrice.toString());
+      const tickets = [Number(ticketNumber)];
 
       const allowance = await LfxToken.allowance(
         spender,
@@ -114,10 +133,14 @@ export const Lotte = () => {
       );
 
       if (allowance < amount) {
-        await lfxToken.approve(contractConfig.Lotte.Token, amount);
+        await lfxToken.approve(
+          contractConfig.Lotte.Token,
+          amount * BigInt(tickets.length)
+        );
+        await wait(10000);
       }
 
-      await lfxLotte.purchase([Number(ticketNumber)], ethers.ZeroAddress);
+      await lfxLotte.purchase(tickets, inputRef || ethers.ZeroAddress);
     } catch (err) {
       console.log('ERR', err);
     } finally {
@@ -154,7 +177,10 @@ export const Lotte = () => {
     (async () => {
       const spender = walletClient.account.address;
       const tickets = await LfxLotte.getTicketByAddress(spender);
-      setTicketsBought(tickets);
+      const ref = await LfxLotte.getRef(spender);
+
+      setRef(ref);
+      setTicketList(tickets);
     })();
   }, [walletClient]);
 
@@ -174,14 +200,38 @@ export const Lotte = () => {
         <ScPersonal>
           <ScBlock>
             <h3>Your Tickets</h3>
-            {!ticketsBought.length ? <p>No ticket found</p> : null}
-            {ticketsBought.map((i) => (
-              <ScTicket>{getTicketByNumber(i)}</ScTicket>
-            ))}
+            {!ticketList.length ? <p>No ticket found</p> : null}
+            <ScTicketList>
+              {ticketList.map((i, index) => (
+                <ScTicket key={index}>{getTicketByNumber(i)}</ScTicket>
+              ))}
+            </ScTicketList>
           </ScBlock>
 
           <ScBlock>
             <h3>Buy Tickets</h3>
+            {ref === ethers.ZeroAddress ? (
+              <Input
+                placeholder="Your Ref"
+                size="lg"
+                style={{ marginBottom: 12 }}
+                value={inputRef}
+                onChange={(e) => {
+                  setInputRef(e.target.value);
+                }}
+              />
+            ) : (
+              <ScRef>
+                Your Ref:{' '}
+                <a
+                  href={`https://testnet.ftmscan.com/address/${ref}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {getShortAddress(ref)}
+                </a>
+              </ScRef>
+            )}
             <Input
               placeholder="Ticket Number [0000 - 1439]"
               size="lg"

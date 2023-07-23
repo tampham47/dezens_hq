@@ -8,6 +8,7 @@ import { contractConfig } from '../contracts';
 import { VaultInfo } from '../apis/lfx-vault';
 import { LfxVault } from '../apis/lfx-vault';
 import { LfxToken } from '../apis/lfx-token';
+import { getShortAddress } from '../utils/address';
 
 const ScMain = styled.div`
   margin-bottom: 6rem;
@@ -225,7 +226,7 @@ export const Stake = () => {
 
           <p>
             Airdrop Contract Address:{' '}
-            <code>{contractConfig.LfxVault.Token}</code> (
+            <code>{getShortAddress(contractConfig.LfxVault.Token)}</code> (
             <a
               href={`https://testnet.ftmscan.com/address/${contractConfig.LfxVault.Token}`}
               target="_blank"
