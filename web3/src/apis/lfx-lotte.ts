@@ -10,6 +10,8 @@ export type LotteInfo = {
   systemFees: number;
   drawFees: number;
   burnAmount: number;
+  lastDrawTimestamp: number;
+  isDrawable: boolean;
 };
 
 export type LotteConfig = {
@@ -40,7 +42,9 @@ class LfxLotteClass {
 
   getInformation = async (): Promise<LotteInfo> => {
     const [
+      lastDrawTimestamp,
       round,
+      isDrawable,
       totalTicket,
       totalSupply,
       totalPot,
@@ -50,6 +54,8 @@ class LfxLotteClass {
     ] = await this.contract.getInformation();
 
     return {
+      isDrawable,
+      lastDrawTimestamp: getNumber(lastDrawTimestamp, 0),
       round: getNumber(round, 0),
       totalTicket: getNumber(totalTicket, 0),
       totalSupply: getNumber(totalSupply, 18),

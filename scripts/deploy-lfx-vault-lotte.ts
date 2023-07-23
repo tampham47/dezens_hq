@@ -18,11 +18,13 @@ async function main() {
 
   // Lotte App
   const ticketPrice = BigInt(10000) * BigInt(1e18);
+  const oneHoursInSeconds = 60 * 60;
   const Lotte = await ethers.getContractFactory('Lotte');
   const lotte = await Lotte.deploy(
     contractConfig.Lfx.Token,
     lfxVaultAddress,
-    ticketPrice
+    ticketPrice,
+    oneHoursInSeconds
   );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();
