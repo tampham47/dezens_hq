@@ -18,7 +18,13 @@ async function main() {
     contractConfig.Lfx.Token,
     contractConfig.LfxVault.Token,
     ticketPrice,
-    oneHoursInSeconds
+    oneHoursInSeconds,
+    280,
+    500,
+    50,
+    70,
+    30,
+    20
   );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();

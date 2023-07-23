@@ -48,19 +48,19 @@ contract Lotte {
   // total token in the contract
   uint public totalSupply;
 
-  // the system fee rate, 2.8% of the ticket
-  uint public systemFeeRate = 280;
-  // the draw fee rate, 5% of system fees
+  // the system fee rate, 4.0% of the ticket
+  uint public systemFeeRate = 400;
+  // the draw fee rate, 5.0% of system fees
   uint public drawFeeRate = 500;
-  // the burn rate, 0.5% of system fees
-  uint public burnRate = 50;
+  // the burn rate, 1.0% of system fees
+  uint public burnRate = 100;
 
-  // rate for the referrer, 0.7% of the ticket
-  uint public refRateLayer1 = 70;
-  // rate for the referrer, 0.3% of the ticket
-  uint public refRateLayer2 = 30;
-  // rate for the referrer, 0.2% of the ticket
-  uint public refRateLayer3 = 20;
+  // rate for the referrer, 1.2% of the ticket
+  uint public refRateLayer1 = 120;
+  // rate for the referrer, 0.55% of the ticket
+  uint public refRateLayer2 = 55;
+  // rate for the referrer, 0.25% of the ticket
+  uint public refRateLayer3 = 25;
 
   // store who is the referrer of the user
   mapping(address => address) public ref;
@@ -85,16 +85,29 @@ contract Lotte {
     address _token,
     address _vaultAddress,
     uint _ticketPrice,
-    uint _minDrawDuration
+    uint _minDrawDuration,
+    uint _systemFeeRate,
+    uint _drawFeeRate,
+    uint _burnRate,
+    uint _refRateLayer1,
+    uint _refRateLayer2,
+    uint _refRateLayer3
   ) {
     owner = msg.sender;
+    lastDrawTimestamp = block.timestamp;
     round = 0;
 
     token = IERC20(_token);
     vaultAddress = _vaultAddress;
     ticketPrice = _ticketPrice;
     minDrawDuration = _minDrawDuration;
-    lastDrawTimestamp = block.timestamp;
+
+    systemFeeRate = _systemFeeRate;
+    drawFeeRate = _drawFeeRate;
+    burnRate = _burnRate;
+    refRateLayer1 = _refRateLayer1;
+    refRateLayer2 = _refRateLayer2;
+    refRateLayer3 = _refRateLayer3;
   }
 
   function _mint(address _to, uint _amount) private {

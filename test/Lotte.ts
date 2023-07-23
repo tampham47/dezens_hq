@@ -34,7 +34,13 @@ const deployContract = async () => {
     lfxTokenAddress,
     lfxVaultAddress,
     100,
-    ONE_HOUR_IN_SECS
+    ONE_HOUR_IN_SECS,
+    280,
+    500,
+    50,
+    70,
+    30,
+    20
   );
 
   // owner inits with 5000 LFX
