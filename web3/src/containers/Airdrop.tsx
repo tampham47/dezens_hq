@@ -196,18 +196,6 @@ export const Airdrop = () => {
                 )
               </p>
               <p>
-                🍍 LFX Token Address:{' '}
-                <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
-                <a
-                  href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Scan
-                </a>
-                )
-              </p>
-              <p>
                 🍍 Only deposit FTM - Fantom, transferring any other token will
                 not be recognized.
               </p>
@@ -239,6 +227,18 @@ export const Airdrop = () => {
         <ScBlock>
           <h4>LFX Airdrop Overview</h4>
 
+          <p>
+            LFX Token Address:{' '}
+            <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
+            <a
+              href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Scan
+            </a>
+            )
+          </p>
           <p>
             Total LFX tokens to be airdropped: {airdropInfo?.balanceLfxToken}{' '}
             LFX

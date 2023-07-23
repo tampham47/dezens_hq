@@ -227,7 +227,7 @@ export const Stake = () => {
           <h3>Vault Information</h3>
 
           <p>
-            Airdrop Contract Address:{' '}
+            Vault Contract Address:{' '}
             <code>{getShortAddress(contractConfig.LfxVault.Token)}</code> (
             <a
               href={`https://testnet.ftmscan.com/address/${contractConfig.LfxVault.Token}`}

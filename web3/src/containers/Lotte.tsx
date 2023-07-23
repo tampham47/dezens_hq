@@ -312,6 +312,19 @@ export const Lotte = () => {
         </ScPersonal>
         <ScContent>
           <h3>Lotte Fan Overview</h3>
+
+          <p>
+            Lotte Contract Address:{' '}
+            <code>{getShortAddress(contractConfig.Lotte.Token)}</code> (
+            <a
+              href={`https://testnet.ftmscan.com/address/${contractConfig.Lotte.Token}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Scan
+            </a>
+            )
+          </p>
           <p>Round: #{lotteInfo?.round}</p>
           <p>Total Ticket: {lotteInfo?.totalTicket}</p>
           <p>Ticket Price: {lotteConfig?.ticketPrice} LFX</p>
