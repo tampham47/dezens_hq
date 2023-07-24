@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { LfxLotte, LotteConfig, LotteInfo } from '../apis/lfx-lotte';
@@ -208,38 +208,48 @@ export const Lotte = () => {
     (window as any).lfx = lfx;
     (window as any).lfxLotte = lotte;
 
-    lotte.on(lotte.filters.Purchase(), (from, ticketList) => {
-      console.log('PURCHASE', from, ticketList);
-    });
-
     setLfxToken(lfx);
     setLfxLotte(lotte);
   }, [walletClient]);
 
-  useEffect(() => {
+  const loadUserData = useCallback(async () => {
     if (!walletClient) return;
 
-    (async () => {
-      const spender = walletClient.account.address;
-      const tickets = await LfxLotte.getTicketByAddress(spender);
-      const ref = await LfxLotte.getRef(spender);
-      const balance = await LfxLotte.balanceOf(spender);
+    const spender = walletClient.account.address;
+    const tickets = await LfxLotte.getTicketByAddress(spender);
+    const ref = await LfxLotte.getRef(spender);
+    const balance = await LfxLotte.balanceOf(spender);
 
-      setRef(ref);
-      setTicketList(tickets);
-      setBalance(balance);
-    })();
+    setRef(ref);
+    setTicketList(tickets);
+    setBalance(balance);
+  }, [walletClient]);
+
+  const loadConfig = async () => {
+    const info = await LfxLotte.getInformation();
+    const config = await LfxLotte.getConfig();
+
+    setLotteInfo(info);
+    setLotteConfig(config);
+  };
+
+  useEffect(() => {
+    loadUserData();
   }, [walletClient]);
 
   useEffect(() => {
-    (async () => {
-      const info = await LfxLotte.getInformation();
-      const config = await LfxLotte.getConfig();
+    loadConfig();
 
-      setLotteInfo(info);
-      setLotteConfig(config);
-    })();
-  }, []);
+    LfxLotte.contract.on('EvtPurchase', () => {
+      loadUserData();
+      loadConfig();
+    });
+
+    LfxLotte.contract.on('EvtDraw', () => {
+      loadUserData();
+      loadConfig();
+    });
+  }, [loadUserData]);
 
   return (
     <ScMain>
