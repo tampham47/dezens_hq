@@ -185,6 +185,7 @@ export const Stake = () => {
               placeholder="LFX amount"
               size="lg"
               type="number"
+              inputMode="numeric"
               style={{ marginBottom: 12 }}
               value={withdrawAmount}
               onChange={(e) => {
@@ -208,6 +209,7 @@ export const Stake = () => {
               placeholder="LFX amount"
               size="lg"
               type="number"
+              inputMode="numeric"
               style={{ marginBottom: 12 }}
               value={depositAmount}
               onChange={(e) => {
