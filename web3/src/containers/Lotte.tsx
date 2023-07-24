@@ -293,6 +293,7 @@ export const Lotte = () => {
             <Input
               placeholder="Ticket Number [0000 - 1439]"
               size="lg"
+              type="number"
               style={{ marginBottom: 12 }}
               value={ticketNumber}
               onChange={(e) => {
