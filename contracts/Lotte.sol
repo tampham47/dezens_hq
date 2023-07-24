@@ -19,6 +19,7 @@ contract Lotte {
   }
 
   struct Draw {
+    uint timestamp;
     uint winningNumber;
     uint winnerCount;
     uint winnerAmount;
@@ -79,7 +80,9 @@ contract Lotte {
 
   // The Transfer event helps off-chain aplications understand
   // what happens within your contract.
-  event Purchase(address indexed _from, address indexed _to, uint256 _value);
+  event EvtPurchase(address indexed _from, uint[] tickets);
+
+  event EvtDraw(address indexed _from, Draw draw);
 
   constructor(
     address _token,
@@ -123,6 +126,7 @@ contract Lotte {
   function _resetAndStartNewRound() private {
     totalTicket = 0;
     round++;
+    lastDrawTimestamp = block.timestamp;
   }
 
   function _isAddress(address _a) private pure returns (bool) {
@@ -279,6 +283,8 @@ contract Lotte {
 
     // take the money
     token.transferFrom(msg.sender, address(this), _amount);
+
+    emit EvtPurchase(msg.sender, _tickets);
   }
 
   function draw() external {
@@ -292,19 +298,19 @@ contract Lotte {
     uint winningNumber = this.getRandom();
     uint winnerCount = this.getAmountOfTicketByTicketNumber(winningNumber);
 
+    drawData[round].winningNumber = winningNumber;
+    drawData[round].timestamp = block.timestamp;
+
     // found the winner, so then distribute the pot rewards
     if (winnerCount > 0) {
       uint totalPot = balanceOf[potAddress];
       uint winnerAmount = totalPot / winnerCount;
 
-      drawData[round].winningNumber = winningNumber;
       drawData[round].winnerCount = winnerCount;
       drawData[round].winnerAmount = winnerAmount;
 
       _burn(potAddress, totalPot);
       _distributeRewardByTicketNumber(winningNumber, winnerAmount);
-    } else {
-      drawData[round].winningNumber = winningNumber;
     }
 
     // rewards 5% of the system fees for whom took the action
@@ -319,10 +325,11 @@ contract Lotte {
     // so the investors can withdraw it anytime
     _withdrawAllToVault();
 
+    // emit the event
+    emit EvtDraw(msg.sender, drawData[round]);
+
     // reset the round
     _resetAndStartNewRound();
-
-    lastDrawTimestamp = block.timestamp;
   }
 
   function withdraw(uint256 amount) external {

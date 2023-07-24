@@ -208,6 +208,10 @@ export const Lotte = () => {
     (window as any).lfx = lfx;
     (window as any).lfxLotte = lotte;
 
+    lotte.on(lotte.filters.Purchase(), (from, ticketList) => {
+      console.log('PURCHASE', from, ticketList);
+    });
+
     setLfxToken(lfx);
     setLfxLotte(lotte);
   }, [walletClient]);

@@ -1,5 +1,6 @@
 import { ethers } from 'hardhat';
 import { saveContractAddress } from './utils/saveContractAddress';
+import { config } from './config';
 
 async function main() {
   // ethers is available in the global scope
@@ -9,7 +10,7 @@ async function main() {
     await deployer.getAddress()
   );
 
-  const lfxTotalSupply = BigInt(21_000_000_000) * BigInt(1e18);
+  const lfxTotalSupply = config.lfxToken.lfxTotalSupply;
   const lfxTokenContract = await ethers.getContractFactory('LFX');
   const lfxToken = await lfxTokenContract.deploy(lfxTotalSupply);
   const lfxTokenAddress = await lfxToken.getAddress();
@@ -19,10 +20,10 @@ async function main() {
   const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
   const lfxAirdrop = await LfxAirdropContract.deploy(
     lfxTokenAddress,
-    5,
-    100,
-    5,
-    50
+    config.lfxAirdrop.maxParticipant,
+    config.lfxAirdrop.maxTotalSupply,
+    config.lfxAirdrop.minDepositAmount,
+    config.lfxAirdrop.maxDepositAmount
   );
   const lfxAirdropAddress = await lfxAirdrop.getAddress();
 
@@ -33,20 +34,20 @@ async function main() {
   await lfxVault.waitForDeployment();
 
   // Lotte App
-  const ticketPrice = BigInt(10000) * BigInt(1e18);
-  const oneHoursInSeconds = 60 * 60;
+  const ticketPrice = config.lfxLotte.ticketPrice;
+  const minDrawDuration = config.lfxLotte.minDrawDuration;
   const Lotte = await ethers.getContractFactory('Lotte');
   const lotte = await Lotte.deploy(
     lfxTokenAddress,
     lfxVaultAddress,
     ticketPrice,
-    oneHoursInSeconds,
-    280,
-    500,
-    50,
-    70,
-    30,
-    20
+    minDrawDuration,
+    config.lfxLotte.systemFeeRate,
+    config.lfxLotte.drawFeeRate,
+    config.lfxLotte.burnRate,
+    config.lfxLotte.refRateLayer1,
+    config.lfxLotte.refRateLayer2,
+    config.lfxLotte.refRateLayer3
   );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();

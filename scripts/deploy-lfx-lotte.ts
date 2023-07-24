@@ -1,6 +1,7 @@
 import { ethers } from 'hardhat';
 import { saveContractAddress } from './utils/saveContractAddress';
 import { contractConfig } from './addresses';
+import { config } from './config';
 
 async function main() {
   // ethers is available in the global scope
@@ -11,20 +12,20 @@ async function main() {
   );
 
   // Lotte App
-  const ticketPrice = BigInt(10000) * BigInt(1e18);
-  const oneHoursInSeconds = 60 * 60;
+  const ticketPrice = config.lfxLotte.ticketPrice;
+  const minDrawDuration = config.lfxLotte.minDrawDuration;
   const Lotte = await ethers.getContractFactory('Lotte');
   const lotte = await Lotte.deploy(
     contractConfig.Lfx.Token,
     contractConfig.LfxVault.Token,
     ticketPrice,
-    oneHoursInSeconds,
-    280,
-    500,
-    50,
-    70,
-    30,
-    20
+    minDrawDuration,
+    config.lfxLotte.systemFeeRate,
+    config.lfxLotte.drawFeeRate,
+    config.lfxLotte.burnRate,
+    config.lfxLotte.refRateLayer1,
+    config.lfxLotte.refRateLayer2,
+    config.lfxLotte.refRateLayer3
   );
   const lotteAddress = await lotte.getAddress();
   await lotte.waitForDeployment();

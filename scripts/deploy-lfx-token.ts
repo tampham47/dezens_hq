@@ -1,5 +1,6 @@
 import { ethers } from 'hardhat';
 import { saveContractAddress } from './utils/saveContractAddress';
+import { config } from './config';
 
 async function main() {
   // ethers is available in the global scope
@@ -9,7 +10,7 @@ async function main() {
     await deployer.getAddress()
   );
 
-  const lfxTotalSupply = BigInt(21_000_000_000) * BigInt(1e18);
+  const lfxTotalSupply = config.lfxToken.lfxTotalSupply;
   const lfxTokenContract = await ethers.getContractFactory('LFX');
   const lfxToken = await lfxTokenContract.deploy(lfxTotalSupply);
   const lfxTokenAddress = await lfxToken.getAddress();

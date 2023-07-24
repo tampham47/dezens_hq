@@ -1,6 +1,7 @@
 import { ethers } from 'hardhat';
 import { saveContractAddress } from './utils/saveContractAddress';
 import { contractConfig } from './addresses';
+import { config } from './config';
 
 async function main() {
   // ethers is available in the global scope
@@ -14,10 +15,10 @@ async function main() {
   const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
   const lfxAirdrop = await LfxAirdropContract.deploy(
     contractConfig.Lfx.Token,
-    5,
-    100,
-    5,
-    50
+    config.lfxAirdrop.maxParticipant,
+    config.lfxAirdrop.maxTotalSupply,
+    config.lfxAirdrop.minDepositAmount,
+    config.lfxAirdrop.maxDepositAmount
   );
   const lfxAirdropAddress = await lfxAirdrop.getAddress();
 
