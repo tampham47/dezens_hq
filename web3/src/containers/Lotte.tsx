@@ -228,6 +228,8 @@ export const Lotte = () => {
   const loadConfig = async () => {
     const info = await LfxLotte.getInformation();
     const config = await LfxLotte.getConfig();
+    const lastDraw = await LfxLotte.getLastDraw();
+    console.log('lastDraw', lastDraw);
 
     setLotteInfo(info);
     setLotteConfig(config);

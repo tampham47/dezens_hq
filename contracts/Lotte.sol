@@ -366,6 +366,10 @@ contract Lotte {
   }
 
   function getLastDraw() public view returns (Draw memory) {
+    if (round == 0) {
+      return Draw(0, 0, 0, 0, new address[](0));
+    }
+
     return drawData[round - 1];
   }
 

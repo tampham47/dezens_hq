@@ -101,6 +101,10 @@ class LfxLotteClass {
     const balance = await this.contract.balanceOf(address);
     return getNumber(balance, 18);
   };
+
+  getLastDraw = async() => {
+    return this.contract.getLastDraw();
+  }
 }
 
 export const LfxLotte = new LfxLotteClass();
