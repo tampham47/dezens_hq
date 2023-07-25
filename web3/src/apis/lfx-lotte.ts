@@ -24,6 +24,14 @@ export type LotteConfig = {
   refRateLayer3: number;
 };
 
+export type DrawInformation = {
+  timestamp: number;
+  winningNumber: number;
+  winningAmount: number;
+  winnerCount: number;
+  winnerList: string[];
+};
+
 class LfxLotteClass {
   provider: ethers.Provider;
   contract: ethers.Contract;
@@ -102,9 +110,18 @@ class LfxLotteClass {
     return getNumber(balance, 18);
   };
 
-  getLastDraw = async() => {
-    return this.contract.getLastDraw();
-  }
+  getLastDraw = async (): Promise<DrawInformation> => {
+    const [timestamp, winningNumber, winnerCount, winningAmount, winnerList] =
+      await this.contract.getLastDraw();
+
+    return {
+      timestamp: getNumber(timestamp, 0),
+      winningNumber: getNumber(winningNumber, 0),
+      winningAmount: getNumber(winningAmount, 18),
+      winnerCount: getNumber(winnerCount, 0),
+      winnerList: Object.values(winnerList),
+    };
+  };
 }
 
 export const LfxLotte = new LfxLotteClass();

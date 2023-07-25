@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { LfxLotte, LotteConfig, LotteInfo } from '../apis/lfx-lotte';
+import {
+  DrawInformation,
+  LfxLotte,
+  LotteConfig,
+  LotteInfo,
+} from '../apis/lfx-lotte';
 import { useWalletClient } from 'wagmi';
 import { contractConfig } from '../contracts';
 import { Contract, ethers } from 'ethers';
@@ -111,6 +116,7 @@ export const Lotte = () => {
   const [ticketList, setTicketList] = useState<number[]>([]);
   const [ref, setRef] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
+  const [lastDraw, setLastDraw] = useState<DrawInformation>();
 
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxLotte, setLfxLotte] = useState<Contract>();
@@ -228,9 +234,11 @@ export const Lotte = () => {
   const loadConfig = async () => {
     const info = await LfxLotte.getInformation();
     const config = await LfxLotte.getConfig();
+    const draw = await LfxLotte.getLastDraw();
 
     setLotteInfo(info);
     setLotteConfig(config);
+    setLastDraw(draw);
   };
 
   useEffect(() => {
@@ -349,6 +357,21 @@ export const Lotte = () => {
           <p>System Fees: {lotteInfo?.systemFees} LFX</p>
           <p>Draw Rewards: {lotteInfo?.drawFees} LFX</p>
           <p>Burn Amount: {lotteInfo?.burnAmount} LFX</p>
+
+          <h4>Last Draw</h4>
+          <p>Time: {lastDraw?.timestamp}</p>
+          <p>
+            Winning Number: {getTicketByNumber(lastDraw?.winningNumber || 0)}
+          </p>
+          <p>Winning Amount: {lastDraw?.winningAmount}</p>
+          <p>Winner Count: {lastDraw?.winnerCount}</p>
+          <p>
+            Winner Address:{' '}
+            {lastDraw?.winnerList.map((i) => (
+              <span>{i}</span>
+            ))}
+            {!lastDraw?.winnerList.length ? <span>No winner</span> : null}
+          </p>
 
           <ScDrawWrapper>
             <Button
