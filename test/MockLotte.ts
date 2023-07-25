@@ -121,7 +121,7 @@ describe('MockLotte: Draw Winner', () => {
     const lastDraw = await lotte.getLastDraw();
     expect(lastDraw.winningNumber).to.equals(11);
     expect(lastDraw.winnerCount).to.equals(0);
-    expect(lastDraw.winnerAmount).to.equals(0);
+    expect(lastDraw.winningAmount).to.equals(0);
     expect(lastDraw.winnerList.length).to.equals(0);
 
     expect(await lotte.totalTicket()).to.equal(0);
@@ -205,7 +205,7 @@ describe('MockLotte: Draw Winner', () => {
     const lastDraw = await lotte.getLastDraw();
     expect(lastDraw.winningNumber).to.equals(11);
     expect(lastDraw.winnerCount).to.equals(1);
-    expect(lastDraw.winnerAmount).to.equals(97200);
+    expect(lastDraw.winningAmount).to.equals(97200);
     expect(lastDraw.winnerList[0]).to.equals(wallet2.address);
 
     expect(await lotte.totalTicket()).to.equal(0);
@@ -290,7 +290,7 @@ describe('MockLotte: Draw Winner', () => {
     const lastDraw = await lotte.getLastDraw();
     expect(lastDraw.winningNumber).to.equals(11);
     expect(lastDraw.winnerCount).to.equals(2);
-    expect(lastDraw.winnerAmount).to.equals(48600);
+    expect(lastDraw.winningAmount).to.equals(48600);
     expect(lastDraw.winnerList[0]).to.equals(wallet1.address);
     expect(lastDraw.winnerList[1]).to.equals(wallet2.address);
 

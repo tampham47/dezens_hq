@@ -20,9 +20,10 @@ contract Lotte {
 
   struct Draw {
     uint timestamp;
+    address actor;
     uint winningNumber;
+    uint winningAmount;
     uint winnerCount;
-    uint winnerAmount;
     address[] winnerList;
   }
 
@@ -300,17 +301,18 @@ contract Lotte {
 
     drawData[round].winningNumber = winningNumber;
     drawData[round].timestamp = block.timestamp;
+    drawData[round].actor = msg.sender;
 
     // found the winner, so then distribute the pot rewards
     if (winnerCount > 0) {
       uint totalPot = balanceOf[potAddress];
-      uint winnerAmount = totalPot / winnerCount;
+      uint winningAmount = totalPot / winnerCount;
 
       drawData[round].winnerCount = winnerCount;
-      drawData[round].winnerAmount = winnerAmount;
+      drawData[round].winningAmount = winningAmount;
 
       _burn(potAddress, totalPot);
-      _distributeRewardByTicketNumber(winningNumber, winnerAmount);
+      _distributeRewardByTicketNumber(winningNumber, winningAmount);
     }
 
     // rewards 5% of the system fees for whom took the action
@@ -367,7 +369,7 @@ contract Lotte {
 
   function getLastDraw() public view returns (Draw memory) {
     if (round == 0) {
-      return Draw(0, 0, 0, 0, new address[](0));
+      return Draw(0, address(0), 0, 0, 0, new address[](0));
     }
 
     return drawData[round - 1];

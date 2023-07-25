@@ -264,31 +264,6 @@ export const Lotte = () => {
       <ScStack>
         <ScPersonal>
           <ScBlock>
-            <h3>Your Balance</h3>
-            <ScRow>
-              <p>{balance} LFX</p>
-              <Button
-                variant="subtle"
-                color="green"
-                onClick={withdraw}
-                loading={withdrawing}
-              >
-                Withdraw
-              </Button>
-            </ScRow>
-          </ScBlock>
-
-          <ScBlock>
-            <h3>Your Tickets</h3>
-            {!ticketList.length ? <ScHelper>No ticket found</ScHelper> : null}
-            <ScTicketList>
-              {ticketList.map((i, index) => (
-                <ScTicket key={index}>{getTicketByNumber(i)}</ScTicket>
-              ))}
-            </ScTicketList>
-          </ScBlock>
-
-          <ScBlock>
             <h3>Buy Tickets</h3>
             {ref === ethers.ZeroAddress ? (
               <Input
@@ -333,6 +308,31 @@ export const Lotte = () => {
               Purchase
             </Button>
           </ScBlock>
+
+          <ScBlock>
+            <h3>Your Tickets</h3>
+            {!ticketList.length ? <ScHelper>No ticket found</ScHelper> : null}
+            <ScTicketList>
+              {ticketList.map((i, index) => (
+                <ScTicket key={index}>{getTicketByNumber(i)}</ScTicket>
+              ))}
+            </ScTicketList>
+          </ScBlock>
+
+          <ScBlock>
+            <h3>Your Balance</h3>
+            <ScRow>
+              <p>{balance} LFX</p>
+              <Button
+                variant="subtle"
+                color="green"
+                onClick={withdraw}
+                loading={withdrawing}
+              >
+                Withdraw
+              </Button>
+            </ScRow>
+          </ScBlock>
         </ScPersonal>
         <ScContent>
           <h3>Lotte Fan Overview</h3>
@@ -350,9 +350,9 @@ export const Lotte = () => {
             )
           </p>
           <p>Round: #{lotteInfo?.round}</p>
-          <p>Total Ticket: {lotteInfo?.totalTicket}</p>
-          <p>Ticket Price: {lotteConfig?.ticketPrice} LFX</p>
           <p>Pot: {lotteInfo?.totalPot} LFX</p>
+          <p>Ticket Price: {lotteConfig?.ticketPrice} LFX</p>
+          <p>Total Ticket: {lotteInfo?.totalTicket}</p>
           <p>LFX Balance: {lotteInfo?.totalSupply} LFX</p>
           <p>System Fees: {lotteInfo?.systemFees} LFX</p>
           <p>Draw Rewards: {lotteInfo?.drawFees} LFX</p>
@@ -361,17 +361,34 @@ export const Lotte = () => {
           <h4>Last Draw</h4>
           <p>Time: {lastDraw?.timestamp}</p>
           <p>
+            Actor:{' '}
+            <a
+              href={`https://testnet.ftmscan.com/address/${lastDraw?.actor}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {getShortAddress(lastDraw?.actor || '')}
+            </a>
+          </p>
+          <p>
             Winning Number: {getTicketByNumber(lastDraw?.winningNumber || 0)}
           </p>
-          <p>Winning Amount: {lastDraw?.winningAmount}</p>
-          <p>Winner Count: {lastDraw?.winnerCount}</p>
           <p>
-            Winner Address:{' '}
-            {lastDraw?.winnerList.map((i) => (
-              <span>{i}</span>
-            ))}
-            {!lastDraw?.winnerList.length ? <span>No winner</span> : null}
+            Winner Count:{' '}
+            {lastDraw?.winnerCount === 0 ? 'No Winner' : lastDraw?.winnerCount}
           </p>
+          {lastDraw?.winnerCount ? (
+            <>
+              <p>Winning Amount: {lastDraw?.winningAmount}</p>
+              <p>
+                Winner Address:{' '}
+                {lastDraw?.winnerList.map((i) => (
+                  <span>{i}</span>
+                ))}
+                {!lastDraw?.winnerList.length ? <span>No winner</span> : null}
+              </p>
+            </>
+          ) : null}
 
           <ScDrawWrapper>
             <Button

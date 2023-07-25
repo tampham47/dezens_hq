@@ -30,6 +30,7 @@ export type DrawInformation = {
   winningAmount: number;
   winnerCount: number;
   winnerList: string[];
+  actor: string;
 };
 
 class LfxLotteClass {
@@ -111,10 +112,17 @@ class LfxLotteClass {
   };
 
   getLastDraw = async (): Promise<DrawInformation> => {
-    const [timestamp, winningNumber, winnerCount, winningAmount, winnerList] =
-      await this.contract.getLastDraw();
+    const [
+      timestamp,
+      actor,
+      winningNumber,
+      winningAmount,
+      winnerCount,
+      winnerList,
+    ] = await this.contract.getLastDraw();
 
     return {
+      actor,
       timestamp: getNumber(timestamp, 0),
       winningNumber: getNumber(winningNumber, 0),
       winningAmount: getNumber(winningAmount, 18),
