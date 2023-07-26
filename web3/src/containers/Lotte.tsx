@@ -108,6 +108,31 @@ const getTicketByNumber = (ticketNumber: number) => {
   return `${aa.toString().padStart(2, '0')}:${bb.toString().padStart(2, '0')}`;
 };
 
+const getNumberByTicket = (ticket: string) => {
+  const [aa, bb] = ticket.split(':');
+  return Number(aa) * 60 + Number(bb);
+};
+
+const validateNumber = (ticket: string) => {
+  if (ticket.length !== 5) {
+    return false;
+  }
+
+  const n = getNumberByTicket(ticket);
+  const [aa, bb] = ticket.split(':');
+  const numberAa = Number(aa);
+  const numberBb = Number(bb);
+
+  return (
+    numberAa >= 0 &&
+    numberAa < 24 &&
+    numberBb >= 0 &&
+    numberBb < 60 &&
+    n >= 0 &&
+    n < 1440
+  );
+};
+
 export const Lotte = () => {
   const { data: walletClient } = useWalletClient();
 
@@ -168,11 +193,17 @@ export const Lotte = () => {
       return;
     }
 
+    const number = getNumberByTicket(ticketNumber);
+
+    if (!validateNumber(ticketNumber)) {
+      return;
+    }
+
     try {
       setLoading(true);
       const spender = walletClient.account.address;
       const amount = ethers.parseEther(lotteConfig.ticketPrice.toString());
-      const tickets = [Number(ticketNumber)];
+      const tickets = [number];
 
       const allowance = await LfxToken.allowance(
         spender,
@@ -288,14 +319,35 @@ export const Lotte = () => {
               </ScRef>
             )}
             <Input
-              placeholder="Ticket Number [0000 - 1439]"
+              placeholder="Ticket Number [00-23]:[00-59]"
               size="lg"
-              type="number"
+              type="text"
               inputMode="numeric"
-              style={{ marginBottom: 12 }}
+              style={{ marginBottom: 12, textAlign: 'center' }}
               value={ticketNumber}
+              onKeyDown={(e) => {
+                if (ticketNumber.length !== 3) {
+                  return;
+                }
+
+                if (e.key === 'Backspace' || e.key === 'Delete') {
+                  setTicketNumber(ticketNumber.slice(0, -1));
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+              }}
               onChange={(e) => {
-                setTicketNumber(e.target.value);
+                let value = e.target.value;
+
+                if (value.length > 5) {
+                  return;
+                }
+
+                if (value.length == 2) {
+                  value += ':';
+                }
+
+                setTicketNumber(value);
               }}
             />
             <Button
