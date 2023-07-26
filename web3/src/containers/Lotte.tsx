@@ -42,7 +42,7 @@ const ScPersonal = styled.div`
   overflow: hidden;
 `;
 
-const ScContent = styled.div`
+const ScBody = styled.div`
   flex: 5;
   border-radius: 16px;
   background-color: #4e4feb;
@@ -50,7 +50,9 @@ const ScContent = styled.div`
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
+`;
 
+const ScContent = styled(ScBody)`
   @media screen and (min-width: 1260px) {
     margin-right: 1rem;
   }
@@ -456,6 +458,50 @@ export const Lotte = () => {
           </ScDrawWrapper>
         </ScContent>
       </ScStack>
+
+      <ScBody>
+        <h3>How to play</h3>
+        <p>
+          Lotte Fan is working automatically itself. The power is all on you.
+        </p>
+
+        <div>
+          <h4>Step: 1. Choose tickets with your favorite number.</h4>
+          <p>
+            A ticket contains two numbers and divided by `:`, the first number
+            is in this range [00, 23], the second number should be in this range
+            [00, 59]
+          </p>
+        </div>
+        <div>
+          <h4>Step 2. Purchase and Payment</h4>
+          <p>
+            To purchase tickets, you need to approve the contract to use LFX in
+            your wallet first. The ticket is about 10.000 LFX. However, you can
+            approve more than that to save the gas fee for the next purchase.
+          </p>
+
+          <p>
+            If your allowance of LFX in the contract is enough to pay for the
+            tickets. You will be led directly to the confirmation screen.
+          </p>
+        </div>
+        <div>
+          <h4>Step 3. Wait for the Draw</h4>
+          <p>
+            Every 24 hours, everybody can perform the Draw action. This action
+            generates a winning number, then distributes rewards to winners if
+            any.
+          </p>
+          <p>
+            If there is no winner. All the rewards in the POT will be
+            accumulated for the next round.
+          </p>
+          <p>
+            Those who perform the Draw action will receive rewards from the system right after the draw is complete. Then they can withdraw LFX to their wallet.
+          </p>
+        </div>
+      </ScBody>
     </ScMain>
   );
 };
