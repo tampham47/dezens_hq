@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Contract } from 'ethers';
 import { useWalletClient } from 'wagmi';
 import styled from 'styled-components';
-import { Button } from '@mantine/core';
 import { QRCodeCanvas } from 'qrcode.react';
-import { Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons-react';
+import { Alert, CopyButton, Button } from '@mantine/core';
+import {
+  IconAlertCircle,
+  IconClipboard,
+  IconClipboardCheck,
+} from '@tabler/icons-react';
 
 import { contractConfig } from '../contracts';
 import { LfxAirdrop, AirdropInfo } from '../apis/lfx-airdrop';
@@ -41,7 +44,7 @@ const ScSection = styled.div`
 const ScQrCodeWrapper = styled.div`
   text-align: center;
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 const ScQrCode = styled.div`
   display: inline-block;
@@ -51,7 +54,24 @@ const ScQrCode = styled.div`
 `;
 
 const ScHelperBox = styled.div`
-  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  ${ScMessage} {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+`;
+
+const ScAddress = styled.span`
+  padding: 2px 2px 2px 16px;
+  border-radius: 4px;
+  border: 1px solid #3330e4;
+  display: inline-block;
+`;
+const ScAddressValue = styled.code`
+  margin-right: 8px;
 `;
 
 const ScImgWrapper = styled.div`
@@ -168,25 +188,6 @@ export const Airdrop = () => {
               <ScInfoLabel>Total FTM deposited</ScInfoLabel>
             </ScInfoBlock>
           </ScInfoList>
-
-          <ScHelperBox>
-            <ScMessage>
-              Deposit FTM to participate LFX Airdrop. FTM will be returned to
-              you when the airdrop ends
-            </ScMessage>
-            <ScMessage>
-              LFX Token Address:{' '}
-              <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
-              <a
-                href={`${process.env.GATSBY_FANTOM_SCAN}/token/${contractConfig.Lfx.Token}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Scan
-              </a>
-              )
-            </ScMessage>
-          </ScHelperBox>
         </ScBlock>
       </ScInfo>
 
@@ -238,6 +239,7 @@ export const Airdrop = () => {
                 time to withdraw.
               </Alert>
             ) : null}
+
             <ScBlock>
               <ScQrCodeWrapper>
                 <ScQrCode>
@@ -247,10 +249,41 @@ export const Airdrop = () => {
                   />
                 </ScQrCode>
               </ScQrCodeWrapper>
+
+              <ScHelperBox>
+                <ScAddress>
+                  <ScAddressValue>
+                    {getShortAddress(contractConfig.LfxAirdrop.Token)}
+                  </ScAddressValue>
+                  <CopyButton value={contractConfig.LfxAirdrop.Token}>
+                    {({ copied, copy }) => (
+                      <Button
+                        color={copied ? 'teal' : 'blue'}
+                        variant="subtle"
+                        onClick={copy}
+                        leftIcon={
+                          copied ? (
+                            <IconClipboardCheck size={16} />
+                          ) : (
+                            <IconClipboard size={16} />
+                          )
+                        }
+                      >
+                        {copied ? 'Copied' : 'Copy'}
+                      </Button>
+                    )}
+                  </CopyButton>
+                </ScAddress>
+                <ScMessage>
+                  Deposit FTM to participate LFX Airdrop. FTM will be returned
+                  to you when the airdrop ends
+                </ScMessage>
+              </ScHelperBox>
+
               <p>
                 🍍 Airdrop Contract Address:{' '}
-                <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>{' '}
-                (
+                <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>
+                &nbsp;(
                 <a
                   href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.LfxAirdrop.Token}`}
                   target="_blank"
@@ -258,7 +291,19 @@ export const Airdrop = () => {
                 >
                   Scan
                 </a>
-                )
+                ).
+              </p>
+              <p>
+                🍍 LFX Token Address:{' '}
+                <code>{getShortAddress(contractConfig.Lfx.Token)}</code>&nbsp;(
+                <a
+                  href={`${process.env.GATSBY_FANTOM_SCAN}/token/${contractConfig.Lfx.Token}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Scan
+                </a>
+                ), do NOT deposit FTM into this contract.
               </p>
               <p>
                 🍍 Only deposit FTM - Fantom, transferring any other token will
