@@ -20,46 +20,13 @@ import {
   ScBlock,
 } from '../components/Common';
 import { getDisplayedNumber } from '../utils/number';
+import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
 
 const ScMain = styled.div`
   margin-bottom: 6rem;
 
   p {
     line-height: 1.6;
-  }
-`;
-
-const ScStack = styled.div`
-  h3 {
-    margin-top: 0;
-  }
-
-  @media screen and (min-width: 1260px) {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-`;
-
-const ScPersonal = styled.div`
-  flex: 2;
-  border-radius: 16px;
-  background-color: #000957;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-`;
-
-const ScContent = styled.div`
-  flex: 5;
-  border-radius: 16px;
-  background-color: #000957;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-
-  @media screen and (min-width: 1260px) {
-    margin-right: 1rem;
   }
 `;
 
@@ -179,7 +146,7 @@ export const Stake = () => {
   return (
     <ScMain>
       <ScStack>
-        <ScPersonal>
+        <ScStackMain>
           <ScBlock>
             <h3>Your Stake</h3>
             <ScRow>
@@ -239,8 +206,8 @@ export const Stake = () => {
               Deposit
             </Button>
           </ScBlock>
-        </ScPersonal>
-        <ScContent>
+        </ScStackMain>
+        <ScStackAside>
           <h3>Vault Information</h3>
 
           <ScImgWrapper>
@@ -283,7 +250,7 @@ export const Stake = () => {
             </a>
             )
           </ScMessage>
-        </ScContent>
+        </ScStackAside>
       </ScStack>
     </ScMain>
   );

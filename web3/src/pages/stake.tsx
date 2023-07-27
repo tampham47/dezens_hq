@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
 
 import { Card } from '../components/Card';
-import { Container } from '../components/Grid';
+import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { Stake } from '../containers/Stake';
@@ -12,16 +12,6 @@ import { Stake } from '../containers/Stake';
 const ScRoot = styled.div`
   background-color: var(--darkmode);
   padding-top: 1px;
-`;
-
-const ScMain = styled.div`
-  margin-top: 3rem;
-  margin-bottom: 5rem;
-
-  @media screen and (min-width: 992px) {
-    margin-top: 3rem;
-    margin-bottom: 5rem;
-  }
 `;
 
 const ScPostList = styled.div`
@@ -116,7 +106,7 @@ const StakePage = ({ data }: any) => {
           <ScMain>
             <h2>News</h2>
             <ScPostList>
-              {posts.map((i) => (
+              {posts.slice(0, 3).map((i) => (
                 <Card key={i.slug} post={i} />
               ))}
             </ScPostList>

@@ -136,6 +136,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
               </Alert>
             </Container>
           ) : null}
+
           {children}
           <Footer />
           <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />

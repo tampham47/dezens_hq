@@ -20,6 +20,7 @@ import {
   ScBlock,
 } from '../components/Common';
 import { getDisplayedNumber } from '../utils/number';
+import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
 
 const ScMain = styled.div`
   p {
@@ -27,43 +28,10 @@ const ScMain = styled.div`
   }
 `;
 
-const ScStack = styled.div`
-  h3 {
-    margin-top: 0;
+const ScInfo = styled(ScStackAside)`
+  @media screen and (min-width: 960px) {
+    margin-right: 0;
   }
-
-  @media screen and (min-width: 1260px) {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-`;
-
-const ScPersonal = styled.div`
-  flex: 2;
-  border-radius: 16px;
-  background-color: #000957;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-`;
-
-const ScContent = styled.div`
-  flex: 5;
-  border-radius: 16px;
-  background-color: #000957;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-
-  @media screen and (min-width: 1260px) {
-    margin-right: 1rem;
-  }
-`;
-
-const ScInfo = styled(ScContent)`
-  flex: none;
-  margin-right: 0;
 `;
 
 const ScSection = styled.div`
@@ -218,7 +186,7 @@ export const Airdrop = () => {
       </ScInfo>
 
       <ScStack>
-        <ScPersonal>
+        <ScStackMain>
           <ScSection>
             <h3>Your LFX Airdrop</h3>
             <ScBlock>
@@ -249,8 +217,9 @@ export const Airdrop = () => {
               </Button>
             </ScBlock>
           </ScSection>
-        </ScPersonal>
-        <ScContent>
+        </ScStackMain>
+
+        <ScStackAside>
           <ScSection>
             <h3>LFX Airdrop</h3>
 
@@ -311,7 +280,7 @@ export const Airdrop = () => {
               </p>
             </ScBlock>
           </ScSection>
-        </ScContent>
+        </ScStackAside>
       </ScStack>
     </ScMain>
   );

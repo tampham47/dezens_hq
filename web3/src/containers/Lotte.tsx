@@ -23,6 +23,7 @@ import {
   ScMessage,
   ScRow,
 } from '../components/Common';
+import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
 
 const ScMain = styled.div`
   p {
@@ -32,44 +33,6 @@ const ScMain = styled.div`
   h4 {
     margin-top: 2.5em;
     margin-bottom: 0.5em;
-  }
-`;
-
-const ScStack = styled.div`
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-  }
-
-  @media screen and (min-width: 1260px) {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-`;
-
-const ScPersonal = styled.div`
-  flex: 2;
-  border-radius: 16px;
-  background-color: #000957;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-`;
-
-const ScBody = styled.div`
-  flex: 5;
-  border-radius: 16px;
-  background-color: #000957;
-  color: black;
-  color: #f1c93b;
-  padding: 24px;
-  margin-bottom: 1rem;
-`;
-
-const ScContent = styled(ScBody)`
-  @media screen and (min-width: 1260px) {
-    margin-right: 1rem;
   }
 `;
 
@@ -83,7 +46,7 @@ const ScTicket = styled.span`
   display: inline-block;
   padding: 6px 12px;
   margin-right: 12px;
-  background-color: #ef6262;
+  background-color: #d61c4e;
   border-radius: 4px;
   font-weight: bold;
   min-width: 80px;
@@ -327,7 +290,7 @@ export const Lotte = () => {
   return (
     <ScMain>
       <ScStack>
-        <ScPersonal>
+        <ScStackMain>
           <ScBlock>
             <h3>Buy Tickets</h3>
             {ref === ethers.ZeroAddress ? (
@@ -420,8 +383,8 @@ export const Lotte = () => {
               </Button>
             </ScRow>
           </ScBlock>
-        </ScPersonal>
-        <ScContent>
+        </ScStackMain>
+        <ScStackAside>
           <h3>Round #{lotteInfo?.round}</h3>
 
           <ScPotWrapper>
@@ -503,11 +466,13 @@ export const Lotte = () => {
               Draw
             </Button>
           </ScDrawWrapper>
-        </ScContent>
+        </ScStackAside>
       </ScStack>
 
       <ScStack>
-        <ScPersonal>
+        <ScStackMain>
+        <ScBlock>
+
           <h3>
             Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '#'}
           </h3>
@@ -556,9 +521,10 @@ export const Lotte = () => {
               </ScRow>
             </>
           ) : null}
-        </ScPersonal>
+        </ScBlock>
+        </ScStackMain>
 
-        <ScContent>
+        <ScStackAside>
           <h3>How to play</h3>
           <p>
             Lotte Fan is working automatically itself. The power is all on you.
@@ -607,7 +573,7 @@ export const Lotte = () => {
               than 7 to active the Draw
             </p>
           </div>
-        </ScContent>
+        </ScStackAside>
       </ScStack>
     </ScMain>
   );
