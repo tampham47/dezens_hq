@@ -11,8 +11,18 @@ export const Container = styled.div`
   }
 `;
 
+export const MobileWrapper = styled.div`
+  margin-left: -16px;
+  margin-right: -16px;
+
+  @media screen and (min-width: 992px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+`;
+
 export const ScMain = styled.div`
-  margin-top: 0rem;
+  margin-top: 4px;
   margin-bottom: 2rem;
 
   @media screen and (min-width: 992px) {

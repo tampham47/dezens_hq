@@ -17,7 +17,7 @@ import { Footer } from './Footer';
 import { NavBar } from './NavBar';
 
 import '../css/normalize.css';
-import { Container } from './Grid';
+import { Container, MobileWrapper } from './Grid';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -119,6 +119,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
 
           {process.env.GATSBY_NETWORK !== 'mainnet' ? (
             <Container>
+              <MobileWrapper>
+
               <Alert
                 icon={<IconAlertCircle size="1rem" />}
                 color="orange"
@@ -134,6 +136,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
                 </a>{' '}
                 to learn how to add Fantom Testnet to your Metamask.
               </Alert>
+              </MobileWrapper>
             </Container>
           ) : null}
 
