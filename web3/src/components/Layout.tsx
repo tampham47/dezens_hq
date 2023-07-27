@@ -9,7 +9,7 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { fantom, fantomTestnet, localhost } from 'wagmi/chains';
+import { fantom, fantomTestnet, arbitrumGoerli } from 'wagmi/chains';
 import { Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const chains = [fantom, fantomTestnet, { ...localhost, id: 31337 }];
+const chains = [arbitrumGoerli, fantom, fantomTestnet];
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -120,22 +120,21 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
           {process.env.GATSBY_NETWORK !== 'mainnet' ? (
             <Container>
               <MobileWrapper>
-
-              <Alert
-                icon={<IconAlertCircle size="1rem" />}
-                color="orange"
-                variant="filled"
-              >
-                You're on Fantom Testnet, please do NOT use your real FTM.{' '}
-                <a
-                  href="https://metaschool.so/rpc/fantomTestnet"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Alert
+                  icon={<IconAlertCircle size="1rem" />}
+                  color="orange"
+                  variant="filled"
                 >
-                  Click here
-                </a>{' '}
-                to learn how to add Fantom Testnet to your Metamask.
-              </Alert>
+                  You're on Fantom Testnet, please do NOT use your real FTM.{' '}
+                  <a
+                    href="https://metaschool.so/rpc/fantomTestnet"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Click here
+                  </a>{' '}
+                  to learn how to add Fantom Testnet to your Metamask.
+                </Alert>
               </MobileWrapper>
             </Container>
           ) : null}

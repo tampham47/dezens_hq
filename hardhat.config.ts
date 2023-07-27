@@ -23,6 +23,17 @@ const config: HardhatUserConfig = {
         `0x${PRIVATE_KEY_05}`,
       ],
     },
+    'arbgoerli': {
+      url: `https://goerli-rollup.arbitrum.io/rpc`,
+      chainId: 421613,
+      accounts: [
+        `0x${PRIVATE_KEY_01}`,
+        `0x${PRIVATE_KEY_02}`,
+        `0x${PRIVATE_KEY_03}`,
+        `0x${PRIVATE_KEY_04}`,
+        `0x${PRIVATE_KEY_05}`,
+      ],
+    },
     testnet: {
       url: `https://rpc.testnet.fantom.network`,
       chainId: 4002,

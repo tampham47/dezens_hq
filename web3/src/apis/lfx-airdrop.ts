@@ -29,6 +29,8 @@ class LfxAirdropClass {
       contractConfig.ArtifactLfxAirdrop.abi,
       this.provider
     );
+
+    console.log('contractConfig', contractConfig);
   }
 
   getInformation = async (): Promise<AirdropInfo> => {

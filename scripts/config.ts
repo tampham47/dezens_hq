@@ -12,7 +12,7 @@ const CONFIG = {
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * BigInt(1e18),
-      minDrawDuration: 60 * 60 * 24, // 1 day
+      minDrawDuration: 60 * 60 * 6, // 1 day
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
       burnRate: 2000, // 20% system fees
@@ -34,7 +34,7 @@ const CONFIG = {
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * BigInt(1e18),
-      minDrawDuration: 60 * 60 * 24, // 1 day
+      minDrawDuration: 60 * 60 * 6, // 1 day
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
       burnRate: 2000, // 20% system fees
