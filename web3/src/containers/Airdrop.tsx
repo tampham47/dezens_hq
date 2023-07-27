@@ -10,6 +10,16 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import { contractConfig } from '../contracts';
 import { LfxAirdrop, AirdropInfo } from '../apis/lfx-airdrop';
 import { getShortAddress } from '../utils/address';
+import {
+  ScInfoList,
+  ScInfoBlock,
+  ScInfoValue,
+  ScInfoLabel,
+  ScMessage,
+  ScRow,
+  ScBlock,
+} from '../components/Common';
+import { getDisplayedNumber } from '../utils/number';
 
 const ScMain = styled.div`
   p {
@@ -31,7 +41,7 @@ const ScStack = styled.div`
 const ScPersonal = styled.div`
   flex: 2;
   border-radius: 16px;
-  background-color: #3f2e3e;
+  background-color: #000957;
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
@@ -41,8 +51,7 @@ const ScPersonal = styled.div`
 const ScContent = styled.div`
   flex: 5;
   border-radius: 16px;
-  background-color: #4e4feb;
-  color: black;
+  background-color: #000957;
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
@@ -61,20 +70,28 @@ const ScSection = styled.div`
   margin-bottom: 4rem;
 `;
 
-const ScBlock = styled.div`
-  margin-bottom: 2rem;
-`;
-
 const ScQrCodeWrapper = styled.div`
   text-align: center;
   margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 `;
 const ScQrCode = styled.div`
   display: inline-block;
   padding: 12px;
   border-radius: 8px;
   background: white;
+`;
+
+const ScHelperBox = styled.div`
+  margin-top: 2rem;
+`;
+
+const ScImgWrapper = styled.div`
+  text-align: center;
+  margin-bottom: 2rem;
+`;
+const ScImg = styled.img`
+  width: 240px;
 `;
 
 export const Airdrop = () => {
@@ -134,27 +151,101 @@ export const Airdrop = () => {
 
   return (
     <ScMain>
+      <ScInfo>
+        <ScBlock>
+          <h3>LFX Airdrop Round #01</h3>
+
+          <ScImgWrapper>
+            <ScImg src="/images/heart.png" alt="Heart LFX" />
+          </ScImgWrapper>
+
+          <ScInfoList>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {airdropInfo?.isWithdrawable ? 'Completed' : 'Ongoing'}
+              </ScInfoValue>
+              <ScInfoLabel>Status</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(airdropInfo?.participantCount)}
+              </ScInfoValue>
+              <ScInfoLabel>Number of participants</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(airdropInfo?.totalSupply)} FTM
+              </ScInfoValue>
+              <ScInfoLabel>Total FTM deposited</ScInfoLabel>
+            </ScInfoBlock>
+          </ScInfoList>
+
+          <ScInfoList>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(airdropInfo?.balanceLfxToken)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Total LFX to distribute</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(airdropInfo?.estLfxReceivePerFtm || 0)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Amount of LFX received / FTM</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock></ScInfoBlock>
+          </ScInfoList>
+
+          <ScHelperBox>
+            <ScMessage>
+              Deposit FTM to participate LFX Airdrop. FTM will be returned to
+              you when the airdrop ends
+            </ScMessage>
+            <ScMessage>
+              LFX Token Address:{' '}
+              <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
+              <a
+                href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Scan
+              </a>
+              )
+            </ScMessage>
+          </ScHelperBox>
+        </ScBlock>
+      </ScInfo>
+
       <ScStack>
         <ScPersonal>
           <ScSection>
             <h3>Your LFX Airdrop</h3>
             <ScBlock>
-              <p>FTM deposited: {userDeposit} FTM</p>
-              <p>
-                Est LFX received:{' '}
-                {userDeposit * (airdropInfo?.estLfxReceivePerFtm || 0)} LFX
-              </p>
+              <ScRow>
+                <p>FTM deposited: </p>
+                <p>{getDisplayedNumber(userDeposit)} FTM</p>
+              </ScRow>
+              <ScRow>
+                <p>Est LFX received: </p>
+                <p>
+                  {getDisplayedNumber(
+                    userDeposit * (airdropInfo?.estLfxReceivePerFtm || 0)
+                  )}{' '}
+                  LFX
+                </p>
+              </ScRow>
             </ScBlock>
             <ScBlock>
               <Button
                 variant="light"
-                color="orange"
+                color="yellow"
                 size="lg"
                 disabled={!airdropInfo?.isWithdrawable}
                 onClick={withdraw}
                 style={{ width: '100%' }}
               >
-                Withdraw
+                Claim
               </Button>
             </ScBlock>
           </ScSection>
@@ -222,43 +313,6 @@ export const Airdrop = () => {
           </ScSection>
         </ScContent>
       </ScStack>
-
-      <ScInfo>
-        <ScBlock>
-          <h4>LFX Airdrop Overview</h4>
-
-          <p>
-            LFX Token Address:{' '}
-            <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
-            <a
-              href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Scan
-            </a>
-            )
-          </p>
-          <p>
-            Total LFX tokens to be airdropped: {airdropInfo?.balanceLfxToken}{' '}
-            LFX
-          </p>
-          <p>
-            Total FTM deposited into smart contract: {airdropInfo?.totalSupply}{' '}
-            FTM
-          </p>
-          <p>
-            Amount of LFX received per FTM:{' '}
-            {airdropInfo?.estLfxReceivePerFtm || 0} LFX
-          </p>
-          <p>Number of participants: {airdropInfo?.participantCount}</p>
-          <p>Status: {airdropInfo?.isWithdrawable ? 'Completed' : 'Ongoing'}</p>
-          <p>
-            Smart contract information, test cases for auditing the smart
-            contract.
-          </p>
-        </ScBlock>
-      </ScInfo>
     </ScMain>
   );
 };

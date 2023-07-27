@@ -10,6 +10,16 @@ import { LfxVault } from '../apis/lfx-vault';
 import { LfxToken } from '../apis/lfx-token';
 import { getShortAddress } from '../utils/address';
 import { wait } from '../utils/time';
+import {
+  ScInfoList,
+  ScInfoBlock,
+  ScInfoValue,
+  ScInfoLabel,
+  ScMessage,
+  ScRow,
+  ScBlock,
+} from '../components/Common';
+import { getDisplayedNumber } from '../utils/number';
 
 const ScMain = styled.div`
   margin-bottom: 6rem;
@@ -33,7 +43,7 @@ const ScStack = styled.div`
 const ScPersonal = styled.div`
   flex: 2;
   border-radius: 16px;
-  background-color: #3f2e3e;
+  background-color: #000957;
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
@@ -43,8 +53,7 @@ const ScPersonal = styled.div`
 const ScContent = styled.div`
   flex: 5;
   border-radius: 16px;
-  background-color: #4e4feb;
-  color: black;
+  background-color: #000957;
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
@@ -54,17 +63,12 @@ const ScContent = styled.div`
   }
 `;
 
-const ScInfo = styled(ScContent)`
-  flex: none;
-  margin-right: 0;
-`;
-
-const ScSection = styled.div`
-  margin-bottom: 4rem;
-`;
-
-const ScBlock = styled.div`
+const ScImgWrapper = styled.div`
+  text-align: center;
   margin-bottom: 2rem;
+`;
+const ScImg = styled.img`
+  width: 240px;
 `;
 
 export const Stake = () => {
@@ -178,9 +182,16 @@ export const Stake = () => {
         <ScPersonal>
           <ScBlock>
             <h3>Your Stake</h3>
-            <p>Total Deposit: {userDeposit} LFX</p>
-            <p>Total Interest: {totalInterest} LFX</p>
-
+            <ScRow>
+              <p>Total Deposit</p>
+              <p>{getDisplayedNumber(userDeposit)} LFX</p>
+            </ScRow>
+            <ScRow>
+              <p>Total Interest</p>
+              <p>{getDisplayedNumber(totalInterest)} LFX</p>
+            </ScRow>
+          </ScBlock>
+          <ScBlock>
             <Input
               placeholder="LFX amount"
               size="lg"
@@ -195,6 +206,7 @@ export const Stake = () => {
             <Button
               size="lg"
               variant="light"
+              color="yellow"
               style={{ width: '100%' }}
               onClick={withdraw}
               loading={withdrawing}
@@ -219,6 +231,7 @@ export const Stake = () => {
             <Button
               size="lg"
               variant="light"
+              color="yellow"
               style={{ width: '100%' }}
               onClick={deposit}
               loading={depositing}
@@ -230,9 +243,37 @@ export const Stake = () => {
         <ScContent>
           <h3>Vault Information</h3>
 
-          <p>
+          <ScImgWrapper>
+            <ScImg src="/images/diamond.png" alt="Diamond LFX" />
+          </ScImgWrapper>
+
+          <ScInfoList>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(vaultInfo?.totalSupply)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Total Deposit</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(vaultInfo?.vaultBalance)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Vault Balance</ScInfoLabel>
+            </ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(vaultInfo?.yieldPerTokenPerDay)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Yield / Token / Day</ScInfoLabel>
+            </ScInfoBlock>
+          </ScInfoList>
+
+          <ScMessage>
+            Stake your LFX to share profit from LotteFan system with us!
+          </ScMessage>
+          <ScMessage>
             Vault Contract Address:{' '}
-            <code>{getShortAddress(contractConfig.LfxVault.Token)}</code> (
+            <code>{getShortAddress(contractConfig.LfxVault.Token)}</code>&nbsp;(
             <a
               href={`https://testnet.ftmscan.com/address/${contractConfig.LfxVault.Token}`}
               target="_blank"
@@ -241,10 +282,7 @@ export const Stake = () => {
               Scan
             </a>
             )
-          </p>
-          <p>Total Deposit: {vaultInfo?.totalSupply} LFX</p>
-          <p>Vault Balance: {vaultInfo?.vaultBalance} LFX</p>
-          <p>Yield Per Token Per Day: {vaultInfo?.yieldPerTokenPerDay} LFX</p>
+          </ScMessage>
         </ScContent>
       </ScStack>
     </ScMain>

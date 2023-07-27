@@ -15,6 +15,14 @@ import { LfxToken } from '../apis/lfx-token';
 import { getShortAddress } from '../utils/address';
 import { getDisplayedNumber } from '../utils/number';
 import { CountDown } from '../components/CountDown';
+import {
+  ScInfoList,
+  ScInfoBlock,
+  ScInfoValue,
+  ScInfoLabel,
+  ScMessage,
+  ScRow,
+} from '../components/Common';
 
 const ScMain = styled.div`
   p {
@@ -97,17 +105,6 @@ const ScHelper = styled.p`
   opacity: 0.6;
 `;
 
-const ScRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-`;
-
 const ScPotWrapper = styled.div`
   text-align: center;
 `;
@@ -126,37 +123,6 @@ const ScPot = styled.span`
   @media screen and (min-width: 960px) {
     font-size: 32px;
   }
-`;
-
-const ScInfoList = styled.div`
-  @media screen and (min-width: 960px) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-`;
-
-const ScInfoBlock = styled.div`
-  padding: 24px;
-
-  @media screen and (min-width: 960px) {
-    width: 25%;
-  }
-`;
-const ScInfoValue = styled.div`
-  font-size: 24px;
-  margin-bottom: 4px;
-`;
-const ScInfoLabel = styled.div`
-  font-size: 14px;
-  font-weight: bold;
-  opacity: 0.75;
-`;
-
-const ScMessage = styled.p`
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  text-align: center;
 `;
 
 const wait = async (ts: number) => {
@@ -217,7 +183,8 @@ export const Lotte = () => {
   const [drawing, setDrawing] = useState<boolean>(false);
   const [withdrawing, setWithdrawing] = useState<boolean>(false);
 
-  const nextDraw = (lotteInfo?.lastDrawTimestamp || 0) + (lotteConfig?.minDrawDuration || 0);
+  const nextDraw =
+    (lotteInfo?.lastDrawTimestamp || 0) + (lotteConfig?.minDrawDuration || 0);
 
   const draw = async () => {
     if (!lfxToken || !lfxLotte || !walletClient || !lotteConfig) {
@@ -521,10 +488,7 @@ export const Lotte = () => {
           </ScMessage>
           <ScMessage>
             Next draw available in{' '}
-            <CountDown
-              targetTime={nextDraw}
-              key={nextDraw}
-            />
+            <CountDown targetTime={nextDraw} key={nextDraw} />
           </ScMessage>
 
           <ScDrawWrapper>
@@ -545,7 +509,7 @@ export const Lotte = () => {
       <ScStack>
         <ScPersonal>
           <h3>
-            Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '-'}
+            Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '#'}
           </h3>
           <ScRow>
             <p>Conducted by:</p>
@@ -637,6 +601,10 @@ export const Lotte = () => {
               Those who perform the Draw action will receive rewards from the
               system right after the draw is complete. Then they can withdraw
               LFX to their wallet.
+            </p>
+            <p>
+              Requirements: The number of purchased tickets should be greater
+              than 7 to active the Draw
             </p>
           </div>
         </ScContent>
