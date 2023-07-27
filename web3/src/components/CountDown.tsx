@@ -11,13 +11,13 @@ const ScBox = styled.span`
 export const CountDown = memo(({ targetTime }: { targetTime: number }) => {
   const [totalTime, setTotalTime] = useState<number>(0);
 
-  const hh = Math.floor(totalTime / (60 * 60))
-    .toString()
-    .padStart(2, '0');
-  const mm = Math.floor(totalTime / 60)
-    .toString()
-    .padStart(2, '0');
+  const hh = Math.floor(totalTime / (60 * 60));
+  const mm = Math.floor((totalTime - hh * 60 * 60) / 60);
   const ss = (totalTime % 60).toString().padStart(2, '0');
+
+  const hhString = hh.toString().padStart(2, '0');
+  const mmString = mm.toString().padStart(2, '0');
+  const ssString = ss.toString().padStart(2, '0');
 
   useEffect(() => {
     setInterval(() => {
@@ -29,7 +29,8 @@ export const CountDown = memo(({ targetTime }: { targetTime: number }) => {
 
   return (
     <span>
-      <ScBox>{hh}</ScBox>:<ScBox>{mm}</ScBox>:<ScBox>{ss}</ScBox>
+      <ScBox>{hhString}</ScBox>:<ScBox>{mmString}</ScBox>:
+      <ScBox>{ssString}</ScBox>
     </span>
   );
 });
