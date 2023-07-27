@@ -34,6 +34,15 @@ import ArbGoerliLfxAirdrop from './arbgoerli/LfxAirdrop.json';
 import ArbGoerliLfxVault from './arbgoerli/LfxVault.json';
 import ArbGoerliLotte from './arbgoerli/Lotte.json';
 
+import OpGoerliArtifactLfx from './opgoerli/ArtifactLFX.json';
+import OpGoerliArtifactLfxAirdrop from './opgoerli/ArtifactLfxAirdrop.json';
+import OpGoerliArtifactLfxVault from './opgoerli/ArtifactLfxVault.json';
+import OpGoerliArtifactLotte from './opgoerli/ArtifactLotte.json';
+import OpGoerliLfx from './opgoerli/LFX.json';
+import OpGoerliLfxAirdrop from './opgoerli/LfxAirdrop.json';
+import OpGoerliLfxVault from './opgoerli/LfxVault.json';
+import OpGoerliLotte from './opgoerli/Lotte.json';
+
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'local') {
     return {
@@ -71,6 +80,19 @@ export const getContractConfig = () => {
       LfxAirdrop: ArbGoerliLfxAirdrop,
       LfxVault: ArbGoerliLfxVault,
       Lotte: ArbGoerliLotte,
+    };
+  }
+
+  if (process.env.GATSBY_NETWORK === 'opgoerli') {
+    return {
+      ArtifactLfx: OpGoerliArtifactLfx,
+      ArtifactLfxAirdrop: OpGoerliArtifactLfxAirdrop,
+      ArtifactLfxVault: OpGoerliArtifactLfxVault,
+      ArtifactLotte: OpGoerliArtifactLotte,
+      Lfx: OpGoerliLfx,
+      LfxAirdrop: OpGoerliLfxAirdrop,
+      LfxVault: OpGoerliLfxVault,
+      Lotte: OpGoerliLotte,
     };
   }
 

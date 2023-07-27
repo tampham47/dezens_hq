@@ -15,35 +15,22 @@ const config: HardhatUserConfig = {
     mainnet: {
       url: `https://rpcapi.fantom.network`,
       chainId: 250,
-      accounts: [
-        `0x${PRIVATE_KEY_01}`,
-        `0x${PRIVATE_KEY_02}`,
-        `0x${PRIVATE_KEY_03}`,
-        `0x${PRIVATE_KEY_04}`,
-        `0x${PRIVATE_KEY_05}`,
-      ],
+      accounts: [`0x${PRIVATE_KEY_01}`],
     },
-    'arbgoerli': {
+    arbgoerli: {
       url: `https://goerli-rollup.arbitrum.io/rpc`,
       chainId: 421613,
-      accounts: [
-        `0x${PRIVATE_KEY_01}`,
-        `0x${PRIVATE_KEY_02}`,
-        `0x${PRIVATE_KEY_03}`,
-        `0x${PRIVATE_KEY_04}`,
-        `0x${PRIVATE_KEY_05}`,
-      ],
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
+    opgoerli: {
+      url: `https://goerli.optimism.io`,
+      chainId: 420,
+      accounts: [`0x${PRIVATE_KEY_01}`],
     },
     testnet: {
       url: `https://rpc.testnet.fantom.network`,
       chainId: 4002,
-      accounts: [
-        `0x${PRIVATE_KEY_01}`,
-        `0x${PRIVATE_KEY_02}`,
-        `0x${PRIVATE_KEY_03}`,
-        `0x${PRIVATE_KEY_04}`,
-        `0x${PRIVATE_KEY_05}`,
-      ],
+      accounts: [`0x${PRIVATE_KEY_01}`],
     },
     localhost: {
       url: `http://127.0.0.1:8545`,

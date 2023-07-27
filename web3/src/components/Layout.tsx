@@ -9,7 +9,7 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { fantom, fantomTestnet, arbitrumGoerli } from 'wagmi/chains';
+import { fantom, fantomTestnet, arbitrumGoerli, optimismGoerli } from 'wagmi/chains';
 import { Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const chains = [arbitrumGoerli, fantom, fantomTestnet];
+const chains = [fantom, fantomTestnet, arbitrumGoerli, optimismGoerli];
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);

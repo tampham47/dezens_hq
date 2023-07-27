@@ -10,6 +10,7 @@
     "deploy:test-vault": "NODE_ENV=test env-cmd -f .env npx hardhat run scripts/deploy-lfx-vault.ts --network testnet",
     "deploy:test-lotte": "NODE_ENV=test env-cmd -f .env npx hardhat run scripts/deploy-lfx-lotte.ts --network testnet",
     "deploy:arbgoerli-all": "NODE_ENV=arbgoerli env-cmd -f .env npx hardhat run scripts/deploy.ts --network arbgoerli",
+    "deploy:opgoerli-all": "NODE_ENV=opgoerli env-cmd -f .env npx hardhat run scripts/deploy.ts --network opgoerli",
     "deploy:mainnet-all": "NODE_ENV=mainnet env-cmd -f .env.prod npx hardhat run scripts/deploy.ts --network mainnet",
     "test:lotte": "env-cmd -f .env npx hardhat test --grep \"Lotte\"",
     "test:mock-lotte": "env-cmd -f .env npx hardhat test --grep \"MockLotte\"",
