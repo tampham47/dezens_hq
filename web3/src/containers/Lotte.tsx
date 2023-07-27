@@ -307,7 +307,7 @@ export const Lotte = () => {
               <ScRef>
                 Your Ref:{' '}
                 <a
-                  href={`https://testnet.ftmscan.com/address/${ref}`}
+                  href={`${process.env.GATSBY_FANTOM_SCAN}/address/${ref}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -441,7 +441,7 @@ export const Lotte = () => {
             Lotte Contract Address:{' '}
             <code>{getShortAddress(contractConfig.Lotte.Token)}</code>&nbsp;(
             <a
-              href={`https://testnet.ftmscan.com/address/${contractConfig.Lotte.Token}`}
+              href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.Lotte.Token}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -471,57 +471,56 @@ export const Lotte = () => {
 
       <ScStack>
         <ScStackMain>
-        <ScBlock>
+          <ScBlock>
+            <h3>
+              Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '#'}
+            </h3>
+            <ScRow>
+              <p>Conducted by:</p>
+              <a
+                href={`${process.env.GATSBY_FANTOM_SCAN}/address/${lastDraw?.actor}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {getShortAddress(lastDraw?.actor || '')}
+              </a>
+            </ScRow>
+            <ScRow>
+              <p>Winning Ticket:</p>
+              <ScTicket style={{ marginRight: 0, marginBottom: 0 }}>
+                {getTicketByNumber(lastDraw?.winningNumber || 0)}
+              </ScTicket>
+            </ScRow>
+            <ScRow>
+              <p>Time: </p>
+              <p>{lastDraw?.timestamp}</p>
+            </ScRow>
+            <ScRow>
+              <p>Winner Count:</p>
+              <p>
+                {lastDraw?.winnerCount === 0
+                  ? 'No Winner'
+                  : lastDraw?.winnerCount}
+              </p>
+            </ScRow>
 
-          <h3>
-            Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '#'}
-          </h3>
-          <ScRow>
-            <p>Conducted by:</p>
-            <a
-              href={`https://testnet.ftmscan.com/address/${lastDraw?.actor}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {getShortAddress(lastDraw?.actor || '')}
-            </a>
-          </ScRow>
-          <ScRow>
-            <p>Winning Ticket:</p>
-            <ScTicket style={{ marginRight: 0, marginBottom: 0 }}>
-              {getTicketByNumber(lastDraw?.winningNumber || 0)}
-            </ScTicket>
-          </ScRow>
-          <ScRow>
-            <p>Time: </p>
-            <p>{lastDraw?.timestamp}</p>
-          </ScRow>
-          <ScRow>
-            <p>Winner Count:</p>
-            <p>
-              {lastDraw?.winnerCount === 0
-                ? 'No Winner'
-                : lastDraw?.winnerCount}
-            </p>
-          </ScRow>
-
-          {lastDraw?.winnerCount ? (
-            <>
-              <ScRow>
-                <p>Winning Amount: </p>
-                <p>{lastDraw?.winningAmount}</p>
-              </ScRow>
-              <ScRow>
-                <p>Winner Address:</p>
-                <p>
-                  {lastDraw?.winnerList.map((i) => (
-                    <span>{i}</span>
-                  ))}
-                </p>
-              </ScRow>
-            </>
-          ) : null}
-        </ScBlock>
+            {lastDraw?.winnerCount ? (
+              <>
+                <ScRow>
+                  <p>Winning Amount: </p>
+                  <p>{lastDraw?.winningAmount}</p>
+                </ScRow>
+                <ScRow>
+                  <p>Winner Address:</p>
+                  <p>
+                    {lastDraw?.winnerList.map((i) => (
+                      <span>{i}</span>
+                    ))}
+                  </p>
+                </ScRow>
+              </>
+            ) : null}
+          </ScBlock>
         </ScStackMain>
 
         <ScStackAside>

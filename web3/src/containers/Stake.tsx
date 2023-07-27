@@ -242,7 +242,7 @@ export const Stake = () => {
             Vault Contract Address:{' '}
             <code>{getShortAddress(contractConfig.LfxVault.Token)}</code>&nbsp;(
             <a
-              href={`https://testnet.ftmscan.com/address/${contractConfig.LfxVault.Token}`}
+              href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.LfxVault.Token}`}
               target="_blank"
               rel="noopener noreferrer"
             >

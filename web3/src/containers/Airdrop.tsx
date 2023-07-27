@@ -178,7 +178,7 @@ export const Airdrop = () => {
               LFX Token Address:{' '}
               <code>{getShortAddress(contractConfig.Lfx.Token)}</code> (
               <a
-                href={`https://testnet.ftmscan.com/token/${contractConfig.Lfx.Token}`}
+                href={`${process.env.GATSBY_FANTOM_SCAN}/token/${contractConfig.Lfx.Token}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -252,7 +252,7 @@ export const Airdrop = () => {
                 <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>{' '}
                 (
                 <a
-                  href={`https://testnet.ftmscan.com/address/${contractConfig.LfxAirdrop.Token}`}
+                  href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.LfxAirdrop.Token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
