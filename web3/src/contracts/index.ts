@@ -16,6 +16,15 @@ import TestLfxAirdrop from './test/LfxAirdrop.json';
 import TestLfxVault from './test/LfxVault.json';
 import TestLotte from './test/Lotte.json';
 
+import MainnetArtifactLfx from './mainnet/ArtifactLFX.json';
+import MainnetArtifactLfxAirdrop from './mainnet/ArtifactLfxAirdrop.json';
+import MainnetArtifactLfxVault from './mainnet/ArtifactLfxVault.json';
+import MainnetArtifactLotte from './mainnet/ArtifactLotte.json';
+import MainnetLfx from './mainnet/LFX.json';
+import MainnetLfxAirdrop from './mainnet/LfxAirdrop.json';
+import MainnetLfxVault from './mainnet/LfxVault.json';
+import MainnetLotte from './mainnet/Lotte.json';
+
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'local') {
     return {
@@ -43,16 +52,16 @@ export const getContractConfig = () => {
     };
   }
 
-  // TODO: will replace by production env
+  // return mainnet config by default
   return {
-    ArtifactLfx: LocalArtifactLfx,
-    ArtifactLfxAirdrop: LocalArtifactLfxAirdrop,
-    ArtifactLfxVault: LocalArtifactLfxVault,
-    ArtifactLotte: LocalArtifactLotte,
-    Lfx: LocalLfx,
-    LfxAirdrop: LocalLfxAirdrop,
-    LfxVault: LocalLfxVault,
-    Lotte: LocalLotte,
+    ArtifactLfx: MainnetArtifactLfx,
+    ArtifactLfxAirdrop: MainnetArtifactLfxAirdrop,
+    ArtifactLfxVault: MainnetArtifactLfxVault,
+    ArtifactLotte: MainnetArtifactLotte,
+    Lfx: MainnetLfx,
+    LfxAirdrop: MainnetLfxAirdrop,
+    LfxVault: MainnetLfxVault,
+    Lotte: MainnetLotte,
   };
 };
 

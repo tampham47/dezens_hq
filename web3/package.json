@@ -15,7 +15,7 @@
     "start:local": "env-cmd -f .env.local gatsby develop",
     "start:test": "env-cmd -f .env.test gatsby develop",
     "start:mainnet": "env-cmd -f .env.mainnet gatsby develop",
-    "deploy:test": "gatsby clean && env-cmd -f .env.test gatsby build && surge ./public https://lotte.fan",
+    "deploy:test": "gatsby clean && env-cmd -f .env.test gatsby build && surge ./public https://lottefan.surge.sh",
     "deploy:mainnet": "gatsby clean && env-cmd -f .env.mainnet gatsby build && surge ./public https://lotte.fan",
     "typecheck": "tsc --noEmit"
   },
