@@ -15,7 +15,13 @@ const config: HardhatUserConfig = {
     mainnet: {
       url: `https://rpcapi.fantom.network`,
       chainId: 250,
-      accounts: [`0x${PRIVATE_KEY_01}`],
+      accounts: [
+        `0x${PRIVATE_KEY_01}`,
+        `0x${PRIVATE_KEY_02}`,
+        `0x${PRIVATE_KEY_03}`,
+        `0x${PRIVATE_KEY_04}`,
+        `0x${PRIVATE_KEY_05}`,
+      ],
     },
     testnet: {
       url: `https://rpc.testnet.fantom.network`,
