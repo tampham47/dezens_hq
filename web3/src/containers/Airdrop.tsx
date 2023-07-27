@@ -142,9 +142,9 @@ export const Airdrop = () => {
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(airdropInfo?.totalSupply)} FTM
+                {getDisplayedNumber(airdropInfo?.maxParticipant)}
               </ScInfoValue>
-              <ScInfoLabel>Total FTM deposited</ScInfoLabel>
+              <ScInfoLabel>Expected participants</ScInfoLabel>
             </ScInfoBlock>
           </ScInfoList>
 
@@ -161,7 +161,12 @@ export const Airdrop = () => {
               </ScInfoValue>
               <ScInfoLabel>Amount of LFX received / FTM</ScInfoLabel>
             </ScInfoBlock>
-            <ScInfoBlock></ScInfoBlock>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(airdropInfo?.totalSupply)} FTM
+              </ScInfoValue>
+              <ScInfoLabel>Total FTM deposited</ScInfoLabel>
+            </ScInfoBlock>
           </ScInfoList>
 
           <ScHelperBox>
