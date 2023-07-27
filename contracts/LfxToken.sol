@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 
 contract LFX is ERC20 {
-  constructor(uint amount) ERC20('LFX', 'LotteFan') {
+  constructor(uint amount) ERC20('LotteFan', 'LFX') {
     _mint(msg.sender, amount);
   }
 
