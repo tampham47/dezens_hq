@@ -15,6 +15,7 @@ export type LotteInfo = {
 };
 
 export type LotteConfig = {
+  minDrawDuration: number;
   ticketPrice: number;
   systemFeeRate: number;
   drawFeeRate: number;
@@ -85,6 +86,7 @@ class LfxLotteClass {
       refRateLayer2,
       refRateLayer3,
     ] = await this.contract.getConfig();
+    const minDrawDuration = await this.contract.minDrawDuration();
 
     return {
       ticketPrice: getNumber(ticketPrice, 18),
@@ -94,6 +96,7 @@ class LfxLotteClass {
       refRateLayer1: getNumber(refRateLayer1, 0),
       refRateLayer2: getNumber(refRateLayer2, 0),
       refRateLayer3: getNumber(refRateLayer3, 0),
+      minDrawDuration: getNumber(minDrawDuration, 0),
     };
   };
 

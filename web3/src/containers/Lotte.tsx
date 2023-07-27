@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Button, Input } from '@mantine/core';
+import { useWalletClient } from 'wagmi';
+import { Contract, ethers } from 'ethers';
 
 import {
   DrawInformation,
@@ -7,23 +10,27 @@ import {
   LotteConfig,
   LotteInfo,
 } from '../apis/lfx-lotte';
-import { useWalletClient } from 'wagmi';
 import { contractConfig } from '../contracts';
-import { Contract, ethers } from 'ethers';
-import { Button, Input } from '@mantine/core';
 import { LfxToken } from '../apis/lfx-token';
 import { getShortAddress } from '../utils/address';
+import { getDisplayedNumber } from '../utils/number';
+import { CountDown } from '../components/CountDown';
 
 const ScMain = styled.div`
   p {
     line-height: 1.6;
+  }
+
+  h4 {
+    margin-top: 2.5em;
+    margin-bottom: 0.5em;
   }
 `;
 
 const ScStack = styled.div`
   h3 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   @media screen and (min-width: 1260px) {
@@ -35,7 +42,7 @@ const ScStack = styled.div`
 const ScPersonal = styled.div`
   flex: 2;
   border-radius: 16px;
-  background-color: #3f2e3e;
+  background-color: #000957;
   color: #f1c93b;
   padding: 24px;
   margin-bottom: 1rem;
@@ -45,7 +52,7 @@ const ScPersonal = styled.div`
 const ScBody = styled.div`
   flex: 5;
   border-radius: 16px;
-  background-color: #4e4feb;
+  background-color: #000957;
   color: black;
   color: #f1c93b;
   padding: 24px;
@@ -94,6 +101,62 @@ const ScRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+`;
+
+const ScPotWrapper = styled.div`
+  text-align: center;
+`;
+
+const ScPot = styled.span`
+  display: inline-block;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 16px 30px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  background-color: #d61c4e;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  @media screen and (min-width: 960px) {
+    font-size: 32px;
+  }
+`;
+
+const ScInfoList = styled.div`
+  @media screen and (min-width: 960px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+`;
+
+const ScInfoBlock = styled.div`
+  padding: 24px;
+
+  @media screen and (min-width: 960px) {
+    width: 25%;
+  }
+`;
+const ScInfoValue = styled.div`
+  font-size: 24px;
+  margin-bottom: 4px;
+`;
+const ScInfoLabel = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0.75;
+`;
+
+const ScMessage = styled.p`
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  text-align: center;
 `;
 
 const wait = async (ts: number) => {
@@ -153,6 +216,8 @@ export const Lotte = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [drawing, setDrawing] = useState<boolean>(false);
   const [withdrawing, setWithdrawing] = useState<boolean>(false);
+
+  const nextDraw = (lotteInfo?.lastDrawTimestamp || 0) + (lotteConfig?.minDrawDuration || 0);
 
   const draw = async () => {
     if (!lfxToken || !lfxLotte || !walletClient || !lotteConfig) {
@@ -354,6 +419,7 @@ export const Lotte = () => {
             />
             <Button
               size="lg"
+              color="yellow"
               variant="light"
               style={{ width: '100%' }}
               onClick={purchase}
@@ -378,7 +444,7 @@ export const Lotte = () => {
             <ScRow>
               <p>{balance} LFX</p>
               <Button
-                variant="subtle"
+                variant="outline"
                 color="green"
                 onClick={withdraw}
                 loading={withdrawing}
@@ -389,11 +455,61 @@ export const Lotte = () => {
           </ScBlock>
         </ScPersonal>
         <ScContent>
-          <h3>Lotte Fan Overview</h3>
+          <h3>Round #{lotteInfo?.round}</h3>
 
-          <p>
+          <ScPotWrapper>
+            <ScPot>POT: {getDisplayedNumber(lotteInfo?.totalPot)} LFX</ScPot>
+          </ScPotWrapper>
+
+          <ScInfoList>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteConfig?.ticketPrice)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Ticket Price</ScInfoLabel>
+            </ScInfoBlock>
+
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteInfo?.totalSupply)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>LFX Balance</ScInfoLabel>
+            </ScInfoBlock>
+
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteInfo?.totalTicket)}
+              </ScInfoValue>
+              <ScInfoLabel>Total Ticket</ScInfoLabel>
+            </ScInfoBlock>
+          </ScInfoList>
+
+          <ScInfoList>
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteInfo?.systemFees)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>System Fees</ScInfoLabel>
+            </ScInfoBlock>
+
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteInfo?.drawFees)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Draw Rewards</ScInfoLabel>
+            </ScInfoBlock>
+
+            <ScInfoBlock>
+              <ScInfoValue>
+                {getDisplayedNumber(lotteInfo?.burnAmount)} LFX
+              </ScInfoValue>
+              <ScInfoLabel>Burn Amount</ScInfoLabel>
+            </ScInfoBlock>
+          </ScInfoList>
+
+          <ScMessage>
             Lotte Contract Address:{' '}
-            <code>{getShortAddress(contractConfig.Lotte.Token)}</code> (
+            <code>{getShortAddress(contractConfig.Lotte.Token)}</code>&nbsp;(
             <a
               href={`https://testnet.ftmscan.com/address/${contractConfig.Lotte.Token}`}
               target="_blank"
@@ -402,52 +518,19 @@ export const Lotte = () => {
               Scan
             </a>
             )
-          </p>
-          <p>Round: #{lotteInfo?.round}</p>
-          <p>Pot: {lotteInfo?.totalPot} LFX</p>
-          <p>Ticket Price: {lotteConfig?.ticketPrice} LFX</p>
-          <p>Total Ticket: {lotteInfo?.totalTicket}</p>
-          <p>LFX Balance: {lotteInfo?.totalSupply} LFX</p>
-          <p>System Fees: {lotteInfo?.systemFees} LFX</p>
-          <p>Draw Rewards: {lotteInfo?.drawFees} LFX</p>
-          <p>Burn Amount: {lotteInfo?.burnAmount} LFX</p>
-
-          <h4>Last Draw</h4>
-          <p>Time: {lastDraw?.timestamp}</p>
-          <p>
-            Actor:{' '}
-            <a
-              href={`https://testnet.ftmscan.com/address/${lastDraw?.actor}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {getShortAddress(lastDraw?.actor || '')}
-            </a>
-          </p>
-          <p>
-            Winning Number: {getTicketByNumber(lastDraw?.winningNumber || 0)}
-          </p>
-          <p>
-            Winner Count:{' '}
-            {lastDraw?.winnerCount === 0 ? 'No Winner' : lastDraw?.winnerCount}
-          </p>
-          {lastDraw?.winnerCount ? (
-            <>
-              <p>Winning Amount: {lastDraw?.winningAmount}</p>
-              <p>
-                Winner Address:{' '}
-                {lastDraw?.winnerList.map((i) => (
-                  <span>{i}</span>
-                ))}
-                {!lastDraw?.winnerList.length ? <span>No winner</span> : null}
-              </p>
-            </>
-          ) : null}
+          </ScMessage>
+          <ScMessage>
+            Next draw available in{' '}
+            <CountDown
+              targetTime={nextDraw}
+              key={nextDraw}
+            />
+          </ScMessage>
 
           <ScDrawWrapper>
             <Button
               size="xl"
-              color="red"
+              color="yellow"
               style={{ minWidth: 220 }}
               onClick={draw}
               loading={drawing}
@@ -459,49 +542,105 @@ export const Lotte = () => {
         </ScContent>
       </ScStack>
 
-      <ScBody>
-        <h3>How to play</h3>
-        <p>
-          Lotte Fan is working automatically itself. The power is all on you.
-        </p>
+      <ScStack>
+        <ScPersonal>
+          <h3>
+            Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '-'}
+          </h3>
+          <ScRow>
+            <p>Conducted by:</p>
+            <a
+              href={`https://testnet.ftmscan.com/address/${lastDraw?.actor}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {getShortAddress(lastDraw?.actor || '')}
+            </a>
+          </ScRow>
+          <ScRow>
+            <p>Winning Ticket:</p>
+            <ScTicket style={{ marginRight: 0, marginBottom: 0 }}>
+              {getTicketByNumber(lastDraw?.winningNumber || 0)}
+            </ScTicket>
+          </ScRow>
+          <ScRow>
+            <p>Time: </p>
+            <p>{lastDraw?.timestamp}</p>
+          </ScRow>
+          <ScRow>
+            <p>Winner Count:</p>
+            <p>
+              {lastDraw?.winnerCount === 0
+                ? 'No Winner'
+                : lastDraw?.winnerCount}
+            </p>
+          </ScRow>
 
-        <div>
-          <h4>Step: 1. Choose tickets with your favorite number.</h4>
+          {lastDraw?.winnerCount ? (
+            <>
+              <ScRow>
+                <p>Winning Amount: </p>
+                <p>{lastDraw?.winningAmount}</p>
+              </ScRow>
+              <ScRow>
+                <p>Winner Address:</p>
+                <p>
+                  {lastDraw?.winnerList.map((i) => (
+                    <span>{i}</span>
+                  ))}
+                </p>
+              </ScRow>
+            </>
+          ) : null}
+        </ScPersonal>
+
+        <ScContent>
+          <h3>How to play</h3>
           <p>
-            A ticket contains two numbers and divided by `:`, the first number
-            is in this range [00, 23], the second number should be in this range
-            [00, 59]
-          </p>
-        </div>
-        <div>
-          <h4>Step 2. Purchase and Payment</h4>
-          <p>
-            To purchase tickets, you need to approve the contract to use LFX in
-            your wallet first. The ticket is about 10.000 LFX. However, you can
-            approve more than that to save the gas fee for the next purchase.
+            Lotte Fan is working automatically itself. The power is all on you.
           </p>
 
-          <p>
-            If your allowance of LFX in the contract is enough to pay for the
-            tickets. You will be led directly to the confirmation screen.
-          </p>
-        </div>
-        <div>
-          <h4>Step 3. Wait for the Draw</h4>
-          <p>
-            Every 24 hours, everybody can perform the Draw action. This action
-            generates a winning number, then distributes rewards to winners if
-            any.
-          </p>
-          <p>
-            If there is no winner. All the rewards in the POT will be
-            accumulated for the next round.
-          </p>
-          <p>
-            Those who perform the Draw action will receive rewards from the system right after the draw is complete. Then they can withdraw LFX to their wallet.
-          </p>
-        </div>
-      </ScBody>
+          <div>
+            <h4>Step: 1. Choose tickets with your favorite number.</h4>
+            <p>
+              A ticket contains two numbers and divided by `:`, the first number
+              is in this range [00, 23], the second number should be in this
+              range [00, 59]
+            </p>
+          </div>
+          <div>
+            <h4>Step 2. Purchase and Payment</h4>
+            <p>
+              To purchase tickets, you need to approve the contract to use LFX
+              in your wallet first. The ticket is about 10.000 LFX. However, you
+              can approve more than that to save the gas fee for the next
+              purchase.
+            </p>
+
+            <p>
+              If your allowance of LFX in the contract is enough to pay for the
+              tickets. You will be led directly to the confirmation screen.
+            </p>
+          </div>
+          <div>
+            <h4>Step 3. Wait for the Draw</h4>
+            <p>
+              Every 24 hours, everybody can perform the Draw action. This action
+              generates a winning number, then distributes rewards to winners if
+              any.
+            </p>
+            <p>
+              If there is no winner. All the rewards in the POT will be
+              accumulated for the next round.
+            </p>
+            <p>
+              Those who perform the Draw action will receive rewards from the
+              system right after the draw is complete. Then they can withdraw
+              LFX to their wallet.
+            </p>
+          </div>
+        </ScContent>
+      </ScStack>
     </ScMain>
   );
 };
