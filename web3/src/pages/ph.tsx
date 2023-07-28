@@ -86,7 +86,7 @@ const BlogTemplate = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published' && i.lang === 'ph');
+    .filter((i: any) => i.status === 'published' && i.lang === 'ph' && i.category === 'blog');
 
   return (
     <Layout>

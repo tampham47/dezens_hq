@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import { Container } from "./Grid";
+import { Container } from './Grid';
 
 const ScMain = styled.footer`
   font-size: 16px;
