@@ -87,7 +87,7 @@ const AirdropPage = ({ data }: any) => {
         markdown: true,
       };
     })
-    .filter((i: any) => i.status === 'published' && i.lang === 'en');
+    .filter((i: any) => i.status === 'published' && i.lang === 'en' && i.category === 'blog');
 
   return (
     <Layout>
