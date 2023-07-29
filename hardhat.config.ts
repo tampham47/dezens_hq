@@ -27,6 +27,11 @@ const config: HardhatUserConfig = {
       chainId: 420,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
+    'polygon-test': {
+      url: `https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78`,
+      chainId: 80001,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
     testnet: {
       url: `https://rpc.testnet.fantom.network`,
       chainId: 4002,

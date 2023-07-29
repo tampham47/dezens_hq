@@ -43,6 +43,15 @@ import OpGoerliLfxAirdrop from './opgoerli/LfxAirdrop.json';
 import OpGoerliLfxVault from './opgoerli/LfxVault.json';
 import OpGoerliLotte from './opgoerli/Lotte.json';
 
+import PolygonTestArtifactLfx from './polygon-test/ArtifactLFX.json';
+import PolygonTestArtifactLfxAirdrop from './polygon-test/ArtifactLfxAirdrop.json';
+import PolygonTestArtifactLfxVault from './polygon-test/ArtifactLfxVault.json';
+import PolygonTestArtifactLotte from './polygon-test/ArtifactLotte.json';
+import PolygonTestLfx from './polygon-test/LFX.json';
+import PolygonTestLfxAirdrop from './polygon-test/LfxAirdrop.json';
+import PolygonTestLfxVault from './polygon-test/LfxVault.json';
+import PolygonTestLotte from './polygon-test/Lotte.json';
+
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'local') {
     return {
@@ -93,6 +102,19 @@ export const getContractConfig = () => {
       LfxAirdrop: OpGoerliLfxAirdrop,
       LfxVault: OpGoerliLfxVault,
       Lotte: OpGoerliLotte,
+    };
+  }
+
+  if (process.env.GATSBY_NETWORK === 'polygon-test') {
+    return {
+      ArtifactLfx: PolygonTestArtifactLfx,
+      ArtifactLfxAirdrop: PolygonTestArtifactLfxAirdrop,
+      ArtifactLfxVault: PolygonTestArtifactLfxVault,
+      ArtifactLotte: PolygonTestArtifactLotte,
+      Lfx: PolygonTestLfx,
+      LfxAirdrop: PolygonTestLfxAirdrop,
+      LfxVault: PolygonTestLfxVault,
+      Lotte: PolygonTestLotte,
     };
   }
 

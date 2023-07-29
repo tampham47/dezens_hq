@@ -11,6 +11,8 @@
     "deploy:test-lotte": "NODE_ENV=test env-cmd -f .env npx hardhat run scripts/deploy-lfx-lotte.ts --network testnet",
     "deploy:arbgoerli-all": "NODE_ENV=arbgoerli env-cmd -f .env npx hardhat run scripts/deploy.ts --network arbgoerli",
     "deploy:opgoerli-all": "NODE_ENV=opgoerli env-cmd -f .env npx hardhat run scripts/deploy.ts --network opgoerli",
+    "deploy:polygon-test-all": "NODE_ENV=polygon-test env-cmd -f .env npx hardhat run scripts/deploy.ts --network polygon-test",
+    "deploy:polygon-test-airdrop": "NODE_ENV=polygon-test env-cmd -f .env npx hardhat run scripts/deploy-lfx-airdrop.ts --network polygon-test",
     "deploy:mainnet-all": "NODE_ENV=mainnet env-cmd -f .env.prod npx hardhat run scripts/deploy.ts --network mainnet",
     "test:lotte": "env-cmd -f .env npx hardhat test --grep \"Lotte\"",
     "test:mock-lotte": "env-cmd -f .env npx hardhat test --grep \"MockLotte\"",

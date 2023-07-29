@@ -12,7 +12,29 @@ const CONFIG = {
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * BigInt(1e18),
-      minDrawDuration: 60 * 60 * 6, // 1 day
+      minDrawDuration: 60 * 60 * 6, // 6 hours
+      systemFeeRate: 500, // 5% of ticket price
+      drawFeeRate: 500, // 5% of system fees
+      burnRate: 2000, // 20% system fees
+      refRateLayer1: 120, // 1.2% of ticket price
+      refRateLayer2: 55, // 0.55% of ticket price
+      refRateLayer3: 25, // 0.25% of ticket price
+    },
+  },
+  'polygon-test': {
+    lfxToken: {
+      lfxTotalSupply: BigInt(21_000_000_000) * BigInt(1e18),
+    },
+    // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
+    lfxAirdrop: {
+      maxParticipant: 2,
+      maxTotalSupply: 250,
+      minDepositAmount: 0.5,
+      maxDepositAmount: 5,
+    },
+    lfxLotte: {
+      ticketPrice: BigInt(10000) * BigInt(1e18),
+      minDrawDuration: 60 * 60 * 1, // 1 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
       burnRate: 2000, // 20% system fees
@@ -34,7 +56,7 @@ const CONFIG = {
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * BigInt(1e18),
-      minDrawDuration: 60 * 60 * 6, // 1 day
+      minDrawDuration: 60 * 60 * 6, // 6 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
       burnRate: 2000, // 20% system fees
