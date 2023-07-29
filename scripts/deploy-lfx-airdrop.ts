@@ -13,6 +13,7 @@ async function main() {
 
   // LFX Airdrop
   const LfxAirdropContract = await ethers.getContractFactory('LfxAirdrop');
+  console.log('config', config);
   const lfxAirdrop = await LfxAirdropContract.deploy(
     contractConfig.Lfx.Token,
     config.lfxAirdrop.maxParticipant,

@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { ethers } from 'hardhat';
 
 const provider = ethers.provider;
-const lamports = BigInt(1e18);
+const e18 = BigInt(1e18);
 
 const deployContract = async () => {
   // Contracts are deployed using the first signer/account by default
@@ -25,9 +25,9 @@ const deployContract = async () => {
   const lfxAirdrop = await LfxAirdropContract.deploy(
     lfxTokenAddress,
     2,
-    100,
-    1,
-    100
+    BigInt(100) * e18,
+    BigInt(1) * e18,
+    BigInt(100) * e18
   );
   const lfxAirdropAddress = await lfxAirdrop.getAddress();
 
@@ -67,9 +67,9 @@ describe('LfxAirdrop', () => {
     expect(await lfxAirdrop.initTimestamp()).to.greaterThanOrEqual(blockTime);
     expect(await lfxAirdrop.maxParticipant()).to.equal(2);
     expect(await lfxAirdrop.isWithdrawable()).to.equal(false);
-    expect((await lfxAirdrop.maxTotalSupply()) / lamports).to.equal(100);
-    expect((await lfxAirdrop.minDepositAmount()) / lamports).to.equal(1);
-    expect((await lfxAirdrop.maxDepositAmount()) / lamports).to.equal(100);
+    expect((await lfxAirdrop.maxTotalSupply()) / e18).to.equal(100);
+    expect((await lfxAirdrop.minDepositAmount()) / e18).to.equal(1);
+    expect((await lfxAirdrop.maxDepositAmount()) / e18).to.equal(100);
   });
 
   it('Should be able to join the airdrop', async () => {
@@ -81,7 +81,7 @@ describe('LfxAirdrop', () => {
     );
 
     expect(await lfxAirdrop.maxParticipant()).to.equal(2);
-    expect((await lfxAirdrop.maxTotalSupply()) / lamports).to.equal(100);
+    expect((await lfxAirdrop.maxTotalSupply()) / e18).to.equal(100);
 
     // send
     await expect(
@@ -95,13 +95,9 @@ describe('LfxAirdrop', () => {
       value: ethers.parseEther('50'),
     });
     expect(await lfxAirdrop.participantCount()).to.equal(1);
-    expect((await provider.getBalance(lfxAirdropAddress)) / lamports).to.equal(
-      50
-    );
-    expect((await lfxAirdrop.balanceOf(wallet1.address)) / lamports).to.equal(
-      50
-    );
-    expect((await lfxAirdrop.totalSupply()) / lamports).to.equal(50);
+    expect((await provider.getBalance(lfxAirdropAddress)) / e18).to.equal(50);
+    expect((await lfxAirdrop.balanceOf(wallet1.address)) / e18).to.equal(50);
+    expect((await lfxAirdrop.totalSupply()) / e18).to.equal(50);
     expect(await lfxAirdrop.isWithdrawable()).to.equal(false);
 
     // send
@@ -111,13 +107,9 @@ describe('LfxAirdrop', () => {
         value: ethers.parseEther('50'),
       })
     ).to.be.revertedWith('LfxAirdrop: You have already deposited');
-    expect((await provider.getBalance(lfxAirdropAddress)) / lamports).to.equal(
-      50
-    );
-    expect((await lfxAirdrop.balanceOf(wallet1.address)) / lamports).to.equal(
-      50
-    );
-    expect((await lfxAirdrop.totalSupply()) / lamports).to.equal(50);
+    expect((await provider.getBalance(lfxAirdropAddress)) / e18).to.equal(50);
+    expect((await lfxAirdrop.balanceOf(wallet1.address)) / e18).to.equal(50);
+    expect((await lfxAirdrop.totalSupply()) / e18).to.equal(50);
     expect(await lfxAirdrop.participantCount()).to.equal(1);
     expect(await lfxAirdrop.isWithdrawable()).to.equal(false);
 
@@ -130,13 +122,9 @@ describe('LfxAirdrop', () => {
 
     expect(await lfx.balanceOf(wallet1.address)).to.equals(15000);
     expect(await lfx.balanceOf(lfxAirdropAddress)).to.equals(10000);
-    expect((await provider.getBalance(lfxAirdropAddress)) / lamports).to.equal(
-      100
-    );
-    expect((await lfxAirdrop.balanceOf(wallet2.address)) / lamports).to.equal(
-      50
-    );
-    expect((await lfxAirdrop.totalSupply()) / lamports).to.equal(100);
+    expect((await provider.getBalance(lfxAirdropAddress)) / e18).to.equal(100);
+    expect((await lfxAirdrop.balanceOf(wallet2.address)) / e18).to.equal(50);
+    expect((await lfxAirdrop.totalSupply()) / e18).to.equal(100);
     expect(await lfxAirdrop.participantCount()).to.equal(2);
     expect(await lfxAirdrop.isWithdrawable()).to.equal(true);
 
@@ -165,7 +153,7 @@ describe('LfxAirdrop', () => {
     );
 
     expect(await lfxAirdrop.maxParticipant()).to.equal(2);
-    expect((await lfxAirdrop.maxTotalSupply()) / lamports).to.equal(100);
+    expect((await lfxAirdrop.maxTotalSupply()) / e18).to.equal(100);
 
     // send
     await wallet1.sendTransaction({
@@ -180,16 +168,16 @@ describe('LfxAirdrop', () => {
       maxParticipant,
       maxTotalSupply,
       minDepositAmount,
-      maxDepositAmount
+      maxDepositAmount,
     ] = await lfxAirdrop.getInformation();
     expect(isWithdrawable).to.equal(false);
     expect(maxParticipant).to.equal(2);
     expect(participantCount).to.equal(1);
-    expect(maxTotalSupply / lamports).to.equal(100);
-    expect(totalSupply / lamports).to.equal(50);
-    expect(minDepositAmount / lamports).to.equal(1);
-    expect(maxDepositAmount / lamports).to.equal(100);
-    expect(totalLfxToken / lamports).to.equal(0);
+    expect(maxTotalSupply / e18).to.equal(100);
+    expect(totalSupply / e18).to.equal(50);
+    expect(minDepositAmount / e18).to.equal(1);
+    expect(maxDepositAmount / e18).to.equal(100);
+    expect(totalLfxToken / e18).to.equal(0);
 
     // send
     await wallet2.sendTransaction({
@@ -200,12 +188,8 @@ describe('LfxAirdrop', () => {
 
     expect(await lfx.balanceOf(wallet1.address)).to.equals(15000);
     expect(await lfx.balanceOf(lfxAirdropAddress)).to.equals(10000);
-    expect((await provider.getBalance(lfxAirdropAddress)) / lamports).to.equal(
-      100
-    );
-    expect((await lfxAirdrop.balanceOf(wallet2.address)) / lamports).to.equal(
-      50
-    );
+    expect((await provider.getBalance(lfxAirdropAddress)) / e18).to.equal(100);
+    expect((await lfxAirdrop.balanceOf(wallet2.address)) / e18).to.equal(50);
     [
       isWithdrawable,
       participantCount,
@@ -214,11 +198,11 @@ describe('LfxAirdrop', () => {
       maxParticipant,
       maxTotalSupply,
       minDepositAmount,
-      maxDepositAmount
+      maxDepositAmount,
     ] = await lfxAirdrop.getInformation();
     expect(isWithdrawable).to.equal(true);
     expect(participantCount).to.equal(2);
-    expect(totalSupply / lamports).to.equal(100);
+    expect(totalSupply / e18).to.equal(100);
     expect(totalLfxToken).to.equal(10000);
 
     // send

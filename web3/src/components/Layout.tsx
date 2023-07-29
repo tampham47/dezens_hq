@@ -137,7 +137,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
                   color="orange"
                   variant="filled"
                 >
-                  You're on Fantom Testnet, please do NOT use your real FTM.{' '}
+                  You're on Fantom Testnet, please do NOT use your real{' '}
+                  {process.env.GATSBY_ROOT_TOKEN_NAME}.{' '}
                   <a
                     href="https://metaschool.so/rpc/fantomTestnet"
                     target="_blank"

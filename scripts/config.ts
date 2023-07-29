@@ -1,17 +1,20 @@
+const e18 = BigInt(1e18);
+const e15 = BigInt(1e15);
+
 const CONFIG = {
   test: {
     lfxToken: {
-      lfxTotalSupply: BigInt(21_000_000_000) * BigInt(1e18),
+      lfxTotalSupply: BigInt(21_000_000_000) * e18,
     },
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     lfxAirdrop: {
       maxParticipant: 10,
-      maxTotalSupply: 250,
-      minDepositAmount: 5,
-      maxDepositAmount: 50,
+      maxTotalSupply: BigInt(250) * e18,
+      minDepositAmount: BigInt(5) * e18,
+      maxDepositAmount: BigInt(50) * e18,
     },
     lfxLotte: {
-      ticketPrice: BigInt(10000) * BigInt(1e18),
+      ticketPrice: BigInt(10000) * e18,
       minDrawDuration: 60 * 60 * 6, // 6 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
@@ -23,17 +26,17 @@ const CONFIG = {
   },
   'polygon-test': {
     lfxToken: {
-      lfxTotalSupply: BigInt(21_000_000_000) * BigInt(1e18),
+      lfxTotalSupply: BigInt(21_000_000_000) * e18,
     },
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     lfxAirdrop: {
       maxParticipant: 2,
-      maxTotalSupply: 250,
-      minDepositAmount: 0.5,
-      maxDepositAmount: 5,
+      maxTotalSupply: BigInt(1000) * e15,
+      minDepositAmount: BigInt(100) * e15,
+      maxDepositAmount: BigInt(1000) * e15,
     },
     lfxLotte: {
-      ticketPrice: BigInt(10000) * BigInt(1e18),
+      ticketPrice: BigInt(10000) * e18,
       minDrawDuration: 60 * 60 * 1, // 1 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
@@ -45,17 +48,17 @@ const CONFIG = {
   },
   mainnet: {
     lfxToken: {
-      lfxTotalSupply: BigInt(21_000_000_000) * BigInt(1e18),
+      lfxTotalSupply: BigInt(21_000_000_000) * e18,
     },
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     lfxAirdrop: {
-      maxParticipant: 10,
-      maxTotalSupply: 250,
-      minDepositAmount: 5,
-      maxDepositAmount: 50,
+      maxParticipant: 2,
+      maxTotalSupply: BigInt(250) * e18,
+      minDepositAmount: BigInt(5) * e18,
+      maxDepositAmount: BigInt(50) * e18,
     },
     lfxLotte: {
-      ticketPrice: BigInt(10000) * BigInt(1e18),
+      ticketPrice: BigInt(10000) * e18,
       minDrawDuration: 60 * 60 * 6, // 6 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
@@ -67,12 +70,12 @@ const CONFIG = {
   },
 };
 
-const getConfig = () => {
-  if (process.env.NODE_ENV === 'mainnet') {
-    return CONFIG.mainnet;
-  }
+type ConfigNetwork = 'test' | 'polygon-test' | 'mainnet';
 
-  return CONFIG.test;
+const getConfig = () => {
+  const env = (process.env.NODE_ENV as ConfigNetwork) || 'test';
+  const config = CONFIG[env];
+  return config || CONFIG.test;
 };
 
 export const config = getConfig();

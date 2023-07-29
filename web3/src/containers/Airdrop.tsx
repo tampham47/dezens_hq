@@ -22,7 +22,7 @@ import {
   ScRow,
   ScBlock,
 } from '../components/Common';
-import { getDisplayedNumber } from '../utils/number';
+import { getAutoRoundNumber, getDisplayedNumber } from '../utils/number';
 import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
 
 const ScMain = styled.div`
@@ -88,6 +88,7 @@ export const Airdrop = () => {
   const [airdropInfo, setAirdropInfo] = useState<AirdropInfo>();
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxAirdrop, setLfxAirdrop] = useState<Contract>();
+  const rootTokenName = process.env.GATSBY_ROOT_TOKEN_NAME;
 
   const withdraw = async () => {
     if (!lfxAirdrop || !lfxToken) return;
@@ -137,6 +138,8 @@ export const Airdrop = () => {
     })();
   }, []);
 
+  console.log('airdropInfo', airdropInfo)
+
   return (
     <ScMain>
       <ScInfo>
@@ -179,13 +182,15 @@ export const Airdrop = () => {
               <ScInfoValue>
                 {getDisplayedNumber(airdropInfo?.estLfxReceivePerFtm || 0)} LFX
               </ScInfoValue>
-              <ScInfoLabel>Amount of LFX received / FTM</ScInfoLabel>
+              <ScInfoLabel>
+                Amount of LFX received / {rootTokenName}
+              </ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(airdropInfo?.totalSupply)} FTM
+                {getAutoRoundNumber(airdropInfo?.totalSupply)} {rootTokenName}
               </ScInfoValue>
-              <ScInfoLabel>Total FTM deposited</ScInfoLabel>
+              <ScInfoLabel>Total {rootTokenName} deposited</ScInfoLabel>
             </ScInfoBlock>
           </ScInfoList>
         </ScBlock>
@@ -197,8 +202,10 @@ export const Airdrop = () => {
             <h3>Your LFX Airdrop</h3>
             <ScBlock>
               <ScRow>
-                <p>FTM deposited: </p>
-                <p>{getDisplayedNumber(userDeposit)} FTM</p>
+                <p>{rootTokenName} deposited: </p>
+                <p>
+                  {getAutoRoundNumber(userDeposit)} {rootTokenName}
+                </p>
               </ScRow>
               <ScRow>
                 <p>Est LFX received: </p>
@@ -275,8 +282,8 @@ export const Airdrop = () => {
                   </CopyButton>
                 </ScAddress>
                 <ScMessage>
-                  Deposit FTM to participate LFX Airdrop. FTM will be returned
-                  to you when the airdrop ends
+                  Deposit {rootTokenName} to participate LFX Airdrop.{' '}
+                  {rootTokenName} will be returned to you when the airdrop ends
                 </ScMessage>
               </ScHelperBox>
 
@@ -303,30 +310,31 @@ export const Airdrop = () => {
                 >
                   Scan
                 </a>
-                ), do NOT deposit FTM into this contract.
+                ), do NOT deposit {rootTokenName} into this contract.
               </p>
               <p>
-                🍍 Only deposit FTM - Fantom, transferring any other token will
-                not be recognized.
+                🍍 Only deposit {rootTokenName} - Fantom, transferring any other
+                token will not be recognized.
               </p>
               <p>
-                🍍 To receive the LFX Airdrop, you need to transfer FTM - Fantom
-                to the smart contract wallet address. The amount of FTM will be
-                refunded to you after the airdrop ends. Depositing FTM helps
-                minimize fraud in the airdrop process.
+                🍍 To receive the LFX Airdrop, you need to transfer{' '}
+                {rootTokenName} - Fantom to the smart contract wallet address.
+                The amount of {rootTokenName} will be refunded to you after the
+                airdrop ends. Depositing {rootTokenName} helps minimize fraud in
+                the airdrop process.
               </p>
               <p>
-                🍍 Each wallet can only deposit FTM once, with the amount of FTM
-                within [{airdropInfo?.minDepositAmount},{' '}
-                {airdropInfo?.maxDepositAmount}
+                🍍 Each wallet can only deposit {rootTokenName} once, with the
+                amount of {rootTokenName} within [
+                {airdropInfo?.minDepositAmount}, {airdropInfo?.maxDepositAmount}
                 ]. The system will not accept deposits exceeding this limit.
               </p>
               <p>
                 🍍 The airdrop will be completed when there are{' '}
                 {airdropInfo?.maxParticipant} participants or{' '}
-                {airdropInfo?.maxTotalSupply} FTM is deposited. After that,
-                users will be allowed to withdraw LFX as well as FTM to their
-                wallet.
+                {airdropInfo?.maxTotalSupply} {rootTokenName} is deposited.
+                After that, users will be allowed to withdraw LFX as well as{' '}
+                {rootTokenName} to their wallet.
               </p>
             </ScBlock>
           </ScSection>

@@ -45,9 +45,12 @@ class LfxAirdropClass {
       maxDepositAmount,
       initTimestamp,
     ] = await this.contract.getInformation();
+    const token = await this.contract.token();
+    console.log('token', token);
+    console.log('balanceLfxToken', balanceLfxToken);
 
-    const totalSupplyNumber = getNumber(totalSupply, 18);
-    const balanceLfxTokenNumber = getNumber(balanceLfxToken, 18);
+    const totalSupplyNumber = getNumber(totalSupply, 15) / 1000;
+    const balanceLfxTokenNumber = getNumber(balanceLfxToken, 15) / 1000;
 
     return {
       isWithdrawable,
@@ -59,16 +62,16 @@ class LfxAirdropClass {
         !balanceLfxTokenNumber || !totalSupplyNumber
           ? 0
           : balanceLfxTokenNumber / totalSupplyNumber,
-      maxTotalSupply: getNumber(maxTotalSupply, 18),
-      minDepositAmount: getNumber(minDepositAmount, 18),
-      maxDepositAmount: getNumber(maxDepositAmount, 18),
+      maxTotalSupply: getNumber(maxTotalSupply, 15) / 1000,
+      minDepositAmount: getNumber(minDepositAmount, 15) / 1000,
+      maxDepositAmount: getNumber(maxDepositAmount, 15) / 1000,
       initTimestamp: getNumber(initTimestamp, 0),
     };
   };
 
   balanceOf = async (address: string) => {
     const balance = await this.contract.balanceOf(address);
-    return getNumber(balance, 18);
+    return getNumber(balance, 15)/ 1000;
   };
 }
 

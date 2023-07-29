@@ -53,9 +53,9 @@ contract LfxAirdrop {
 
     token = IERC20(_token);
     maxParticipant = _maxParticipant;
-    maxTotalSupply = _maxTotalSupply * 1e18;
-    minDepositAmount = _minDepositAmount * 1e18;
-    maxDepositAmount = _maxDepositAmount * 1e18;
+    maxTotalSupply = _maxTotalSupply;
+    minDepositAmount = _minDepositAmount;
+    maxDepositAmount = _maxDepositAmount;
   }
 
   function _mint(address _to, uint _amount) private {
