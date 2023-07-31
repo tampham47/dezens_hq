@@ -9,6 +9,7 @@ async function main() {
     'Deploying the contracts with the account:',
     await deployer.getAddress()
   );
+  console.log('Config', config);
 
   const lfxTotalSupply = config.lfxToken.lfxTotalSupply;
   const lfxTokenContract = await ethers.getContractFactory('LFX');
