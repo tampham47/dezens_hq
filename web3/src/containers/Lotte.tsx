@@ -208,10 +208,8 @@ export const Lotte = () => {
       );
 
       if (allowance < amount) {
-        await lfxToken.approve(
-          contractConfig.Lotte.Token,
-          amount * BigInt(tickets.length)
-        );
+        const lfxBalance = await LfxToken.contract.balanceOf(spender);
+        await lfxToken.approve(contractConfig.Lotte.Token, lfxBalance);
         await wait(10000);
       }
 
