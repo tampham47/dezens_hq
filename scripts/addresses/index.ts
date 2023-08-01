@@ -8,6 +8,11 @@ import PolygonTestLfxAirdrop from './polygon-test/LfxAirdrop.json';
 import PolygonTestLfxVault from './polygon-test/LfxVault.json';
 import PolygonTestLotte from './polygon-test/Lotte.json';
 
+import PolygonLfx from './polygon/LFX.json';
+import PolygonLfxAirdrop from './polygon/LfxAirdrop.json';
+import PolygonLfxVault from './polygon/LfxVault.json';
+import PolygonLotte from './polygon/Lotte.json';
+
 import MainnetLfx from './mainnet/LFX.json';
 import MainnetLfxAirdrop from './mainnet/LfxAirdrop.json';
 import MainnetLfxVault from './mainnet/LfxVault.json';
@@ -38,6 +43,15 @@ export const getContractConfig = () => {
       LfxAirdrop: PolygonTestLfxAirdrop,
       LfxVault: PolygonTestLfxVault,
       Lotte: PolygonTestLotte,
+    };
+  }
+
+  if (process.env.NODE_ENV === 'polygon') {
+    return {
+      Lfx: PolygonLfx,
+      LfxAirdrop: PolygonLfxAirdrop,
+      LfxVault: PolygonLfxVault,
+      Lotte: PolygonLotte,
     };
   }
 

@@ -52,6 +52,15 @@ import PolygonTestLfxAirdrop from './polygon-test/LfxAirdrop.json';
 import PolygonTestLfxVault from './polygon-test/LfxVault.json';
 import PolygonTestLotte from './polygon-test/Lotte.json';
 
+import PolygonArtifactLfx from './polygon/ArtifactLFX.json';
+import PolygonArtifactLfxAirdrop from './polygon/ArtifactLfxAirdrop.json';
+import PolygonArtifactLfxVault from './polygon/ArtifactLfxVault.json';
+import PolygonArtifactLotte from './polygon/ArtifactLotte.json';
+import PolygonLfx from './polygon/LFX.json';
+import PolygonLfxAirdrop from './polygon/LfxAirdrop.json';
+import PolygonLfxVault from './polygon/LfxVault.json';
+import PolygonLotte from './polygon/Lotte.json';
+
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'local') {
     return {
@@ -115,6 +124,19 @@ export const getContractConfig = () => {
       LfxAirdrop: PolygonTestLfxAirdrop,
       LfxVault: PolygonTestLfxVault,
       Lotte: PolygonTestLotte,
+    };
+  }
+
+  if (process.env.GATSBY_NETWORK === 'polygon') {
+    return {
+      ArtifactLfx: PolygonArtifactLfx,
+      ArtifactLfxAirdrop: PolygonArtifactLfxAirdrop,
+      ArtifactLfxVault: PolygonArtifactLfxVault,
+      ArtifactLotte: PolygonArtifactLotte,
+      Lfx: PolygonLfx,
+      LfxAirdrop: PolygonLfxAirdrop,
+      LfxVault: PolygonLfxVault,
+      Lotte: PolygonLotte,
     };
   }
 

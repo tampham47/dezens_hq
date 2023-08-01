@@ -29,8 +29,6 @@ class LfxAirdropClass {
       contractConfig.ArtifactLfxAirdrop.abi,
       this.provider
     );
-
-    console.log('contractConfig', contractConfig);
   }
 
   getInformation = async (): Promise<AirdropInfo> => {
@@ -45,10 +43,6 @@ class LfxAirdropClass {
       maxDepositAmount,
       initTimestamp,
     ] = await this.contract.getInformation();
-    const token = await this.contract.token();
-    console.log('token', token);
-    console.log('balanceLfxToken', balanceLfxToken);
-
     const totalSupplyNumber = getNumber(totalSupply, 15) / 1000;
     const balanceLfxTokenNumber = getNumber(balanceLfxToken, 15) / 1000;
 
@@ -71,7 +65,7 @@ class LfxAirdropClass {
 
   balanceOf = async (address: string) => {
     const balance = await this.contract.balanceOf(address);
-    return getNumber(balance, 15)/ 1000;
+    return getNumber(balance, 15) / 1000;
   };
 }
 

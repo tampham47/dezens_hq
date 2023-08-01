@@ -31,6 +31,11 @@ const config: HardhatUserConfig = {
       chainId: 80001,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
+    polygon: {
+      url: `https://polygon-rpc.com`,
+      chainId: 137,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
     'mantle-test': {
       url: `https://rpc.testnet.mantle.xyz`,
       chainId: 5001,

@@ -10,10 +10,7 @@ import {
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-  fantom,
-  fantomTestnet,
-  arbitrumGoerli,
-  optimismGoerli,
+  polygon,
   polygonMumbai,
 } from 'wagmi/chains';
 import { Alert } from '@mantine/core';
@@ -72,10 +69,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const chains = [
-  fantom,
-  fantomTestnet,
-  arbitrumGoerli,
-  optimismGoerli,
+  polygon,
   polygonMumbai,
 ];
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
@@ -129,7 +123,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <>
           <NavBar />
 
-          {process.env.GATSBY_NETWORK !== 'mainnet' ? (
+          {process.env.GATSBY_NETWORK !== 'polygon' ? (
             <Container>
               <MobileWrapper>
                 <Alert

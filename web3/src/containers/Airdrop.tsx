@@ -311,8 +311,8 @@ export const Airdrop = () => {
                 ), do NOT deposit {rootTokenName} into this contract.
               </p>
               <p>
-                🍍 Only deposit {rootTokenName} - Fantom, transferring any other
-                token will not be recognized.
+                🍍 Only deposit {rootTokenName} - Polygon, transferring any
+                other token will not be recognized.
               </p>
               <p>
                 🍍 To receive the LFX Airdrop, you need to transfer{' '}
