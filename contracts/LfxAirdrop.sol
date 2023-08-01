@@ -68,6 +68,15 @@ contract LfxAirdrop {
     balanceOf[_from] -= _amount;
   }
 
+  modifier isOwner() {
+    require(msg.sender == owner, 'Lotte: caller is not the owner');
+    _;
+  }
+
+  function setMaxParticipant(uint _maxParticipant) external isOwner {
+    maxParticipant = _maxParticipant;
+  }
+
   receive() external payable {
     require(
       isWithdrawable == false,

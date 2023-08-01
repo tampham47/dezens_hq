@@ -72,6 +72,16 @@ describe('LfxAirdrop', () => {
     expect((await lfxAirdrop.maxDepositAmount()) / e18).to.equal(100);
   });
 
+  it('Should be able to update maxParticipant', async () => {
+    const { lfxAirdrop, owner, wallet1 } = await loadFixture(deployContract);
+
+    expect(await lfxAirdrop.maxParticipant()).to.equal(2);
+
+    await expect(lfxAirdrop.connect(wallet1).setMaxParticipant(1)).to.be.reverted;
+    await lfxAirdrop.connect(owner).setMaxParticipant(3);
+    expect(await lfxAirdrop.maxParticipant()).to.equal(3);
+  });
+
   it('Should be able to join the airdrop', async () => {
     const { lfx, lfxAirdrop, lfxAirdropAddress, wallet1, wallet2, wallet3 } =
       await loadFixture(deployContract);

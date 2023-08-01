@@ -138,8 +138,6 @@ export const Airdrop = () => {
     })();
   }, []);
 
-  console.log('airdropInfo', airdropInfo)
-
   return (
     <ScMain>
       <ScInfo>
