@@ -323,7 +323,7 @@ export const Airdrop = () => {
               </p>
               <p>
                 🍍 To receive the LFX Airdrop, you need to transfer{' '}
-                {rootTokenName} - Fantom to the smart contract wallet address.
+                {rootTokenName} - Polygon to the smart contract wallet address.
                 The amount of {rootTokenName} will be refunded to you after the
                 airdrop ends. Depositing {rootTokenName} helps minimize fraud in
                 the airdrop process.
