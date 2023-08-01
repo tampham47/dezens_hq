@@ -21,6 +21,7 @@ import {
 } from '../components/Common';
 import { getDisplayedNumber } from '../utils/number';
 import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
   margin-bottom: 6rem;
@@ -173,7 +174,7 @@ export const Stake = () => {
             <Button
               size="lg"
               variant="light"
-              color="yellow"
+              color="orange"
               style={{ width: '100%' }}
               onClick={withdraw}
               loading={withdrawing}
@@ -198,7 +199,7 @@ export const Stake = () => {
             <Button
               size="lg"
               variant="light"
-              color="yellow"
+              color="orange"
               style={{ width: '100%' }}
               onClick={deposit}
               loading={depositing}
@@ -250,6 +251,8 @@ export const Stake = () => {
             </a>
             )
           </ScMessage>
+
+          <BuyLfx />
         </ScStackAside>
       </ScStack>
     </ScMain>

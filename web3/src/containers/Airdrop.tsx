@@ -24,6 +24,7 @@ import {
 } from '../components/Common';
 import { getAutoRoundNumber, getDisplayedNumber } from '../utils/number';
 import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
   p {
@@ -32,6 +33,12 @@ const ScMain = styled.div`
 `;
 
 const ScInfo = styled(ScStackAside)`
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #fd8d14;
+  }
+
   @media screen and (min-width: 960px) {
     margin-right: 0;
   }
@@ -67,7 +74,7 @@ const ScHelperBox = styled.div`
 const ScAddress = styled.span`
   padding: 2px 2px 2px 16px;
   border-radius: 4px;
-  border: 1px solid #3330e4;
+  border: 1px solid #6527be;
   display: inline-block;
 `;
 const ScAddressValue = styled.code`
@@ -218,7 +225,7 @@ export const Airdrop = () => {
             <ScBlock>
               <Button
                 variant="light"
-                color="yellow"
+                color="orange"
                 size="lg"
                 disabled={!airdropInfo?.isWithdrawable}
                 onClick={withdraw}
@@ -263,7 +270,7 @@ export const Airdrop = () => {
                   <CopyButton value={contractConfig.LfxAirdrop.Token}>
                     {({ copied, copy }) => (
                       <Button
-                        color={copied ? 'teal' : 'blue'}
+                        color={copied ? 'teal' : 'violet'}
                         variant="subtle"
                         onClick={copy}
                         leftIcon={
@@ -336,6 +343,8 @@ export const Airdrop = () => {
               </p>
             </ScBlock>
           </ScSection>
+
+          <BuyLfx />
         </ScStackAside>
       </ScStack>
     </ScMain>

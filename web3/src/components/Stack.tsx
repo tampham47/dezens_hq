@@ -4,6 +4,7 @@ export const ScStack = styled.div`
   h3 {
     margin-top: 0;
     margin-bottom: 1rem;
+    color: #fd8d14;
   }
 
   @media screen and (min-width: 960px) {
@@ -14,8 +15,8 @@ export const ScStack = styled.div`
 
 export const ScStackMain = styled.div`
   flex: 2;
-  background-color: #000957;
-  color: #f1c93b;
+  background-color: #322653;
+  color: #ffd2d7;
   padding: 24px;
   overflow: hidden;
   border-radius: 8px;
@@ -33,8 +34,8 @@ export const ScStackMain = styled.div`
 
 export const ScStackAside = styled.div`
   flex: 5;
-  background-color: #000957;
-  color: #f1c93b;
+  background-color: #322653;
+  color: #ffd2d7;
   padding: 24px;
   border-radius: 8px;
   margin-left: -16px;

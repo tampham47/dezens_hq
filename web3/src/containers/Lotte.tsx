@@ -24,6 +24,7 @@ import {
   ScRow,
 } from '../components/Common';
 import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
   p {
@@ -46,7 +47,7 @@ const ScTicket = styled.span`
   display: inline-block;
   padding: 6px 12px;
   margin-right: 12px;
-  background-color: #d61c4e;
+  background-color: #6527be;
   border-radius: 4px;
   font-weight: bold;
   min-width: 80px;
@@ -79,7 +80,7 @@ const ScPot = styled.span`
   padding: 16px 30px;
   border-radius: 8px;
   letter-spacing: 1px;
-  background-color: #d61c4e;
+  background-color: #6527be;
   margin-top: 2rem;
   margin-bottom: 2rem;
 
@@ -347,7 +348,7 @@ export const Lotte = () => {
             />
             <Button
               size="lg"
-              color="yellow"
+              color="orange"
               variant="light"
               style={{ width: '100%' }}
               onClick={purchase}
@@ -372,8 +373,8 @@ export const Lotte = () => {
             <ScRow>
               <p>{balance} LFX</p>
               <Button
-                variant="outline"
-                color="green"
+                variant="subtle"
+                color="violet"
                 onClick={withdraw}
                 loading={withdrawing}
               >
@@ -455,7 +456,7 @@ export const Lotte = () => {
           <ScDrawWrapper>
             <Button
               size="xl"
-              color="yellow"
+              color="orange"
               style={{ minWidth: 220 }}
               onClick={draw}
               loading={drawing}
@@ -570,6 +571,8 @@ export const Lotte = () => {
               than 7 to active the Draw
             </p>
           </div>
+
+          <BuyLfx />
         </ScStackAside>
       </ScStack>
     </ScMain>

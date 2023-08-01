@@ -104,8 +104,8 @@ const ScLinkComp = css`
   &:hover {
     text-decoration: none;
     opacity: 0.75;
-    color: black;
-    background: #ffd24c;
+    color: white;
+    background: #6527be;
   }
 
   > span {
@@ -206,8 +206,8 @@ export const NavBar = () => {
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
-                <ScNavLink to="/vn/">VN</ScNavLink>
-                <ScNavLink to="/ph/">PH</ScNavLink>
+                <ScNavLink to="/vn/">Vn🇻🇳</ScNavLink>
+                <ScNavLink to="/ph/">Ph🇵🇭</ScNavLink>
               </ScNavBarLeft>
 
               <ScNavBarRight>
