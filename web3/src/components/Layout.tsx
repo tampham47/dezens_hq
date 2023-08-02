@@ -9,10 +9,7 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import {
-  polygon,
-  polygonMumbai,
-} from 'wagmi/chains';
+import { polygon, polygonMumbai, fantom, fantomTestnet } from 'wagmi/chains';
 import { Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -68,10 +65,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const chains = [
-  polygon,
-  polygonMumbai,
-];
+let chains = [fantom, fantomTestnet, polygon, polygonMumbai];
+
+if (process.env.GATSBY_NETWORK === 'mainnet') {
+  chains = [fantom];
+}
+if (process.env.GATSBY_NETWORK === 'polygon') {
+  chains = [polygon];
+}
+
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -123,7 +125,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <>
           <NavBar />
 
-          {process.env.GATSBY_NETWORK !== 'polygon' ? (
+          {process.env.GATSBY_NETWORK !== 'mainnet' &&
+          process.env.GATSBY_NETWORK !== 'polygon' ? (
             <Container>
               <MobileWrapper>
                 <Alert

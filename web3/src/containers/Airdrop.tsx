@@ -96,6 +96,11 @@ export const Airdrop = () => {
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxAirdrop, setLfxAirdrop] = useState<Contract>();
   const rootTokenName = process.env.GATSBY_ROOT_TOKEN_NAME;
+  let network = 'Polygon';
+
+  if (rootTokenName === 'FTM') {
+    network = 'Fantom';
+  }
 
   const withdraw = async () => {
     if (!lfxAirdrop || !lfxToken) return;
@@ -287,8 +292,10 @@ export const Airdrop = () => {
                   </CopyButton>
                 </ScAddress>
                 <ScMessage>
-                  Deposit {rootTokenName} to participate LFX Airdrop.{' '}
-                  {rootTokenName} will be returned to you when the airdrop ends
+                  Deposit [{airdropInfo?.minDepositAmount},{' '}
+                  {airdropInfo?.maxDepositAmount}] {rootTokenName} to
+                  participate LFX Airdrop. {rootTokenName} will be returned to
+                  you when the airdrop ends
                 </ScMessage>
               </ScHelperBox>
 
@@ -318,15 +325,15 @@ export const Airdrop = () => {
                 ), do NOT deposit {rootTokenName} into this contract.
               </p>
               <p>
-                🍍 Only deposit {rootTokenName} - Polygon, transferring any
+                🍍 Only deposit {rootTokenName} - {network}, transferring any
                 other token will not be recognized.
               </p>
               <p>
                 🍍 To receive the LFX Airdrop, you need to transfer{' '}
-                {rootTokenName} - Polygon to the smart contract wallet address.
-                The amount of {rootTokenName} will be refunded to you after the
-                airdrop ends. Depositing {rootTokenName} helps minimize fraud in
-                the airdrop process.
+                {rootTokenName} - {network} to the smart contract wallet
+                address. The amount of {rootTokenName} will be refunded to you
+                after the airdrop ends. Depositing {rootTokenName} helps
+                minimize fraud in the airdrop process.
               </p>
               <p>
                 🍍 Each wallet can only deposit {rootTokenName} once, with the
