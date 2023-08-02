@@ -1,8 +1,8 @@
 # Todos
 
-- Apply 1e18 to numbers
-- Add system event into contracts
-- Working with wallet connects
+- [ ] Create ref link so that user can share it quickly
+- [ ] Dynamic ticket prices based on POT
+- [ ] V2: American styles
 
 ## Sample Hardhat Project
 
