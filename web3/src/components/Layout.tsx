@@ -87,9 +87,9 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   const name = 'Lotte.Fan';
   const title = 'Lotte.Fan';
-  const description = 'Buy Lottery on Fantom';
+  const description = 'A truly decentralized Lottery application for all';
   const link = 'https://lotte.fan';
-  const cover = '/images/icon.png';
+  const cover = '/images/social-share.webp';
 
   return (
     <main>
