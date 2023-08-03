@@ -10,7 +10,7 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 50,
+      maxParticipant: 2,
       maxTotalSupply: BigInt(625000) * e15,
       minDepositAmount: BigInt(2500) * e15,
       maxDepositAmount: BigInt(25000) * e15,
@@ -34,7 +34,7 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 5,
+      maxParticipant: 2,
       maxTotalSupply: BigInt(25000) * e15,
       minDepositAmount: BigInt(1000) * e15,
       maxDepositAmount: BigInt(10000) * e15,
@@ -58,7 +58,7 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 50,
+      maxParticipant: 2,
       maxTotalSupply: BigInt(250000) * e15,
       minDepositAmount: BigInt(1000) * e15,
       maxDepositAmount: BigInt(10000) * e15,
@@ -82,7 +82,7 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 50,
+      maxParticipant: 2,
       maxTotalSupply: BigInt(625000) * e15,
       minDepositAmount: BigInt(2500) * e15,
       maxDepositAmount: BigInt(25000) * e15,
