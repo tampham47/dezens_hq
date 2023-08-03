@@ -34,10 +34,10 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 2,
+      maxParticipant: 250,
       maxTotalSupply: BigInt(25000) * e15,
-      minDepositAmount: BigInt(1000) * e15,
-      maxDepositAmount: BigInt(10000) * e15,
+      minDepositAmount: BigInt(10) * e15,
+      maxDepositAmount: BigInt(100) * e15,
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * e18,
@@ -58,10 +58,10 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 2,
+      maxParticipant: 250,
       maxTotalSupply: BigInt(250000) * e15,
-      minDepositAmount: BigInt(1000) * e15,
-      maxDepositAmount: BigInt(10000) * e15,
+      minDepositAmount: BigInt(10) * e15,
+      maxDepositAmount: BigInt(100) * e15,
     },
     lfxLotte: {
       ticketPrice: BigInt(10000) * e18,

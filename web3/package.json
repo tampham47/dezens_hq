@@ -19,7 +19,7 @@
     "start:mainnet": "env-cmd -f .env.mainnet gatsby develop",
     "start:polygon-test": "env-cmd -f .env.polygon-test gatsby develop",
     "start:polygon": "env-cmd -f .env.polygon gatsby develop",
-    "deploy:test": "gatsby clean && env-cmd -f .env.polygon-test gatsby build && surge ./public https://lottefan.surge.sh",
+    "deploy:test": "gatsby clean && env-cmd -f .env.polygon-test gatsby build && surge ./public https://lotte-polygon-test.surge.sh",
     "deploy:polygon": "gatsby clean && env-cmd -f .env.polygon gatsby build && surge ./public https://lotte.fan",
     "typecheck": "tsc --noEmit"
   },
