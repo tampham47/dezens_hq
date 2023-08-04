@@ -15,6 +15,7 @@
     "start:polygon-test": "env-cmd -f .env.polygon-test gatsby develop",
     "start:polygon": "env-cmd -f .env.polygon gatsby develop",
     "start:bsc-testnet": "env-cmd -f .env.bsc-testnet gatsby develop",
+    "start:bsc": "env-cmd -f .env.bsc gatsby develop",
     "deploy:polygon-test": "gatsby clean && env-cmd -f .env.polygon-test gatsby build && surge ./public https://lotte-polygon-test.surge.sh",
     "deploy:polygon": "gatsby clean && env-cmd -f .env.polygon gatsby build && surge ./public https://lotte.fan",
     "typecheck": "tsc --noEmit"

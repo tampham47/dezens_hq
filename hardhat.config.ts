@@ -11,29 +11,9 @@ const config: HardhatUserConfig = {
       chainId: 97,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
-    'bsc-mainnet': {
+    bsc: {
       url: `https://bsc-dataseed.binance.org`,
       chainId: 56,
-      accounts: [`0x${PRIVATE_KEY_01}`],
-    },
-    mainnet: {
-      url: `https://rpcapi.fantom.network`,
-      chainId: 250,
-      accounts: [`0x${PRIVATE_KEY_01}`],
-    },
-    testnet: {
-      url: `https://rpc.testnet.fantom.network`,
-      chainId: 4002,
-      accounts: [`0x${PRIVATE_KEY_01}`],
-    },
-    arbgoerli: {
-      url: `https://goerli-rollup.arbitrum.io/rpc`,
-      chainId: 421613,
-      accounts: [`0x${PRIVATE_KEY_01}`],
-    },
-    opgoerli: {
-      url: `https://goerli.optimism.io`,
-      chainId: 420,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
     'polygon-test': {
@@ -44,11 +24,6 @@ const config: HardhatUserConfig = {
     polygon: {
       url: `https://polygon-rpc.com`,
       chainId: 137,
-      accounts: [`0x${PRIVATE_KEY_01}`],
-    },
-    'mantle-test': {
-      url: `https://rpc.testnet.mantle.xyz`,
-      chainId: 5001,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
     localhost: {
