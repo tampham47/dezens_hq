@@ -86,10 +86,10 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  const name = 'Lotte.Fan';
-  const title = 'Lotte.Fan';
-  const description = 'A truly decentralized Lottery application for all';
-  const link = 'https://lotte.fan';
+  const name = 'Dezens';
+  const title = 'Dezens';
+  const description = 'Truly decentralized applications for dezen generation';
+  const link = 'https://Dezens.io';
   const cover = '/images/social-share.webp';
 
   return (
@@ -126,7 +126,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <>
           <NavBar />
 
-          {(process.env.GATSBY_NETWORK !== 'polygon' && process.env.GATSBY_NETWORK !== 'bsc') ? (
+          {process.env.GATSBY_NETWORK !== 'polygon' &&
+          process.env.GATSBY_NETWORK !== 'bsc' ? (
             <Container>
               <MobileWrapper>
                 <Alert
@@ -143,7 +144,11 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
 
           {children}
           <Footer />
-          <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+          <Web3Modal
+            projectId={projectId}
+            ethereumClient={ethereumClient}
+            themeMode="dark"
+          />
         </>
       </WagmiConfig>
     </main>

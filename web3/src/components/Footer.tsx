@@ -171,7 +171,7 @@ export const Footer = () => {
 
             <Container>
               <ScContent>
-                <ScMark>@2023 Lotte.Fan</ScMark>
+                <ScMark>@2023 Dezens</ScMark>
               </ScContent>
             </Container>
           </ScMain>

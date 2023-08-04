@@ -104,8 +104,8 @@ const ScLinkComp = css`
   &:hover {
     text-decoration: none;
     opacity: 0.75;
-    color: white;
-    background: #6527be;
+    color: black;
+    background: #7dd2f0;
   }
 
   > span {
@@ -175,7 +175,7 @@ export const NavBar = () => {
           <ScNavBar>
             <ScLogo to="/">
               <img src="/images/icon.png" loading="eager" />
-              Lotte.Fan
+              Dezens
             </ScLogo>
 
             <ScMenuController

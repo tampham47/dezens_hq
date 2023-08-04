@@ -95,7 +95,7 @@ const BlogTemplate = ({ data }: any) => {
     <Layout>
       <ScRoot>
         <Helmet>
-          <title>Blog | Lotte.Fan</title>
+          <title>Blog | Dezens</title>
         </Helmet>
 
         <Container>

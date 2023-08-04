@@ -468,7 +468,7 @@ export const Lotte = () => {
         </ScStackAside>
       </ScStack>
 
-      <ScStack>
+      <ScStack style={{ display: 'none' }}>
         <ScStackMain>
           <ScBlock>
             <h3>
