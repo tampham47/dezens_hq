@@ -6,6 +6,16 @@ const { PRIVATE_KEY_01 } = process.env;
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
   networks: {
+    'bsc-testnet': {
+      url: `https://data-seed-prebsc-1-s1.binance.org:8545`,
+      chainId: 97,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
+    'bsc-mainnet': {
+      url: `https://bsc-dataseed.binance.org`,
+      chainId: 56,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
     mainnet: {
       url: `https://rpcapi.fantom.network`,
       chainId: 250,
