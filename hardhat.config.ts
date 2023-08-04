@@ -11,9 +11,9 @@ const config: HardhatUserConfig = {
       chainId: 97,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
-    bsc: {
-      url: `https://bsc-dataseed.binance.org`,
-      chainId: 56,
+    'ftm-testnet': {
+      url: `https://rpc.testnet.fantom.network`,
+      chainId: 4002,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
     'polygon-test': {
@@ -24,6 +24,16 @@ const config: HardhatUserConfig = {
     polygon: {
       url: `https://polygon-rpc.com`,
       chainId: 137,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
+    bsc: {
+      url: `https://bsc-dataseed.binance.org`,
+      chainId: 56,
+      accounts: [`0x${PRIVATE_KEY_01}`],
+    },
+    ftm: {
+      url: `https://rpcapi.fantom.network`,
+      chainId: 250,
       accounts: [`0x${PRIVATE_KEY_01}`],
     },
     localhost: {

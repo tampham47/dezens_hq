@@ -8,6 +8,11 @@ import BscTestnetLfxAirdrop from './bsc-testnet/LfxAirdrop.json';
 import BscTestnetLfxVault from './bsc-testnet/LfxVault.json';
 import BscTestnetLotte from './bsc-testnet/Lotte.json';
 
+import FtmTestnetLfx from './ftm-testnet/LFX.json';
+import FtmTestnetLfxAirdrop from './ftm-testnet/LfxAirdrop.json';
+import FtmTestnetLfxVault from './ftm-testnet/LfxVault.json';
+import FtmTestnetLotte from './ftm-testnet/Lotte.json';
+
 import PolygonLfx from './polygon/LFX.json';
 import PolygonLfxAirdrop from './polygon/LfxAirdrop.json';
 import PolygonLfxVault from './polygon/LfxVault.json';
@@ -34,6 +39,15 @@ export const getContractConfig = () => {
       LfxAirdrop: BscTestnetLfxAirdrop,
       LfxVault: BscTestnetLfxVault,
       Lotte: BscTestnetLotte,
+    };
+  }
+
+  if (process.env.NODE_ENV === 'ftm-testnet') {
+    return {
+      Lfx: FtmTestnetLfx,
+      LfxAirdrop: FtmTestnetLfxAirdrop,
+      LfxVault: FtmTestnetLfxVault,
+      Lotte: FtmTestnetLotte,
     };
   }
 

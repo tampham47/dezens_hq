@@ -9,7 +9,14 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { polygon, polygonMumbai, bscTestnet, bsc } from 'wagmi/chains';
+import {
+  polygon,
+  polygonMumbai,
+  bscTestnet,
+  bsc,
+  fantomTestnet,
+  fantom,
+} from 'wagmi/chains';
 import { Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -65,10 +72,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-let chains = [polygon, polygonMumbai];
+let chains = [polygonMumbai];
 
 if (process.env.GATSBY_NETWORK === 'bsc-testnet') {
   chains = [bscTestnet];
+}
+
+if (process.env.GATSBY_NETWORK === 'ftm-testnet') {
+  chains = [fantomTestnet];
 }
 
 if (process.env.GATSBY_NETWORK === 'polygon') {
@@ -77,6 +88,10 @@ if (process.env.GATSBY_NETWORK === 'polygon') {
 
 if (process.env.GATSBY_NETWORK === 'bsc') {
   chains = [bsc];
+}
+
+if (process.env.GATSBY_NETWORK === 'ftm') {
+  chains = [fantom];
 }
 
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
