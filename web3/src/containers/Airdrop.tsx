@@ -304,7 +304,7 @@ export const Airdrop = () => {
                 <code>{getShortAddress(contractConfig.LfxAirdrop.Token)}</code>
                 &nbsp;(
                 <a
-                  href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.LfxAirdrop.Token}`}
+                  href={`${process.env.GATSBY_ETHER_SCAN}/address/${contractConfig.LfxAirdrop.Token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -316,7 +316,7 @@ export const Airdrop = () => {
                 🍍 LFX Token Address:{' '}
                 <code>{getShortAddress(contractConfig.Lfx.Token)}</code>&nbsp;(
                 <a
-                  href={`${process.env.GATSBY_FANTOM_SCAN}/token/${contractConfig.Lfx.Token}`}
+                  href={`${process.env.GATSBY_ETHER_SCAN}/token/${contractConfig.Lfx.Token}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

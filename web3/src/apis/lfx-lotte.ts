@@ -40,7 +40,7 @@ class LfxLotteClass {
 
   constructor() {
     this.provider = new ethers.JsonRpcProvider(
-      process.env.GATSBY_FANTOM_RPC_URL
+      process.env.GATSBY_ETHER_RPC_URL
     );
 
     this.contract = new ethers.Contract(

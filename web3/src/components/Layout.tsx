@@ -9,7 +9,7 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { polygon, polygonMumbai, fantom, fantomTestnet } from 'wagmi/chains';
+import { polygon, polygonMumbai, bscTestnet } from 'wagmi/chains';
 import { Alert } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
@@ -65,13 +65,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-let chains = [fantom, fantomTestnet, polygon, polygonMumbai];
+let chains = [polygon, polygonMumbai];
 
-if (process.env.GATSBY_NETWORK === 'mainnet') {
-  chains = [fantom];
-}
 if (process.env.GATSBY_NETWORK === 'polygon') {
   chains = [polygon];
+}
+
+if (process.env.GATSBY_NETWORK === 'bsc-testnet') {
+  chains = [bscTestnet];
 }
 
 const projectId = 'c08bda26db91f19c077f6e936e169bc0';
@@ -125,8 +126,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <>
           <NavBar />
 
-          {process.env.GATSBY_NETWORK !== 'mainnet' &&
-          process.env.GATSBY_NETWORK !== 'polygon' ? (
+          {(process.env.GATSBY_NETWORK !== 'polygon' && process.env.GATSBY_NETWORK !== 'bsc') ? (
             <Container>
               <MobileWrapper>
                 <Alert
@@ -135,15 +135,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
                   variant="filled"
                 >
                   You're on Fantom Testnet, please do NOT use your real{' '}
-                  {process.env.GATSBY_ROOT_TOKEN_NAME}.{' '}
-                  <a
-                    href="https://metaschool.so/rpc/fantomTestnet"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Click here
-                  </a>{' '}
-                  to learn how to add Fantom Testnet to your Metamask.
+                  {process.env.GATSBY_ROOT_TOKEN_NAME}.
                 </Alert>
               </MobileWrapper>
             </Container>

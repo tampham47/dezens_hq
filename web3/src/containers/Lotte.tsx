@@ -306,7 +306,7 @@ export const Lotte = () => {
               <ScRef>
                 Your Ref:{' '}
                 <a
-                  href={`${process.env.GATSBY_FANTOM_SCAN}/address/${ref}`}
+                  href={`${process.env.GATSBY_ETHER_SCAN}/address/${ref}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -440,7 +440,7 @@ export const Lotte = () => {
             Lotte Contract Address:{' '}
             <code>{getShortAddress(contractConfig.Lotte.Token)}</code>&nbsp;(
             <a
-              href={`${process.env.GATSBY_FANTOM_SCAN}/address/${contractConfig.Lotte.Token}`}
+              href={`${process.env.GATSBY_ETHER_SCAN}/address/${contractConfig.Lotte.Token}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -477,7 +477,7 @@ export const Lotte = () => {
             <ScRow>
               <p>Conducted by:</p>
               <a
-                href={`${process.env.GATSBY_FANTOM_SCAN}/address/${lastDraw?.actor}`}
+                href={`${process.env.GATSBY_ETHER_SCAN}/address/${lastDraw?.actor}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
