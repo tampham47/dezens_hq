@@ -23,7 +23,7 @@ const ScLink = styled.a`
 export const BuyLfx = () => {
   return (
     <ScLink
-      href="https://app.uniswap.org/#/swap?chain=polygon&inputCurrency=ETH&outputCurrency=0xd0b2c5834816f9884a537482F92F1A41d356aDfE"
+      href="https://spooky.fi/#/swap?outputCurrency=0x3C5BD56dF41A4a7f6c3BaFe5FFFd3d832d699f4F&inputCurrency=ETH"
       target="_blank"
       rel="noopener noreferrer"
     >
