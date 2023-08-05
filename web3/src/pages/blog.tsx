@@ -100,7 +100,7 @@ const BlogTemplate = ({ data }: any) => {
 
         <Container>
           <ScMain>
-            <h2>Blog</h2>
+            <h2>Dezens Blog</h2>
 
             <ScPostList>
               {posts.map((i) => (

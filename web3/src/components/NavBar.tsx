@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'gatsby';
 import { Web3Button } from '@web3modal/react';
-import { Menu } from 'react-feather';
+import { IconMenu } from '@tabler/icons-react';
 
 import { Container } from './Grid';
 
@@ -13,7 +13,9 @@ const ScHeader = styled.header`
   right: 0;
   top: 0;
   z-index: 98;
-  background: #0b0b0f;
+  background: #1f2122;
+  background: -webkit-linear-gradient(to left, #3a3c3e, #1f2122);
+  background: linear-gradient(to left, #3a3c3e, #1f2122);
 `;
 
 const ScMenuController = styled.input`
@@ -30,15 +32,15 @@ const ScNavBarContent = styled.div`
   top: 64px;
   left: 0;
   right: 0;
-  background: #0b0b0f;
   display: none;
   padding: 12px 24px;
-  padding-bottom: 36px;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #232526;
+  padding-top: 2rem;
 
   @media screen and (min-width: 1024px) {
+    padding-top: 12px;
+    background: transparent;
     position: static;
     display: flex;
     flex-direction: row;
@@ -92,14 +94,11 @@ const ScLinkComp = css`
   transition: all 0.3s;
   display: block;
   user-select: none;
-  font-weight: bold;
   height: 40px;
   line-height: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 20px;
-  border: 1px solid gray;
   margin-bottom: 8px;
+  border-radius: 4px;
+  font-size: 17px;
 
   &:hover {
     text-decoration: none;
@@ -117,6 +116,9 @@ const ScLinkComp = css`
     border: none;
     margin-bottom: 0;
     margin-right: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
 
     > span {
       display: none;
@@ -148,6 +150,7 @@ const ScLogo = styled(Link)`
   align-items: center;
   font-weight: bold;
   margin-right: 24px;
+  font-size: 17px;
 
   img {
     height: 32px;
@@ -198,7 +201,7 @@ export const NavBar = () => {
                   !refMenuController.current.checked ?? false;
               }}
             >
-              <Menu size={24} />
+              <IconMenu size={24} />
             </ScMenuButton>
 
             <ScNavBarContent>

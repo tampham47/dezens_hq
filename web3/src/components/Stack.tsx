@@ -19,7 +19,7 @@ export const ScStackMain = styled.div`
   color: #ffd2d7;
   padding: 24px;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-left: -16px;
   margin-right: -16px;
   margin-bottom: 4px;
@@ -36,7 +36,7 @@ export const ScStackAside = styled.div`
   flex: 5;
   color: #ffd2d7;
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-left: -16px;
   margin-right: -16px;
   margin-bottom: 4px;

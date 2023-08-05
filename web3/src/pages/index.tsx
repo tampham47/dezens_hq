@@ -107,7 +107,7 @@ const BlogTemplate = ({ data }: any) => {
 
         <Container>
           <ScMain>
-            <h2>News</h2>
+            <h3>News</h3>
             <ScPostList>
               {posts.slice(0, 3).map((i) => (
                 <Card key={i.slug} post={i} />
