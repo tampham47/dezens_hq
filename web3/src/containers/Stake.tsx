@@ -252,7 +252,7 @@ export const Stake = () => {
           </ScInfoList>
 
           <ScMessage>
-            Stake your DEZ to share profit from LotteFan system with us!
+            Stake your DEZ to share profit from DezApps with us!
           </ScMessage>
           <ScMessage>
             Vault Contract Address:{' '}
