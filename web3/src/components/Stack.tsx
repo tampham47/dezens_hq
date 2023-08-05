@@ -49,3 +49,27 @@ export const ScStackAside = styled.div`
     margin-right: 1rem;
   }
 `;
+
+export const ScList = styled.div`
+  @media screen and (min-width: 992px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -24px;
+    margin-right: -24px;
+  }
+`;
+
+export const ScListItem = styled.div`
+  max-width: 500px;
+  margin-bottom: 4rem;
+  padding: 12px 24px;
+  border: 1px solid #0083b0;
+  border-radius: 8px;
+
+  @media screen and (min-width: 992px) {
+    margin-left: 24px;
+    margin-right: 24px;
+    width: calc(33.33% - 48px);
+    margin-bottom: 36px;
+  }
+`;

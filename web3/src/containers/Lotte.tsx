@@ -5,7 +5,6 @@ import { useWalletClient } from 'wagmi';
 import { Contract, ethers } from 'ethers';
 
 import {
-  DrawInformation,
   LfxLotte,
   LotteConfig,
   LotteInfo,
@@ -27,8 +26,9 @@ import {
   ScStack,
   ScStackMain as ScStackMainSrc,
   ScStackAside as ScStackAsideSrc,
+  ScList,
 } from '../components/Stack';
-import { BuyLfx } from '../components/BuyLfx';
+import { DrawHistory } from './DrawHistory';
 
 const ScMain = styled.div`
   p {
@@ -151,7 +151,6 @@ export const Lotte = () => {
   const [ticketList, setTicketList] = useState<number[]>([]);
   const [ref, setRef] = useState<string>('');
   const [balance, setBalance] = useState<number>(0);
-  const [lastDraw, setLastDraw] = useState<DrawInformation>();
 
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxLotte, setLfxLotte] = useState<Contract>();
@@ -162,6 +161,7 @@ export const Lotte = () => {
   const [drawing, setDrawing] = useState<boolean>(false);
   const [withdrawing, setWithdrawing] = useState<boolean>(false);
 
+  const currentRound = lotteInfo?.round || 0;
   const nextDraw =
     (lotteInfo?.lastDrawTimestamp || 0) + (lotteConfig?.minDrawDuration || 0);
 
@@ -280,7 +280,6 @@ export const Lotte = () => {
 
     setLotteInfo(info);
     setLotteConfig(config);
-    setLastDraw(draw);
   };
 
   useEffect(() => {
@@ -475,113 +474,16 @@ export const Lotte = () => {
         </ScStackAside>
       </ScStack>
 
-      <ScStack style={{ display: 'none' }}>
-        <ScStackMain>
-          <ScBlock>
-            <h3>
-              Last Draw: Round #{lotteInfo?.round ? lotteInfo.round - 1 : '#'}
-            </h3>
-            <ScRow>
-              <p>Conducted by:</p>
-              <a
-                href={`${process.env.GATSBY_ETHER_SCAN}/address/${lastDraw?.actor}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {getShortAddress(lastDraw?.actor || '')}
-              </a>
-            </ScRow>
-            <ScRow>
-              <p>Winning Ticket:</p>
-              <ScTicket style={{ marginRight: 0, marginBottom: 0 }}>
-                {getTicketByNumber(lastDraw?.winningNumber || 0)}
-              </ScTicket>
-            </ScRow>
-            <ScRow>
-              <p>Time: </p>
-              <p>{lastDraw?.timestamp}</p>
-            </ScRow>
-            <ScRow>
-              <p>Winner Count:</p>
-              <p>
-                {lastDraw?.winnerCount === 0
-                  ? 'No Winner'
-                  : lastDraw?.winnerCount}
-              </p>
-            </ScRow>
-
-            {lastDraw?.winnerCount ? (
-              <>
-                <ScRow>
-                  <p>Winning Amount: </p>
-                  <p>{lastDraw?.winningAmount}</p>
-                </ScRow>
-                <ScRow>
-                  <p>Winner Address:</p>
-                  <p>
-                    {lastDraw?.winnerList.map((i) => (
-                      <span>{i}</span>
-                    ))}
-                  </p>
-                </ScRow>
-              </>
-            ) : null}
-          </ScBlock>
-        </ScStackMain>
-
-        <ScStackAside>
-          <h3>How to play</h3>
-          <p>
-            Lotte Fan is working automatically itself. The power is all on you.
-          </p>
-
-          <div>
-            <h4>Step: 1. Choose tickets with your favorite number.</h4>
-            <p>
-              A ticket contains two numbers and divided by `:`, the first number
-              is in this range [00, 23], the second number should be in this
-              range [00, 59]
-            </p>
-          </div>
-          <div>
-            <h4>Step 2. Purchase and Payment</h4>
-            <p>
-              To purchase tickets, you need to approve the contract to use LFX
-              in your wallet first. The ticket is about 10.000 LFX. However, you
-              can approve more than that to save the gas fee for the next
-              purchase.
-            </p>
-
-            <p>
-              If your allowance of LFX in the contract is enough to pay for the
-              tickets. You will be led directly to the confirmation screen.
-            </p>
-          </div>
-          <div>
-            <h4>Step 3. Wait for the Draw</h4>
-            <p>
-              Every 24 hours, everybody can perform the Draw action. This action
-              generates a winning number, then distributes rewards to winners if
-              any.
-            </p>
-            <p>
-              If there is no winner. All the rewards in the POT will be
-              accumulated for the next round.
-            </p>
-            <p>
-              Those who perform the Draw action will receive rewards from the
-              system right after the draw is complete. Then they can withdraw
-              LFX to their wallet.
-            </p>
-            <p>
-              Requirements: The number of purchased tickets should be greater
-              than 7 to active the Draw
-            </p>
-          </div>
-
-          <BuyLfx />
-        </ScStackAside>
-      </ScStack>
+      {currentRound > 0 ? (
+        <>
+          <h4>Draw history</h4>
+          <ScList>
+            <DrawHistory index={currentRound - 1} key={currentRound - 1} />
+            <DrawHistory index={currentRound - 2} key={currentRound - 2} />
+            <DrawHistory index={currentRound - 3} key={currentRound - 3} />
+          </ScList>
+        </>
+      ) : null}
     </ScMain>
   );
 };

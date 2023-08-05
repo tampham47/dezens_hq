@@ -114,6 +114,35 @@ class LfxLotteClass {
     return getNumber(balance, 18);
   };
 
+  getDrawByIndex = async (index: number): Promise<DrawInformation> => {
+    const [
+      timestamp,
+      actor,
+      winningNumber,
+      winningAmount,
+      winnerCount,
+      winnerList,
+    ] = await this.contract.drawData(index);
+    console.log(
+      'a',
+      timestamp,
+      actor,
+      winningNumber,
+      winningAmount,
+      winnerCount,
+      winnerList
+    );
+
+    return {
+      actor,
+      timestamp: getNumber(timestamp, 0),
+      winningNumber: getNumber(winningNumber, 0),
+      winningAmount: getNumber(winningAmount, 18),
+      winnerCount: getNumber(winnerCount, 0),
+      winnerList: winnerList ? Object.values(winnerList) : [],
+    };
+  };
+
   getLastDraw = async (): Promise<DrawInformation> => {
     const [
       timestamp,
@@ -123,6 +152,7 @@ class LfxLotteClass {
       winnerCount,
       winnerList,
     ] = await this.contract.getLastDraw();
+    console.log('lastDraw', winnerList)
 
     return {
       actor,

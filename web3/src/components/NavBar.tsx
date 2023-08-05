@@ -13,9 +13,9 @@ const ScHeader = styled.header`
   right: 0;
   top: 0;
   z-index: 98;
-  background: #1f2122;
-  background: -webkit-linear-gradient(to left, #3a3c3e, #1f2122);
-  background: linear-gradient(to left, #3a3c3e, #1f2122);
+
+  background: #000428;
+  background: linear-gradient(to right, #004e92, #000428);
 `;
 
 const ScMenuController = styled.input`
