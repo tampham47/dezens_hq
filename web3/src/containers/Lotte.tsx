@@ -384,7 +384,7 @@ export const Lotte = () => {
           </ScBlock>
         </ScStackMain>
         <ScStackAside>
-          <h3>Round #{lotteInfo?.round}</h3>
+          <h3>DezLottery R#{lotteInfo?.round}</h3>
 
           <ScPotWrapper>
             <ScPot>POT: {getDisplayedNumber(lotteInfo?.totalPot)} DEZ</ScPot>
