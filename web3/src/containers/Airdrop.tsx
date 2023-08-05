@@ -3,7 +3,7 @@ import { Contract } from 'ethers';
 import { useWalletClient } from 'wagmi';
 import styled from 'styled-components';
 import { QRCodeCanvas } from 'qrcode.react';
-import { Alert, CopyButton, Button } from '@mantine/core';
+import { Alert, CopyButton, Button, Progress } from '@mantine/core';
 import {
   IconAlertCircle,
   IconClipboard,
@@ -62,8 +62,7 @@ const ScInfo = styled(ScStackAside)`
   }
 `;
 
-const ScSection = styled.div`
-`;
+const ScSection = styled.div``;
 
 const ScQrCodeWrapper = styled.div`
   text-align: center;
@@ -101,6 +100,9 @@ const ScAddressValue = styled.code`
 const ScImgWrapper = styled.div`
   text-align: center;
   margin-bottom: 2rem;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 const ScImg = styled.img`
   width: 240px;
@@ -113,6 +115,9 @@ export const Airdrop = () => {
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [lfxAirdrop, setLfxAirdrop] = useState<Contract>();
   const rootTokenName = process.env.GATSBY_ROOT_TOKEN_NAME;
+  const participantCount = airdropInfo?.participantCount ?? 0;
+  const maxParticipant = airdropInfo?.maxParticipant ?? 100;
+  const joinPercent = Math.max(5, Math.ceil(participantCount / maxParticipant));
   let network = 'Polygon';
 
   if (rootTokenName === 'FTM') {
@@ -175,6 +180,13 @@ export const Airdrop = () => {
 
           <ScImgWrapper>
             <ScImg src="/images/heart.png" alt="Heart DEZ" />
+            <Progress
+              value={joinPercent}
+              color="red"
+              size="sm"
+              striped
+              animate
+            />
           </ScImgWrapper>
 
           <ScInfoList>
