@@ -1,19 +1,25 @@
 import styled from 'styled-components';
 
 export const ScInfoList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
   @media screen and (min-width: 960px) {
-    display: flex;
-    flex-wrap: wrap;
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
     justify-content: center;
   }
 `;
 
 export const ScInfoBlock = styled.div`
   margin-bottom: 2rem;
+  width: 50%;
 
   @media screen and (min-width: 960px) {
     padding: 24px;
-    width: 25%;
+    width: 30%;
     margin-bottom: 0;
   }
 `;

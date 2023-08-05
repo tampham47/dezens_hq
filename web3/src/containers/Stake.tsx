@@ -20,7 +20,11 @@ import {
   ScBlock,
 } from '../components/Common';
 import { getDisplayedNumber } from '../utils/number';
-import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import {
+  ScStack,
+  ScStackMain as ScStackMainSrc,
+  ScStackAside as ScStackAsideSrc,
+} from '../components/Stack';
 import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
@@ -28,6 +32,17 @@ const ScMain = styled.div`
 
   p {
     line-height: 1.6;
+  }
+`;
+
+const ScStackMain = styled(ScStackMainSrc)`
+  background: #141e30;
+`;
+const ScStackAside = styled(ScStackAsideSrc)`
+  background: #141e30;
+
+  @media screen and (min-width: 960px) {
+    background: linear-gradient(to right, #243b55, #141e30);
   }
 `;
 

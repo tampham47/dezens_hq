@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IconChevronRight } from '@tabler/icons-react';
 
 const ScLink = styled.a`
-  background-color: #8062d6;
+  background-color: #64a8c0;
   padding: 16px 24px;
   border-radius: 8px;
   display: block;
@@ -16,7 +16,7 @@ const ScLink = styled.a`
 
   &:hover {
     text-decoration: none;
-    background-color: #6527be;
+    background-color: #70bdd8;
   }
 `;
 

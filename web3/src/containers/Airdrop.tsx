@@ -23,7 +23,11 @@ import {
   ScBlock,
 } from '../components/Common';
 import { getAutoRoundNumber, getDisplayedNumber } from '../utils/number';
-import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import {
+  ScStack,
+  ScStackMain as ScStackMainSrc,
+  ScStackAside as ScStackAsideSrc,
+} from '../components/Stack';
 import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
@@ -32,12 +36,26 @@ const ScMain = styled.div`
   }
 `;
 
+const ScStackMain = styled(ScStackMainSrc)`
+  background: #141e30;
+`;
+const ScStackAside = styled(ScStackAsideSrc)`
+  background: #141e30;
+
+  @media screen and (min-width: 960px) {
+    background: linear-gradient(to right, #243b55, #141e30);
+  }
+`;
+
 const ScInfo = styled(ScStackAside)`
   h3 {
     margin-top: 0;
-    margin-bottom: 1rem;
-    color: #fd8d14;
+    margin-bottom: 1em;
+    color: #003973;
   }
+
+  background: #003973;
+  background: linear-gradient(to bottom, #e5e5be, #003973);
 
   @media screen and (min-width: 960px) {
     margin-right: 0;
@@ -45,7 +63,6 @@ const ScInfo = styled(ScStackAside)`
 `;
 
 const ScSection = styled.div`
-  margin-bottom: 4rem;
 `;
 
 const ScQrCodeWrapper = styled.div`
@@ -74,7 +91,7 @@ const ScHelperBox = styled.div`
 const ScAddress = styled.span`
   padding: 2px 2px 2px 16px;
   border-radius: 4px;
-  border: 1px solid #6527be;
+  border: 1px solid #64a8c0;
   display: inline-block;
 `;
 const ScAddressValue = styled.code`
@@ -154,7 +171,7 @@ export const Airdrop = () => {
     <ScMain>
       <ScInfo>
         <ScBlock>
-          <h3>DexAirdrops R#1</h3>
+          <h3>DezAirdrops R#1</h3>
 
           <ScImgWrapper>
             <ScImg src="/images/heart.png" alt="Heart DEZ" />
@@ -179,9 +196,6 @@ export const Airdrop = () => {
               </ScInfoValue>
               <ScInfoLabel>Expected participants</ScInfoLabel>
             </ScInfoBlock>
-          </ScInfoList>
-
-          <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
                 {getDisplayedNumber(airdropInfo?.balanceLfxToken)} DEZ
@@ -192,9 +206,7 @@ export const Airdrop = () => {
               <ScInfoValue>
                 {getDisplayedNumber(airdropInfo?.estLfxReceivePerFtm || 0)} DEZ
               </ScInfoValue>
-              <ScInfoLabel>
-                Amount of DEZ received / {rootTokenName}
-              </ScInfoLabel>
+              <ScInfoLabel>Est. DEZ / {rootTokenName}</ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
@@ -275,7 +287,7 @@ export const Airdrop = () => {
                   <CopyButton value={contractConfig.LfxAirdrop.Token}>
                     {({ copied, copy }) => (
                       <Button
-                        color={copied ? 'teal' : 'violet'}
+                        color={copied ? 'teal' : 'cyan'}
                         variant="subtle"
                         onClick={copy}
                         leftIcon={

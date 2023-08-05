@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const ScStack = styled.div`
-  h3 {
+  h3,
+  h4 {
     margin-top: 0;
-    margin-bottom: 1rem;
-    color: #fd8d14;
+    margin-bottom: 1em;
+    color: #7dd2f0;
   }
 
   @media screen and (min-width: 960px) {
@@ -15,7 +16,6 @@ export const ScStack = styled.div`
 
 export const ScStackMain = styled.div`
   flex: 2;
-  background-color: #322653;
   color: #ffd2d7;
   padding: 24px;
   overflow: hidden;
@@ -34,7 +34,6 @@ export const ScStackMain = styled.div`
 
 export const ScStackAside = styled.div`
   flex: 5;
-  background-color: #322653;
   color: #ffd2d7;
   padding: 24px;
   border-radius: 8px;

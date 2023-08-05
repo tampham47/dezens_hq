@@ -23,17 +23,31 @@ import {
   ScMessage,
   ScRow,
 } from '../components/Common';
-import { ScStack, ScStackMain, ScStackAside } from '../components/Stack';
+import {
+  ScStack,
+  ScStackMain as ScStackMainSrc,
+  ScStackAside as ScStackAsideSrc,
+} from '../components/Stack';
 import { BuyLfx } from '../components/BuyLfx';
 
 const ScMain = styled.div`
   p {
     line-height: 1.6;
   }
+`;
 
-  h4 {
-    margin-top: 2.5em;
-    margin-bottom: 0.5em;
+const ScStackMain = styled(ScStackMainSrc)`
+  background: #141e30;
+
+  @media screen and (min-width: 960px) {
+    background: linear-gradient(to left, #243b55, #141e30);
+  }
+`;
+const ScStackAside = styled(ScStackAsideSrc)`
+  background: #141e30;
+
+  @media screen and (min-width: 960px) {
+    background: linear-gradient(to right, #243b55, #141e30);
   }
 `;
 
@@ -45,11 +59,12 @@ const ScTicketList = styled.div``;
 
 const ScTicket = styled.span`
   display: inline-block;
-  padding: 6px 12px;
+  padding: 6px 16px;
   margin-right: 12px;
-  background-color: #6527be;
-  border-radius: 4px;
+  border: 1px solid #ff731d;
+  color: #ff731d;
   font-weight: bold;
+  border-radius: 6px;
   min-width: 80px;
   text-align: center;
   margin-bottom: 6px;
@@ -80,7 +95,7 @@ const ScPot = styled.span`
   padding: 16px 30px;
   border-radius: 8px;
   letter-spacing: 1px;
-  background-color: #6527be;
+  background-color: #ff731d;
   margin-top: 2rem;
   margin-bottom: 2rem;
 
@@ -348,7 +363,6 @@ export const Lotte = () => {
             />
             <Button
               size="lg"
-              color="orange"
               variant="light"
               style={{ width: '100%' }}
               onClick={purchase}
@@ -359,7 +373,7 @@ export const Lotte = () => {
           </ScBlock>
 
           <ScBlock>
-            <h3>Your Tickets</h3>
+            <h4>Your Tickets</h4>
             {!ticketList.length ? <ScHelper>No ticket found</ScHelper> : null}
             <ScTicketList>
               {ticketList.map((i, index) => (
@@ -369,15 +383,10 @@ export const Lotte = () => {
           </ScBlock>
 
           <ScBlock>
-            <h3>Your Balance</h3>
+            <h4>Your Balance</h4>
             <ScRow>
               <p>{balance} DEZ</p>
-              <Button
-                variant="subtle"
-                color="violet"
-                onClick={withdraw}
-                loading={withdrawing}
-              >
+              <Button variant="subtle" onClick={withdraw} loading={withdrawing}>
                 Withdraw
               </Button>
             </ScRow>
@@ -411,9 +420,7 @@ export const Lotte = () => {
               </ScInfoValue>
               <ScInfoLabel>Total Ticket</ScInfoLabel>
             </ScInfoBlock>
-          </ScInfoList>
 
-          <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
                 {getDisplayedNumber(lotteInfo?.systemFees)} DEZ
@@ -437,7 +444,7 @@ export const Lotte = () => {
           </ScInfoList>
 
           <ScMessage>
-            Lotte Contract Address:{' '}
+            DezLottery Contract Address:{' '}
             <code>{getShortAddress(contractConfig.Lotte.Token)}</code>&nbsp;(
             <a
               href={`${process.env.GATSBY_ETHER_SCAN}/address/${contractConfig.Lotte.Token}`}
@@ -456,7 +463,6 @@ export const Lotte = () => {
           <ScDrawWrapper>
             <Button
               size="xl"
-              color="orange"
               style={{ minWidth: 220 }}
               onClick={draw}
               loading={drawing}
