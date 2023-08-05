@@ -98,7 +98,7 @@ const ScLinkComp = css`
   line-height: 40px;
   margin-bottom: 8px;
   border-radius: 4px;
-  font-size: 17px;
+  font-size: 16px;
 
   &:hover {
     text-decoration: none;
