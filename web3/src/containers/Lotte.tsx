@@ -463,6 +463,7 @@ export const Lotte = () => {
           <ScDrawWrapper>
             <Button
               size="xl"
+              color="cyan"
               style={{ minWidth: 220 }}
               onClick={draw}
               loading={drawing}
