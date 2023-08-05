@@ -154,7 +154,7 @@ export const Airdrop = () => {
     <ScMain>
       <ScInfo>
         <ScBlock>
-          <h3>DEZ Airdrop Round #01</h3>
+          <h3>DexAirdrops R#1</h3>
 
           <ScImgWrapper>
             <ScImg src="/images/heart.png" alt="Heart DEZ" />
@@ -244,7 +244,7 @@ export const Airdrop = () => {
 
         <ScStackAside>
           <ScSection>
-            <h3>DEZ Airdrop</h3>
+            <h3>Deposit FTM</h3>
 
             {airdropInfo?.isWithdrawable ? (
               <Alert
