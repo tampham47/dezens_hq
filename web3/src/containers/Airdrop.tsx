@@ -154,10 +154,10 @@ export const Airdrop = () => {
     <ScMain>
       <ScInfo>
         <ScBlock>
-          <h3>LFX Airdrop Round #01</h3>
+          <h3>DEZ Airdrop Round #01</h3>
 
           <ScImgWrapper>
-            <ScImg src="/images/heart.png" alt="Heart LFX" />
+            <ScImg src="/images/heart.png" alt="Heart DEZ" />
           </ScImgWrapper>
 
           <ScInfoList>
@@ -184,16 +184,16 @@ export const Airdrop = () => {
           <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(airdropInfo?.balanceLfxToken)} LFX
+                {getDisplayedNumber(airdropInfo?.balanceLfxToken)} DEZ
               </ScInfoValue>
-              <ScInfoLabel>Total LFX to distribute</ScInfoLabel>
+              <ScInfoLabel>Total DEZ to distribute</ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(airdropInfo?.estLfxReceivePerFtm || 0)} LFX
+                {getDisplayedNumber(airdropInfo?.estLfxReceivePerFtm || 0)} DEZ
               </ScInfoValue>
               <ScInfoLabel>
-                Amount of LFX received / {rootTokenName}
+                Amount of DEZ received / {rootTokenName}
               </ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
@@ -209,7 +209,7 @@ export const Airdrop = () => {
       <ScStack>
         <ScStackMain>
           <ScSection>
-            <h3>Your LFX Airdrop</h3>
+            <h3>Your DEZ Airdrop</h3>
             <ScBlock>
               <ScRow>
                 <p>{rootTokenName} deposited: </p>
@@ -218,12 +218,12 @@ export const Airdrop = () => {
                 </p>
               </ScRow>
               <ScRow>
-                <p>Est LFX received: </p>
+                <p>Est DEZ received: </p>
                 <p>
                   {getDisplayedNumber(
                     userDeposit * (airdropInfo?.estLfxReceivePerFtm || 0)
                   )}{' '}
-                  LFX
+                  DEZ
                 </p>
               </ScRow>
             </ScBlock>
@@ -244,7 +244,7 @@ export const Airdrop = () => {
 
         <ScStackAside>
           <ScSection>
-            <h3>LFX Airdrop</h3>
+            <h3>DEZ Airdrop</h3>
 
             {airdropInfo?.isWithdrawable ? (
               <Alert
@@ -294,7 +294,7 @@ export const Airdrop = () => {
                 <ScMessage>
                   Deposit [{airdropInfo?.minDepositAmount},{' '}
                   {airdropInfo?.maxDepositAmount}] {rootTokenName} to
-                  participate LFX Airdrop. {rootTokenName} will be returned to
+                  participate DEZ Airdrop. {rootTokenName} will be returned to
                   you when the airdrop ends
                 </ScMessage>
               </ScHelperBox>
@@ -313,7 +313,7 @@ export const Airdrop = () => {
                 ).
               </p>
               <p>
-                🍍 LFX Token Address:{' '}
+                🍍 DEZ Token Address:{' '}
                 <code>{getShortAddress(contractConfig.Lfx.Token)}</code>&nbsp;(
                 <a
                   href={`${process.env.GATSBY_ETHER_SCAN}/token/${contractConfig.Lfx.Token}`}
@@ -329,7 +329,7 @@ export const Airdrop = () => {
                 other token will not be recognized.
               </p>
               <p>
-                🍍 To receive the LFX Airdrop, you need to transfer{' '}
+                🍍 To receive the DEZ Airdrop, you need to transfer{' '}
                 {rootTokenName} - {network} to the smart contract wallet
                 address. The amount of {rootTokenName} will be refunded to you
                 after the airdrop ends. Depositing {rootTokenName} helps
@@ -345,7 +345,7 @@ export const Airdrop = () => {
                 🍍 The airdrop will be completed when there are{' '}
                 {airdropInfo?.maxParticipant} participants or{' '}
                 {airdropInfo?.maxTotalSupply} {rootTokenName} is deposited.
-                After that, users will be allowed to withdraw LFX as well as{' '}
+                After that, users will be allowed to withdraw DEZ as well as{' '}
                 {rootTokenName} to their wallet.
               </p>
             </ScBlock>

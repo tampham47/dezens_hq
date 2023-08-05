@@ -371,7 +371,7 @@ export const Lotte = () => {
           <ScBlock>
             <h3>Your Balance</h3>
             <ScRow>
-              <p>{balance} LFX</p>
+              <p>{balance} DEZ</p>
               <Button
                 variant="subtle"
                 color="violet"
@@ -387,22 +387,22 @@ export const Lotte = () => {
           <h3>Round #{lotteInfo?.round}</h3>
 
           <ScPotWrapper>
-            <ScPot>POT: {getDisplayedNumber(lotteInfo?.totalPot)} LFX</ScPot>
+            <ScPot>POT: {getDisplayedNumber(lotteInfo?.totalPot)} DEZ</ScPot>
           </ScPotWrapper>
 
           <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(lotteConfig?.ticketPrice)} LFX
+                {getDisplayedNumber(lotteConfig?.ticketPrice)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Ticket Price</ScInfoLabel>
             </ScInfoBlock>
 
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(lotteInfo?.totalSupply)} LFX
+                {getDisplayedNumber(lotteInfo?.totalSupply)} DEZ
               </ScInfoValue>
-              <ScInfoLabel>LFX Balance</ScInfoLabel>
+              <ScInfoLabel>DEZ Balance</ScInfoLabel>
             </ScInfoBlock>
 
             <ScInfoBlock>
@@ -416,21 +416,21 @@ export const Lotte = () => {
           <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(lotteInfo?.systemFees)} LFX
+                {getDisplayedNumber(lotteInfo?.systemFees)} DEZ
               </ScInfoValue>
               <ScInfoLabel>System Fees</ScInfoLabel>
             </ScInfoBlock>
 
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(lotteInfo?.drawFees)} LFX
+                {getDisplayedNumber(lotteInfo?.drawFees)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Draw Rewards</ScInfoLabel>
             </ScInfoBlock>
 
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(lotteInfo?.burnAmount)} LFX
+                {getDisplayedNumber(lotteInfo?.burnAmount)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Burn Amount</ScInfoLabel>
             </ScInfoBlock>

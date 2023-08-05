@@ -152,16 +152,16 @@ export const Stake = () => {
             <h3>Your Stake</h3>
             <ScRow>
               <p>Total Deposit</p>
-              <p>{getDisplayedNumber(userDeposit)} LFX</p>
+              <p>{getDisplayedNumber(userDeposit)} DEZ</p>
             </ScRow>
             <ScRow>
               <p>Total Interest</p>
-              <p>{getDisplayedNumber(totalInterest)} LFX</p>
+              <p>{getDisplayedNumber(totalInterest)} DEZ</p>
             </ScRow>
           </ScBlock>
           <ScBlock>
             <Input
-              placeholder="LFX amount"
+              placeholder="DEZ amount"
               size="lg"
               type="number"
               inputMode="numeric"
@@ -186,7 +186,7 @@ export const Stake = () => {
           <ScBlock>
             <h3>Deposit</h3>
             <Input
-              placeholder="LFX amount"
+              placeholder="DEZ amount"
               size="lg"
               type="number"
               inputMode="numeric"
@@ -212,32 +212,32 @@ export const Stake = () => {
           <h3>Vault Information</h3>
 
           <ScImgWrapper>
-            <ScImg src="/images/diamond.png" alt="Diamond LFX" />
+            <ScImg src="/images/diamond.png" alt="Diamond DEZ" />
           </ScImgWrapper>
 
           <ScInfoList>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(vaultInfo?.totalSupply)} LFX
+                {getDisplayedNumber(vaultInfo?.totalSupply)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Total Deposit</ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(vaultInfo?.vaultBalance)} LFX
+                {getDisplayedNumber(vaultInfo?.vaultBalance)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Vault Balance</ScInfoLabel>
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(vaultInfo?.yieldPerTokenPerDay)} LFX
+                {getDisplayedNumber(vaultInfo?.yieldPerTokenPerDay)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Yield / Token / Day</ScInfoLabel>
             </ScInfoBlock>
           </ScInfoList>
 
           <ScMessage>
-            Stake your LFX to share profit from LotteFan system with us!
+            Stake your DEZ to share profit from LotteFan system with us!
           </ScMessage>
           <ScMessage>
             Vault Contract Address:{' '}

@@ -27,7 +27,7 @@ export const BuyLfx = () => {
       target="_blank"
       rel="noopener noreferrer"
     >
-      Buy LFX
+      Buy DEZ
       <IconChevronRight size={24} />
     </ScLink>
   );
