@@ -146,7 +146,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
           <NavBar />
 
           {process.env.GATSBY_NETWORK !== 'polygon' &&
-          process.env.GATSBY_NETWORK !== 'bsc' ? (
+          process.env.GATSBY_NETWORK !== 'bsc' &&
+          process.env.GATSBY_NETWORK !== 'ftm' ? (
             <Container>
               <MobileWrapper>
                 <Alert

@@ -43,6 +43,15 @@ import BscLfxAirdrop from './bsc/LfxAirdrop.json';
 import BscLfxVault from './bsc/LfxVault.json';
 import BscLotte from './bsc/Lotte.json';
 
+import FtmArtifactLfx from './ftm/ArtifactLFX.json';
+import FtmArtifactLfxAirdrop from './ftm/ArtifactLfxAirdrop.json';
+import FtmArtifactLfxVault from './ftm/ArtifactLfxVault.json';
+import FtmArtifactLotte from './ftm/ArtifactLotte.json';
+import FtmLfx from './ftm/LFX.json';
+import FtmLfxAirdrop from './ftm/LfxAirdrop.json';
+import FtmLfxVault from './ftm/LfxVault.json';
+import FtmLotte from './ftm/Lotte.json';
+
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'polygon-test') {
     return {
@@ -106,6 +115,19 @@ export const getContractConfig = () => {
       LfxAirdrop: BscLfxAirdrop,
       LfxVault: BscLfxVault,
       Lotte: BscLotte,
+    };
+  }
+
+  if (process.env.GATSBY_NETWORK === 'ftm') {
+    return {
+      ArtifactLfx: FtmArtifactLfx,
+      ArtifactLfxAirdrop: FtmArtifactLfxAirdrop,
+      ArtifactLfxVault: FtmArtifactLfxVault,
+      ArtifactLotte: FtmArtifactLotte,
+      Lfx: FtmLfx,
+      LfxAirdrop: FtmLfxAirdrop,
+      LfxVault: FtmLfxVault,
+      Lotte: FtmLotte,
     };
   }
 
