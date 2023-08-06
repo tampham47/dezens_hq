@@ -152,7 +152,6 @@ class LfxLotteClass {
       winnerCount,
       winnerList,
     ] = await this.contract.getLastDraw();
-    console.log('lastDraw', winnerList)
 
     return {
       actor,

@@ -4,11 +4,7 @@ import { Button, Input } from '@mantine/core';
 import { useWalletClient } from 'wagmi';
 import { Contract, ethers } from 'ethers';
 
-import {
-  LfxLotte,
-  LotteConfig,
-  LotteInfo,
-} from '../apis/lfx-lotte';
+import { LfxLotte, LotteConfig, LotteInfo } from '../apis/lfx-lotte';
 import { contractConfig } from '../contracts';
 import { LfxToken } from '../apis/lfx-token';
 import { getShortAddress } from '../utils/address';

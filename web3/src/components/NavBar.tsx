@@ -5,6 +5,8 @@ import { Web3Button } from '@web3modal/react';
 import { IconMenu } from '@tabler/icons-react';
 
 import { Container } from './Grid';
+import { useWalletClient } from 'wagmi';
+import { contractConfig } from '../contracts';
 
 const ScHeader = styled.header`
   font-family: 'Inter', sans-serif;
@@ -99,6 +101,8 @@ const ScLinkComp = css`
   margin-bottom: 8px;
   border-radius: 4px;
   font-size: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   &:hover {
     text-decoration: none;
@@ -169,7 +173,31 @@ const ScMobileOnly = styled.div`
 `;
 
 export const NavBar = () => {
+  const { data: walletClient } = useWalletClient();
   const refMenuController = useRef<HTMLInputElement>(null);
+
+  const addDezIntoMetamask = async () => {
+    if (!walletClient) {
+      return;
+    }
+
+    try {
+      await walletClient.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: contractConfig.Lfx.Token,
+            symbol: 'DEZ',
+            decimals: 18,
+            image: 'https://dezens.io/images/dezens-420.png',
+          },
+        },
+      });
+    } catch (err) {
+      console.log('err', err);
+    }
+  };
 
   return (
     <>
@@ -209,6 +237,9 @@ export const NavBar = () => {
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
+                <ScNavLink to="#" onClick={addDezIntoMetamask}>
+                  Add DEZ to your wallet
+                </ScNavLink>
               </ScNavBarLeft>
 
               <ScNavBarRight>
