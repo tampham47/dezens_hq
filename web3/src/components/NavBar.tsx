@@ -188,6 +188,8 @@ export const NavBar = () => {
           type: 'ERC20', // Initially only supports ERC20, but eventually more!
           options: {
             address: contractConfig.Lfx.Token,
+            chainId: 250,
+            name: 'Dezens',
             symbol: 'DEZ',
             decimals: 18,
             image: 'https://dezens.io/images/dezens-420.png',
@@ -237,9 +239,11 @@ export const NavBar = () => {
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
-                <ScNavLink to="#" onClick={addDezIntoMetamask}>
-                  Add $DEZ to your wallet
-                </ScNavLink>
+                {walletClient ? (
+                  <ScNavLink to="#" onClick={addDezIntoMetamask}>
+                    Add $DEZ to your wallet
+                  </ScNavLink>
+                ) : null}
               </ScNavBarLeft>
 
               <ScNavBarRight>

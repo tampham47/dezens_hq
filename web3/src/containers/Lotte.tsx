@@ -25,6 +25,7 @@ import {
   ScList,
 } from '../components/Stack';
 import { DrawHistory } from './DrawHistory';
+import { useWeb3Modal } from '@web3modal/react';
 
 const ScMain = styled.div`
   p {
@@ -141,6 +142,7 @@ const validateNumber = (ticket: string) => {
 
 export const Lotte = () => {
   const { data: walletClient } = useWalletClient();
+  const web3Modal = useWeb3Modal();
 
   const [lotteInfo, setLotteInfo] = useState<LotteInfo>();
   const [lotteConfig, setLotteConfig] = useState<LotteConfig>();
@@ -356,15 +358,31 @@ export const Lotte = () => {
                 setTicketNumber(value);
               }}
             />
-            <Button
-              size="lg"
-              variant="light"
-              style={{ width: '100%' }}
-              onClick={purchase}
-              loading={loading}
-            >
-              Purchase
-            </Button>
+            {walletClient ? (
+              <Button
+                size="lg"
+                variant="light"
+                style={{ width: '100%' }}
+                onClick={purchase}
+                loading={loading}
+              >
+                Purchase
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                variant="light"
+                style={{ width: '100%' }}
+                onClick={async () => {
+                  try {
+                    await web3Modal.open();
+                  } catch (err) {}
+                }}
+                loading={loading}
+              >
+                Connect Wallet
+              </Button>
+            )}
           </ScBlock>
 
           <ScBlock>
