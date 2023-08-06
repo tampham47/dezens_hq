@@ -117,7 +117,7 @@ export const Airdrop = () => {
   const rootTokenName = process.env.GATSBY_ROOT_TOKEN_NAME;
   const participantCount = airdropInfo?.participantCount ?? 0;
   const maxParticipant = airdropInfo?.maxParticipant ?? 100;
-  const joinPercent = Math.max(5, Math.ceil(participantCount / maxParticipant));
+  const joinPercent = Math.max(5, Math.ceil(participantCount * 100 / maxParticipant));
   let network = 'Polygon';
 
   if (rootTokenName === 'FTM') {
