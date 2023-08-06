@@ -238,7 +238,7 @@ export const NavBar = () => {
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
                 <ScNavLink to="#" onClick={addDezIntoMetamask}>
-                  Add DEZ to your wallet
+                  Add $DEZ to your wallet
                 </ScNavLink>
               </ScNavBarLeft>
 
