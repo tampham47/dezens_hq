@@ -239,6 +239,7 @@ export const NavBar = () => {
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
+                <ScNavLink to="/vn/">VN🇻🇳</ScNavLink>
                 {walletClient ? (
                   <ScNavLink to="#" onClick={addDezIntoMetamask}>
                     Add $DEZ to your wallet
