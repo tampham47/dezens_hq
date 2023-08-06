@@ -51,6 +51,8 @@ export const ScStackAside = styled.div`
 `;
 
 export const ScList = styled.div`
+  margin-bottom: 4rem;
+
   @media screen and (min-width: 992px) {
     display: flex;
     flex-wrap: wrap;
@@ -61,7 +63,7 @@ export const ScList = styled.div`
 
 export const ScListItem = styled.div`
   max-width: 500px;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   padding: 12px 24px;
   border: 1px solid #0083b0;
   border-radius: 8px;
