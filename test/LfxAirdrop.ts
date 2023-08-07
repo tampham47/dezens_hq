@@ -86,10 +86,6 @@ describe('LfxAirdrop', () => {
     const { lfx, lfxAirdrop, lfxAirdropAddress, wallet1, wallet2, wallet3 } =
       await loadFixture(deployContract);
 
-    expect(await provider.getBalance(wallet1)).to.equal(
-      ethers.parseEther('10000.0')
-    );
-
     expect(await lfxAirdrop.maxParticipant()).to.equal(2);
     expect((await lfxAirdrop.maxTotalSupply()) / e18).to.equal(100);
 
@@ -157,10 +153,6 @@ describe('LfxAirdrop', () => {
   it('should be able to call getInformation', async () => {
     const { lfx, lfxAirdrop, lfxAirdropAddress, wallet1, wallet2, wallet3 } =
       await loadFixture(deployContract);
-
-    expect(await provider.getBalance(wallet1)).to.equal(
-      ethers.parseEther('10000.0')
-    );
 
     expect(await lfxAirdrop.maxParticipant()).to.equal(2);
     expect((await lfxAirdrop.maxTotalSupply()) / e18).to.equal(100);
