@@ -14,7 +14,7 @@ async function main() {
   // LFX Airdrop
   const LfxLotteContract = await ethers.getContractFactory('Lotte');
   const lotte = await LfxLotteContract.attach(contractConfig.Lotte.Token);
-  const tx = await lotte.setTicketPrice(BigInt(5000) * BigInt(1e18));
+  const tx = await lotte.setTicketPrice(config.lfxLotte.ticketPrice);
   await tx.wait(1);
 
   console.log('New Price', await lotte.ticketPrice());

@@ -136,7 +136,7 @@ const CONFIG = {
       maxDepositAmount: BigInt(2) * e18,
     },
     lfxLotte: {
-      ticketPrice: BigInt(10000) * e18,
+      ticketPrice: BigInt(500) * e18,
       minDrawDuration: 60 * 60 * 1, // 1 hours
       systemFeeRate: 500, // 5% of ticket price
       drawFeeRate: 500, // 5% of system fees
