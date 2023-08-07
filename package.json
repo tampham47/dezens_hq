@@ -16,6 +16,8 @@
     "test:token": "env-cmd -f .env npx hardhat test --grep \"LfxToken\"",
     "test:vault": "env-cmd -f .env npx hardhat test --grep \"LfxVault\"",
     "test:airdrop": "env-cmd -f .env npx hardhat test --grep \"LfxAirdrop\"",
+    "test:dez-mm": "env-cmd -f .env npx hardhat test --grep \"DezMM\"",
+    "test:dez-refs": "env-cmd -f .env npx hardhat test --grep \"DezRefs\"",
     "test": "env-cmd -f .env npx hardhat test"
   },
   "devDependencies": {
