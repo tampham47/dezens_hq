@@ -17,7 +17,7 @@ async function main() {
   const tx = await lotte.setMaxParticipant(config.lfxAirdrop.maxParticipant);
   await tx.wait(1);
 
-  console.log('New Price', await lotte.maxParticipant());
+  console.log('New Max Participant', await lotte.maxParticipant());
 }
 
 // We recommend this pattern to be able to use async/await everywhere

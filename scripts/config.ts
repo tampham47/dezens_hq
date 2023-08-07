@@ -130,7 +130,7 @@ const CONFIG = {
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
     lfxAirdrop: {
-      maxParticipant: 250,
+      maxParticipant: 100,
       maxTotalSupply: BigInt(250) * e18,
       minDepositAmount: BigInt(1) * e18,
       maxDepositAmount: BigInt(2) * e18,
