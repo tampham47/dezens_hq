@@ -21,12 +21,7 @@ class DezMmClass {
     this.provider = new ethers.WebSocketProvider(
       process.env.GATSBY_ETHER_WSS_URL
     );
-
-    console.log(
-      'DezMmClass',
-      contractConfig.DezMM.Token,
-      contractConfig.DezMM.abi
-    );
+    
     this.contract = new ethers.Contract(
       contractConfig.DezMM.Token,
       contractConfig.ArtifactDezMM.abi,

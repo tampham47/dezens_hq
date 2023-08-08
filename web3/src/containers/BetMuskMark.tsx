@@ -10,6 +10,7 @@ import { wait } from '../utils/time';
 import { DezMM, DezMmInformation } from '../apis/dez-mm';
 import { CountDownWithDay } from '../components/CountDownWithDay';
 import { getAutoRoundNumber } from '../utils/number';
+import { DezRefs } from '../apis/dez-refs';
 
 const ScContent = styled(ScContentSrc)`
   background: #141e30;
@@ -41,28 +42,47 @@ const ScContent = styled(ScContentSrc)`
 
 const ScFrame = styled.div`
   position: relative;
+  min-height: 600px;
 `;
 const ScFloatHeader = styled.h3`
-  position: absolute;
-  top: 12px;
+  top: 0;
   left: 0;
   right: 0;
   text-align: center;
   color: #f79327;
-  font-size: 28px;
+  font-size: 18px;
   line-height: 1.2;
   letter-spacing: 1.2;
+  margin: 0;
+
+  @media screen and (min-width: 960px) {
+    position: absolute;
+    top: 12px;
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: 1.2;
+  }
 `;
 const ScFloatBody = styled.div`
-  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   text-align: center;
+
+  @media screen and (min-width: 960px) {
+    position: absolute;
+  }
 `;
 
 const ScImg = styled.img`
   width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  @media screen and (min-width: 960px) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 `;
 
 const ScForm = styled.div`
@@ -89,8 +109,15 @@ const ScFormItem = styled.div`
 `;
 
 const ScCombatBarWrapper = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 2rem;
+
+  @media screen and (min-width: 960px) {
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-bottom: 0;
+  }
 `;
 const ScCombatBar = styled.div`
   position: relative;
@@ -101,18 +128,34 @@ const ScCombatBar = styled.div`
 const ScCombatBarContent = styled.div`
   padding-left: 16px;
   padding-right: 16px;
+  position: relative;
 
-  b, span {
+  b,
+  span {
     white-space: nowrap;
   }
 
   b {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 42px;
   }
   span {
-    font-size: 14px;
+    font-size: 12px;
   }
+
+  @media screen and (min-width: 960px) {
+    b {
+      font-size: 18px;
+      line-height: 42px;
+    }
+    span {
+      font-size: 14px;
+    }
+  }
+`;
+const ScCombatBarText = styled.div`
+  position: absolute;
+  top: 0;
 `;
 const ScCombatBarLeft = styled(ScCombatBarContent)<{ width: number }>`
   position: absolute;
@@ -125,6 +168,10 @@ const ScCombatBarLeft = styled(ScCombatBarContent)<{ width: number }>`
   text-align: left;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
+
+  ${ScCombatBarText} {
+    left: 12px;
+  }
 `;
 const ScCombatBarRight = styled(ScCombatBarContent)<{ width: number }>`
   position: absolute;
@@ -137,12 +184,17 @@ const ScCombatBarRight = styled(ScCombatBarContent)<{ width: number }>`
   text-align: right;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+
+  ${ScCombatBarText} {
+    right: 12px;
+  }
 `;
 
 export const BetMuskMark = () => {
   const { data: walletClient } = useWalletClient();
   const [refAddress, setRefAddress] = useState<string>('');
   const [betAmount, setBetAmount] = useState<string>('');
+  const [ref, setRef] = useState<string>('');
 
   const [dezMm, setDezMm] = useState<Contract>();
   const [lfxToken, setLfxToken] = useState<Contract>();
@@ -154,14 +206,22 @@ export const BetMuskMark = () => {
   const totalMusk = userInfo?.totalMusk ?? 0;
   const totalMark = userInfo?.totalMark ?? 0;
   const total = totalMusk + totalMark;
-  const p = total > 0 ? Math.round((totalMusk * 100) / total) : 0;
-  const muskPercentage = Math.max(10, p);
+  const p = total > 0 ? Math.floor((totalMusk * 100) / total) : 50;
+  const muskPercentage = Math.min(90, p);
   const markPercentage = 100 - muskPercentage;
 
   const updateUserInfo = useCallback(async () => {
     if (!walletClient) return;
+
+    const address = walletClient.account.address;
+    const _ref = await DezRefs.getRef(address);
     const info = await DezMM.getInformation(walletClient.account.address);
+
     setUserInfo(info);
+    if (_ref) {
+      setRef(_ref);
+      setRefAddress(_ref);
+    }
   }, [walletClient]);
 
   const betOnMusk = async () => {
@@ -237,12 +297,25 @@ export const BetMuskMark = () => {
   }, [walletClient]);
 
   useEffect(() => {
+    if (!walletClient) {
+      return;
+    }
+
+    const address = walletClient.account.address;
+
     updateUserInfo();
 
     DezMM.contract.on('Bet', () => {
       updateUserInfo();
     });
-  }, [updateUserInfo]);
+
+    DezRefs.contract.on('RefSet', (user: string, ref: string) => {
+      if (user === address) {
+        setRef(ref);
+        setRefAddress(ref);
+      }
+    });
+  }, [walletClient]);
 
   return (
     <ScMain>
@@ -267,18 +340,22 @@ export const BetMuskMark = () => {
             <ScCombatBarWrapper>
               <ScCombatBar>
                 <ScCombatBarLeft width={muskPercentage}>
-                  <b>{getAutoRoundNumber(userInfo?.totalMusk ?? 0)} DEZ</b>
-                  <br />
-                  <span>
-                    {getAutoRoundNumber(userInfo?.betMusk ?? 0)} DEZ (your bet)
-                  </span>
+                  <ScCombatBarText>
+                    <b>{getAutoRoundNumber(userInfo?.totalMusk ?? 0)} DEZ</b>
+                    <br />
+                    <span>
+                      {getAutoRoundNumber(userInfo?.betMusk ?? 0)} DEZ (yours)
+                    </span>
+                  </ScCombatBarText>
                 </ScCombatBarLeft>
                 <ScCombatBarRight width={markPercentage}>
-                  <b>{getAutoRoundNumber(userInfo?.totalMark || 0)} DEZ</b>
-                  <br />
-                  <span>
-                    (your bet) {getAutoRoundNumber(userInfo?.betMark ?? 0)} DEZ
-                  </span>
+                  <ScCombatBarText>
+                    <b>{getAutoRoundNumber(userInfo?.totalMark || 0)} DEZ</b>
+                    <br />
+                    <span>
+                      (yours) {getAutoRoundNumber(userInfo?.betMark ?? 0)} DEZ
+                    </span>
+                  </ScCombatBarText>
                 </ScCombatBarRight>
               </ScCombatBar>
             </ScCombatBarWrapper>
@@ -294,6 +371,7 @@ export const BetMuskMark = () => {
                     onChange={(e) => {
                       setRefAddress(e.target.value);
                     }}
+                    disabled={!!ref}
                   />
                 </ScFormItem>
               </ScFormRow>
