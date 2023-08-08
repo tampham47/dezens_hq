@@ -11,6 +11,7 @@ import { DezMM, DezMmInformation } from '../apis/dez-mm';
 import { CountDownWithDay } from '../components/CountDownWithDay';
 import { getAutoRoundNumber } from '../utils/number';
 import { DezRefs } from '../apis/dez-refs';
+import { BuyLfx } from '../components/BuyLfx';
 
 const ScContent = styled(ScContentSrc)`
   background: #141e30;
@@ -416,6 +417,8 @@ export const BetMuskMark = () => {
           </ScFloatBody>
         </ScFrame>
       </ScContent>
+
+      <BuyLfx />
     </ScMain>
   );
 };
