@@ -109,7 +109,7 @@ const CONFIG = {
       refRateLayer3: 25,
     },
     dezMm: {
-      finalizeTs: 0,
+      finalizeTs: 1692525600,
     },
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.
@@ -205,7 +205,7 @@ const CONFIG = {
       refRateLayer3: 25,
     },
     dezMm: {
-      finalizeTs: 0,
+      finalizeTs: 1692525600,
     },
     // maxTotalSupply = maxParticipant * maxDepositAmount / 2;
     // amount in ROOT token: ETH, MNT, BNB, etc.

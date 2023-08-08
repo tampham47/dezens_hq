@@ -22,7 +22,7 @@ async function main() {
 
   console.log('DezRefs Address   :', dezRefsAddress);
 
-  saveContractAddress('dezRefs', dezRefsAddress);
+  saveContractAddress('DezRefs', dezRefsAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

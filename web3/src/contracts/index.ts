@@ -20,10 +20,14 @@ import FtmTestnetArtifactLfx from './ftm-testnet/ArtifactLFX.json';
 import FtmTestnetArtifactLfxAirdrop from './ftm-testnet/ArtifactLfxAirdrop.json';
 import FtmTestnetArtifactLfxVault from './ftm-testnet/ArtifactLfxVault.json';
 import FtmTestnetArtifactLotte from './ftm-testnet/ArtifactLotte.json';
+import FtmTestnetArtifactDezRefs from './ftm-testnet/ArtifactDezRefs.json';
+import FtmTestnetArtifactDezMM from './ftm-testnet/ArtifactDezMM.json';
 import FtmTestnetLfx from './ftm-testnet/LFX.json';
 import FtmTestnetLfxAirdrop from './ftm-testnet/LfxAirdrop.json';
 import FtmTestnetLfxVault from './ftm-testnet/LfxVault.json';
 import FtmTestnetLotte from './ftm-testnet/Lotte.json';
+import FtmTestnetDezRefs from './ftm-testnet/DezRefs.json';
+import FtmTestnetDezMM from './ftm-testnet/DezMM.json';
 
 import PolygonArtifactLfx from './polygon/ArtifactLFX.json';
 import PolygonArtifactLfxAirdrop from './polygon/ArtifactLfxAirdrop.json';
@@ -85,10 +89,14 @@ export const getContractConfig = () => {
       ArtifactLfxAirdrop: FtmTestnetArtifactLfxAirdrop,
       ArtifactLfxVault: FtmTestnetArtifactLfxVault,
       ArtifactLotte: FtmTestnetArtifactLotte,
+      ArtifactDezRefs: FtmTestnetArtifactDezRefs,
+      ArtifactDezMM: FtmTestnetArtifactDezMM,
       Lfx: FtmTestnetLfx,
       LfxAirdrop: FtmTestnetLfxAirdrop,
       LfxVault: FtmTestnetLfxVault,
       Lotte: FtmTestnetLotte,
+      DezRefs: FtmTestnetDezRefs,
+      DezMM: FtmTestnetDezMM,
     };
   }
 

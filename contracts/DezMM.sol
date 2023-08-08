@@ -15,13 +15,12 @@ contract DezMM {
   IERC20 public immutable dez;
   DezRefs public refs;
   address public immutable vaultAddress;
-
   uint public initialTs;
-  uint public finalizeTs;
 
+  uint public winner; // 0 = undecided, 1 = musk, 2 = mark, 3 = dismissed
+  uint public finalizeTs;
   uint public totalMusk;
   uint public totalMark;
-  uint public winner; // 0 = undecided, 1 = musk, 2 = mark, 3 = dismissed
 
   // the system fee rate, 2.0% of the ticket
   // div by 10000 to get the actual rate
@@ -33,8 +32,9 @@ contract DezMM {
   mapping(address => uint256) public teamMusk;
   mapping(address => uint256) public teamMark;
 
-  event BetOnMusk(address indexed spender, uint amount);
-  event BetOnMark(address indexed spender, uint amount);
+  event WinnerSet(uint winner);
+  event Withdraw(address indexed spender, uint amount);
+  event Bet(address indexed spender, uint team, uint amount);
 
   constructor(
     address _dez,
@@ -109,6 +109,7 @@ contract DezMM {
     dez.burn(burnAmount);
     // send fees to vault
     dez.transfer(vaultAddress, fees);
+    emit WinnerSet(_winner);
   }
 
   function betOnMusk(uint _amount, address refAddress) external {
@@ -144,6 +145,7 @@ contract DezMM {
     _mintMusk(sender, _amount);
     // but only transfer the amount after the ref fees
     dez.transferFrom(sender, address(this), amount);
+    emit Bet(sender, 1, _amount);
   }
 
   function betOnMark(uint _amount, address refAddress) external {
@@ -177,6 +179,7 @@ contract DezMM {
 
     _mintMark(sender, _amount);
     dez.transferFrom(sender, address(this), amount);
+    emit Bet(sender, 2, _amount);
   }
 
   function getPrize(address sender) external view returns (uint) {
@@ -236,6 +239,43 @@ contract DezMM {
 
     // send amount to user
     dez.transfer(sender, tokenReceive);
+    emit Withdraw(sender, tokenReceive);
+  }
+
+  function getInformation(
+    address sender
+  ) external view returns (uint, uint, uint, uint, uint, uint, uint, uint) {
+    uint userShares;
+    uint totalShares;
+    uint betMusk = teamMusk[sender];
+    uint betMark = teamMark[sender];
+
+    if (winner == 1) {
+      userShares = betMusk;
+      totalShares = totalMusk;
+    } else if (winner == 2) {
+      userShares = betMark;
+      totalShares = totalMark;
+    } else if (winner == 3) {
+      userShares = betMusk + betMark;
+      totalShares = totalMusk + totalMark;
+    }
+
+    uint poolBalance = dez.balanceOf(address(this));
+    uint prizes = totalShares != 0
+      ? (userShares * poolBalance) / totalShares
+      : 0;
+
+    return (
+      finalizeTs,
+      poolBalance,
+      totalMusk,
+      totalMark,
+      betMusk,
+      betMark,
+      winner,
+      prizes
+    );
   }
 }
 

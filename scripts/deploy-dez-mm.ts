@@ -11,11 +11,15 @@ async function main() {
     await deployer.getAddress()
   );
 
+  if (!contractConfig.DezRefs?.Token) {
+    throw Error('DezRefs not found');
+  }
+
   // DezRefs
   const DezMmContract = await ethers.getContractFactory('DezMM');
   const dezRefs = await DezMmContract.deploy(
     contractConfig.Lfx.Token,
-    contractConfig.DezRefs?.Token || ethers.ZeroAddress,
+    contractConfig.DezRefs.Token,
     contractConfig.LfxVault.Token,
     config.dezMm.finalizeTs
   );
@@ -24,7 +28,7 @@ async function main() {
 
   console.log('DezMm Address   :', dezMmAddress);
 
-  saveContractAddress('dezMM', dezMmAddress);
+  saveContractAddress('DezMM', dezMmAddress);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -19,6 +19,8 @@ import FtmTestnetLfx from './ftm-testnet/LFX.json';
 import FtmTestnetLfxAirdrop from './ftm-testnet/LfxAirdrop.json';
 import FtmTestnetLfxVault from './ftm-testnet/LfxVault.json';
 import FtmTestnetLotte from './ftm-testnet/Lotte.json';
+import FtmTestnetDezRefs from './ftm-testnet/DezRefs.json';
+import FtmTestnetDezMM from './ftm-testnet/DezMM.json';
 
 import PolygonLfx from './polygon/LFX.json';
 import PolygonLfxAirdrop from './polygon/LfxAirdrop.json';
@@ -71,6 +73,8 @@ export const getContractConfig = () => {
       LfxAirdrop: FtmTestnetLfxAirdrop,
       LfxVault: FtmTestnetLfxVault,
       Lotte: FtmTestnetLotte,
+      DezRefs: FtmTestnetDezRefs,
+      DezMM: FtmTestnetDezMM,
     };
   }
 

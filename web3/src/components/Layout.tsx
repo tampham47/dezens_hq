@@ -148,7 +148,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
           {process.env.GATSBY_NETWORK !== 'polygon' &&
           process.env.GATSBY_NETWORK !== 'bsc' &&
           process.env.GATSBY_NETWORK !== 'ftm' ? (
-            <Container>
+            <Container style={{marginTop: 24}}>
               <MobileWrapper>
                 <Alert
                   icon={<IconAlertCircle size="1rem" />}

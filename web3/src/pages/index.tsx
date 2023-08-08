@@ -8,6 +8,7 @@ import { Layout } from '../components/Layout';
 import { graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { Lotte } from '../containers/Lotte';
+import { BetMuskMark } from '../containers/BetMuskMark';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -98,6 +99,12 @@ const BlogTemplate = ({ data }: any) => {
         <Helmet titleTemplate="%s">
           <title>Dezens</title>
         </Helmet>
+
+        <Container>
+          <ScMain>
+            <BetMuskMark />
+          </ScMain>
+        </Container>
 
         <Container>
           <ScMain>
