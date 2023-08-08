@@ -51,10 +51,14 @@ import FtmArtifactLfx from './ftm/ArtifactLFX.json';
 import FtmArtifactLfxAirdrop from './ftm/ArtifactLfxAirdrop.json';
 import FtmArtifactLfxVault from './ftm/ArtifactLfxVault.json';
 import FtmArtifactLotte from './ftm/ArtifactLotte.json';
+import FtmArtifactDezRefs from './ftm/ArtifactDezRefs.json';
+import FtmArtifactDezMM from './ftm/ArtifactDezMM.json';
 import FtmLfx from './ftm/LFX.json';
 import FtmLfxAirdrop from './ftm/LfxAirdrop.json';
 import FtmLfxVault from './ftm/LfxVault.json';
 import FtmLotte from './ftm/Lotte.json';
+import FtmDezRefs from './ftm/DezRefs.json';
+import FtmDezMM from './ftm/DezMM.json';
 
 export const getContractConfig = () => {
   if (process.env.GATSBY_NETWORK === 'polygon-test') {
@@ -132,10 +136,14 @@ export const getContractConfig = () => {
       ArtifactLfxAirdrop: FtmArtifactLfxAirdrop,
       ArtifactLfxVault: FtmArtifactLfxVault,
       ArtifactLotte: FtmArtifactLotte,
+      ArtifactDezRefs: FtmArtifactDezRefs,
+      ArtifactDezMM: FtmArtifactDezMM,
       Lfx: FtmLfx,
       LfxAirdrop: FtmLfxAirdrop,
       LfxVault: FtmLfxVault,
       Lotte: FtmLotte,
+      DezRefs: FtmDezRefs,
+      DezMM: FtmDezMM,
     };
   }
 

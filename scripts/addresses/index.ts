@@ -36,6 +36,8 @@ import FtmLfx from './ftm/LFX.json';
 import FtmLfxAirdrop from './ftm/LfxAirdrop.json';
 import FtmLfxVault from './ftm/LfxVault.json';
 import FtmLotte from './ftm/Lotte.json';
+import FtmDezRefs from './ftm/DezRefs.json';
+import FtmDezMM from './ftm/DezMM.json';
 
 export const getContractConfig = () => {
   if (process.env.NODE_ENV === 'local') {
@@ -102,6 +104,8 @@ export const getContractConfig = () => {
       LfxAirdrop: FtmLfxAirdrop,
       LfxVault: FtmLfxVault,
       Lotte: FtmLotte,
+      DezRefs: FtmDezRefs,
+      DezMM: FtmDezMM,
     };
   }
 
