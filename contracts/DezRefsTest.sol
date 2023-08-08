@@ -16,8 +16,7 @@ contract DezRefsTest {
     refs = DezRefs(_refs);
   }
 
-  function setRef(address _ref) external returns (uint8) {
-    bool t = refs.setRef(msg.sender, _ref);
-    return t ? 1 : 0;
+  function setRef(address _ref) external {
+    refs.setRef(msg.sender, _ref);
   }
 }

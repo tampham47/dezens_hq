@@ -11,13 +11,11 @@ contract DezRefs {
   // An address type variable is used to store ethereum accounts.
   address public owner;
 
+  // div by 10000 to get the actual rate
   // rate for the referrer, 1.2% of the ticket
-  // div by 10000 to get the actual rate
   uint public refRateLayer1 = 120;
-  // div by 10000 to get the actual rate
   // rate for the referrer, 0.55% of the ticket
   uint public refRateLayer2 = 55;
-  // div by 10000 to get the actual rate
   // rate for the referrer, 0.25% of the ticket
   uint public refRateLayer3 = 25;
 
@@ -50,16 +48,22 @@ contract DezRefs {
     refRateLayer3 = _refRateLayer3;
   }
 
-  function setRef(address _user, address _ref) external returns (bool) {
-    require(!isRef[_user], 'root ref already set');
-    require(_user != _ref, 'ref cannot be self');
-    require(ref[_user] == address(0), 'ref already set');
-    require(ref[_ref] != _user, 'ref cannot be referrer');
+  function setRef(address _user, address _ref) external {
+    // just dont want to throw any error, procceds anyway
+    // require(!isRef[_user], 'root ref already set');
+    // require(_user != _ref, 'ref cannot be self');
+    // require(ref[_user] == address(0), 'ref already set');
+    // require(ref[_ref] != _user, 'ref cannot be referrer');
 
-    isRef[_ref] = true;
-    ref[_user] = _ref;
-
-    return true;
+    if (
+      !isRef[_user] &&
+      _user != _ref &&
+      ref[_user] == address(0) &&
+      ref[_ref] != _user
+    ) {
+      isRef[_ref] = true;
+      ref[_user] = _ref;
+    }
   }
 
   function getRefLayers(

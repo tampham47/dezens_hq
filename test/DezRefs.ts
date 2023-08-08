@@ -80,9 +80,9 @@ describe('DezRefs', () => {
       .to.be.ok;
     expect(await refs.connect(wallet2).setRef(wallet2.address, wallet1.address))
       .to.be.ok;
-    await expect(
-      refs.connect(owner).setRef(owner.address, wallet3.address)
-    ).to.be.rejectedWith('root ref already set');
+
+    // root ref already set
+    expect(await refs.connect(owner).setRef(owner.address, wallet3.address)).to.be.ok;
   });
 
   it('getRefLayers', async () => {
@@ -99,12 +99,13 @@ describe('DezRefs', () => {
       .to.be.ok;
     expect(await refs.connect(wallet4).setRef(wallet4.address, wallet3.address))
       .to.be.ok;
-    await expect(
-      refs.connect(owner).setRef(owner.address, wallet4.address)
-    ).to.be.revertedWith('root ref already set');
-    await expect(
-      refs.connect(wallet1).setRef(wallet1.address, wallet4.address)
-    ).to.be.revertedWith('root ref already set');
+
+    //root ref already set
+    expect(await refs.connect(owner).setRef(owner.address, wallet4.address)).to
+      .be.ok;
+    //root ref already set
+    expect(await refs.connect(wallet1).setRef(wallet1.address, wallet4.address))
+      .to.be.ok;
 
     let refLayers = await refs.getRefLayers(wallet2.address);
     expect(refLayers[0]).to.equal(wallet1.address);
