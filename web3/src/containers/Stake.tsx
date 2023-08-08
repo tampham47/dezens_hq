@@ -19,7 +19,7 @@ import {
   ScRow,
   ScBlock,
 } from '../components/Common';
-import { getDisplayedNumber } from '../utils/number';
+import { getAutoRoundNumber, getDisplayedNumber } from '../utils/number';
 import {
   ScStack,
   ScStackMain as ScStackMainSrc,
@@ -245,7 +245,7 @@ export const Stake = () => {
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getDisplayedNumber(vaultInfo?.yieldPerTokenPerDay)} DEZ
+                {getAutoRoundNumber(vaultInfo?.yieldPerTokenPerDay)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Yield / Token / Day</ScInfoLabel>
             </ScInfoBlock>
