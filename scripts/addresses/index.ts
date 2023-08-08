@@ -1,3 +1,10 @@
+import LocalLfx from './local/LFX.json';
+import LocalLfxAirdrop from './local/LfxAirdrop.json';
+import LocalLfxVault from './local/LfxVault.json';
+import LocalLotte from './local/Lotte.json';
+import LocalDezRefs from './local/DezRefs.json';
+import LocalDezMM from './local/DezMM.json';
+
 import PolygonTestLfx from './polygon-test/LFX.json';
 import PolygonTestLfxAirdrop from './polygon-test/LfxAirdrop.json';
 import PolygonTestLfxVault from './polygon-test/LfxVault.json';
@@ -29,6 +36,17 @@ import FtmLfxVault from './ftm/LfxVault.json';
 import FtmLotte from './ftm/Lotte.json';
 
 export const getContractConfig = () => {
+  if (process.env.NODE_ENV === 'local') {
+    return {
+      Lfx: LocalLfx,
+      LfxAirdrop: LocalLfxAirdrop,
+      LfxVault: LocalLfxVault,
+      Lotte: LocalLotte,
+      DezMM: LocalDezMM,
+      DezRefs: LocalDezRefs,
+    };
+  }
+
   if (process.env.NODE_ENV === 'polygon-test') {
     return {
       Lfx: PolygonTestLfx,
