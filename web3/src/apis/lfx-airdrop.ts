@@ -20,8 +20,8 @@ class LfxAirdropClass {
   contract: ethers.Contract;
 
   constructor() {
-    this.provider = new ethers.WebSocketProvider(
-      process.env.GATSBY_ETHER_WSS_URL
+    this.provider = new ethers.JsonRpcProvider(
+      process.env.GATSBY_ETHER_RPC_URL
     );
 
     this.contract = new ethers.Contract(
