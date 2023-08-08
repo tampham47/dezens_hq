@@ -21,7 +21,7 @@ contract DezMM {
 
   uint public totalMusk;
   uint public totalMark;
-  uint public winner; // 0 = undecided, 1 = musk, 2 = mark
+  uint public winner; // 0 = undecided, 1 = musk, 2 = mark, 3 = dismissed
 
   // the system fee rate, 2.0% of the ticket
   // div by 10000 to get the actual rate
@@ -97,7 +97,7 @@ contract DezMM {
 
   function setWinner(uint _winner) external isOwner {
     require(winner == 0, 'winner already decided');
-    require(_winner == 1 || _winner == 2, 'invalid winner');
+    require(_winner == 1 || _winner == 2 || _winner == 3, 'invalid winner');
 
     uint poolBalance = dez.balanceOf(address(this));
     uint fees = (poolBalance * systemFeeRate) / 10000;
@@ -191,6 +191,9 @@ contract DezMM {
     } else if (winner == 2) {
       userShares = teamMark[sender];
       totalShares = totalMark;
+    } else if (winner == 3) {
+      userShares = teamMusk[sender] + teamMark[sender];
+      totalShares = totalMusk + totalMark;
     }
 
     uint poolBalance = dez.balanceOf(address(this));
@@ -204,7 +207,8 @@ contract DezMM {
     require(winner != 0, 'winner not decided');
     require(
       (teamMusk[sender] > 0 && winner == 1) ||
-        (teamMark[sender] > 0 && winner == 2),
+        (teamMark[sender] > 0 && winner == 2) ||
+        (winner == 3),
       'not a winner'
     );
 
@@ -214,13 +218,19 @@ contract DezMM {
     if (winner == 1) {
       userShares = teamMusk[sender];
       totalShares = totalMusk;
-      _burnMusk(sender, userShares);
+      _burnMusk(sender, teamMusk[sender]);
     } else if (winner == 2) {
       userShares = teamMark[sender];
       totalShares = totalMark;
-      _burnMark(sender, userShares);
+      _burnMark(sender, teamMark[sender]);
+    } else if (winner == 3) {
+      userShares = teamMusk[sender] + teamMark[sender];
+      totalShares = totalMusk + totalMark;
+      _burnMusk(sender, teamMusk[sender]);
+      _burnMark(sender, teamMark[sender]);
     }
 
+    require(totalShares > 0, 'no shares');
     uint poolBalance = dez.balanceOf(address(this));
     uint tokenReceive = (userShares * poolBalance) / totalShares;
 

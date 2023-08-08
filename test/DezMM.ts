@@ -93,7 +93,7 @@ describe('DezMM', () => {
     expect(await dezMm.systemBurnRate()).to.equal(200);
 
     await expect(dezMm.connect(owner).setWinner(0));
-    await expect(dezMm.connect(owner).setWinner(3)).to.be.revertedWith(
+    await expect(dezMm.connect(owner).setWinner(4)).to.be.revertedWith(
       'invalid winner'
     );
 
@@ -363,5 +363,100 @@ describe('DezMM', () => {
     expect(await dezMm.connect(wallet5).withdraw()).to.be.ok;
     expect(await dez.balanceOf(wallet5.address)).to.equal(34185);
     expect(14184 + 20000).to.equal(34184);
+  });
+
+  it('the bet dismissed', async () => {
+    const {
+      dez,
+      dezMm,
+      dezMmAddress,
+      dezVaultAddress,
+      owner,
+      wallet0,
+      wallet1,
+      wallet2,
+      wallet3,
+      wallet4,
+      wallet5,
+    } = await loadFixture(deployContract);
+
+    await dez.connect(wallet1).approve(dezMmAddress, 25000);
+    await dez.connect(wallet2).approve(dezMmAddress, 25000);
+    await dez.connect(wallet3).approve(dezMmAddress, 25000);
+    await dez.connect(wallet4).approve(dezMmAddress, 25000);
+    await dez.connect(wallet5).approve(dezMmAddress, 25000);
+
+    expect(await dez.balanceOf(wallet0.address)).to.equal(0);
+
+    // bet 1
+    expect(await dezMm.connect(wallet1).betOnMark(10000, wallet0.address)).to.be
+      .ok;
+    expect(await dez.balanceOf(wallet0.address)).to.equal(120);
+    expect(await dez.balanceOf(wallet1.address)).to.equal(15000);
+
+    // bet 2
+    expect(await dezMm.connect(wallet2).betOnMark(10000, wallet1.address)).to.be
+      .ok;
+    expect(await dez.balanceOf(wallet0.address)).to.equal(175);
+    expect(await dez.balanceOf(wallet1.address)).to.equal(15120);
+    expect(await dez.balanceOf(wallet2.address)).to.equal(15000);
+
+    // bet 3
+    expect(await dezMm.connect(wallet3).betOnMark(10000, wallet2.address)).to.be
+      .ok;
+    expect(await dez.balanceOf(wallet0.address)).to.equal(200);
+    expect(await dez.balanceOf(wallet1.address)).to.equal(15175);
+    expect(await dez.balanceOf(wallet2.address)).to.equal(15120);
+    expect(await dez.balanceOf(wallet3.address)).to.equal(15000);
+
+    // bet 4
+    expect(await dezMm.connect(wallet4).betOnMusk(10000, wallet0.address)).to.be
+      .ok;
+    expect(await dez.balanceOf(wallet0.address)).to.equal(320);
+    expect(await dez.balanceOf(wallet4.address)).to.equal(15000);
+
+    // bet 5
+    expect(await dezMm.connect(wallet5).betOnMusk(5000, wallet0.address)).to.be
+      .ok;
+    expect(await dez.balanceOf(wallet0.address)).to.equal(380);
+    expect(await dez.balanceOf(wallet5.address)).to.equal(20000);
+
+    await expect(dezMm.connect(wallet4).withdraw()).to.be.revertedWith(
+      'winner not decided'
+    );
+
+    // set winner
+    expect(await dez.balanceOf(dezMmAddress)).to.equal(44325);
+    expect(await dez.balanceOf(dezVaultAddress)).to.equal(0);
+    expect(await dezMm.connect(owner).setWinner(3)).to.be.ok;
+
+    const systemBurnRate = Number(await dezMm.systemBurnRate());
+    const burnAmount = Math.floor((44325 * systemBurnRate) / 10000);
+    expect(burnAmount).to.equal(886);
+    expect(await dez.balanceOf(dezMmAddress)).to.equal(42553);
+    expect(await dez.balanceOf(dezVaultAddress)).to.equal(886);
+    expect(42553 + 886 + burnAmount).to.equal(44325);
+
+    expect(await dezMm.getPrize(wallet1.address)).to.equal(9456);
+    expect(await dezMm.getPrize(wallet2.address)).to.equal(9456);
+    expect(await dezMm.getPrize(wallet3.address)).to.equal(9456);
+    expect(await dezMm.getPrize(wallet4.address)).to.equal(9456);
+    expect(await dezMm.getPrize(wallet5.address)).to.equal(4728);
+
+    expect(await dezMm.connect(wallet1).withdraw()).to.be.ok;
+    expect(await dezMm.connect(wallet2).withdraw()).to.be.ok;
+    expect(await dezMm.connect(wallet3).withdraw()).to.be.ok;
+    expect(await dezMm.connect(wallet4).withdraw()).to.be.ok;
+    expect(await dezMm.connect(wallet5).withdraw()).to.be.ok;
+
+    await expect(dezMm.connect(wallet4).withdraw()).to.be.revertedWith(
+      'no shares'
+    );
+
+    expect(await dez.balanceOf(wallet1.address)).to.equal(24631);
+    expect(await dez.balanceOf(wallet2.address)).to.equal(24576);
+    expect(await dez.balanceOf(wallet3.address)).to.equal(24456);
+    expect(await dez.balanceOf(wallet4.address)).to.equal(24456);
+    expect(await dez.balanceOf(wallet5.address)).to.equal(24729);
   });
 });
