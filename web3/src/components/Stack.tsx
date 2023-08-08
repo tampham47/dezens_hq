@@ -8,13 +8,6 @@ export const ScMain = styled.div`
 
 export const ScContent = styled.div`
   padding: 24px;
-
-  h3,
-  h4 {
-    margin-top: 0;
-    margin-bottom: 1em;
-    color: #7dd2f0;
-  }
 `;
 
 export const ScStack = styled.div`

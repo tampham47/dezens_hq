@@ -24,6 +24,8 @@ contract DezRefs {
 
   mapping(address => bool) public isRef;
 
+  event RefSet(address indexed user, address indexed ref);
+
   constructor(uint _refRateLayer1, uint _refRateLayer2, uint _refRateLayer3) {
     owner = msg.sender;
     refRateLayer1 = _refRateLayer1;
@@ -63,6 +65,7 @@ contract DezRefs {
     ) {
       isRef[_ref] = true;
       ref[_user] = _ref;
+      emit RefSet(_user, _ref);
     }
   }
 
