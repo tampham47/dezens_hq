@@ -16,6 +16,9 @@ contract DezMM {
   DezRefs public refs;
   address public immutable vaultAddress;
 
+  uint public initialTs;
+  uint public finalizeTs;
+
   uint public totalMusk;
   uint public totalMark;
   uint public winner; // 0 = undecided, 1 = musk, 2 = mark
@@ -33,8 +36,16 @@ contract DezMM {
   event BetOnMusk(address indexed spender, uint amount);
   event BetOnMark(address indexed spender, uint amount);
 
-  constructor(address _dez, address _refs, address _vaultAddress) {
+  constructor(
+    address _dez,
+    address _refs,
+    address _vaultAddress,
+    uint _finalizeTs
+  ) {
     owner = msg.sender;
+    initialTs = block.timestamp;
+    finalizeTs = _finalizeTs;
+
     dez = IERC20(_dez);
     refs = DezRefs(_refs);
     vaultAddress = _vaultAddress;
@@ -69,6 +80,11 @@ contract DezMM {
     _;
   }
 
+  function setFinalizeTs(uint _finalizeTs) external isOwner {
+    require(block.timestamp < _finalizeTs, 'invalid finalize ts');
+    finalizeTs = _finalizeTs;
+  }
+
   function setSystemFeeRate(uint _systemFeeRate) external isOwner {
     require(_systemFeeRate <= 10000, 'invalid system fee rate');
     systemFeeRate = _systemFeeRate;
@@ -96,6 +112,8 @@ contract DezMM {
   }
 
   function betOnMusk(uint _amount, address refAddress) external {
+    require(block.timestamp < finalizeTs, 'betting has ended');
+
     address sender = msg.sender;
     uint amount = _amount;
 
@@ -129,6 +147,8 @@ contract DezMM {
   }
 
   function betOnMark(uint _amount, address refAddress) external {
+    require(block.timestamp < finalizeTs, 'betting has ended');
+
     address sender = msg.sender;
     uint amount = _amount;
 
