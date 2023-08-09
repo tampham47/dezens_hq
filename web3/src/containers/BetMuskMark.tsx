@@ -19,6 +19,7 @@ const ScContent = styled(ScContentSrc)`
   border-radius: 4px;
   margin-left: -16px;
   margin-right: -16px;
+  margin-bottom: 1rem;
 
   background: #3c486b; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -41,11 +42,32 @@ const ScContent = styled(ScContentSrc)`
   }
 `;
 
+const ScInfoSection = styled(ScContent)`
+  background: #0f0c29; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #24243e,
+    #302b63,
+    #0f0c29
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #24243e,
+    #302b63,
+    #0f0c29
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+`;
+
 const ScFrame = styled.div`
   position: relative;
   min-height: 600px;
 `;
-const ScFloatHeader = styled.h3`
+const ScFloatHeader = styled.div`
   top: 0;
   left: 0;
   right: 0;
@@ -191,6 +213,14 @@ const ScCombatBarRight = styled(ScCombatBarContent)<{ width: number }>`
   }
 `;
 
+const ScMessage = styled.div`
+  font-size: 18px;
+  padding: 24px;
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 export const BetMuskMark = () => {
   const { data: walletClient } = useWalletClient();
   const [refAddress, setRefAddress] = useState<string>('');
@@ -323,9 +353,11 @@ export const BetMuskMark = () => {
       <ScContent>
         <ScFrame>
           <ScFloatHeader>
-            Musk vs. Mark
-            <br />
-            Bet BIG - Win BIG
+            <h3>
+              Musk vs. Mark
+              <br />
+              Bet BIG - Win BIG
+            </h3>
           </ScFloatHeader>
 
           <ScImg src="images/mm/mm04.jpg" />
@@ -417,8 +449,17 @@ export const BetMuskMark = () => {
           </ScFloatBody>
         </ScFrame>
       </ScContent>
-
-      <BuyLfx />
+      <ScInfoSection>
+        <ScMessage>
+          <p>
+            Get ready for the ultimate showdown! Watch as Elon Musk and Mark
+            Zuckerberg throw down in the ring! Who will emerge victorious? Place
+            your bets now for a chance to win in this electrifying clash of
+            giants!
+          </p>
+          <BuyLfx />
+        </ScMessage>
+      </ScInfoSection>
     </ScMain>
   );
 };

@@ -25,7 +25,7 @@ const ScMenuController = styled.input`
   width: 0;
   flex: 1;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     flex: none;
   }
 `;
@@ -40,7 +40,7 @@ const ScNavBarContent = styled.div`
   background: #232526;
   padding-top: 2rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     padding-top: 12px;
     background: transparent;
     position: static;
@@ -65,7 +65,7 @@ const ScNavBar = styled.nav`
     display: block;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     ${ScMenuController}:checked ~ ${ScNavBarContent} {
       display: flex;
     }
@@ -75,7 +75,7 @@ const ScNavBarLeft = styled.div`
   flex: 1;
   margin-bottom: 1rem;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     margin-bottom: 0;
   }
 `;
@@ -83,7 +83,7 @@ const ScNavBarRight = styled.div`
   display: none;
   flex: none;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     display: initial;
   }
 `;
@@ -100,7 +100,7 @@ const ScLinkComp = css`
   line-height: 40px;
   margin-bottom: 8px;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 15px;
   padding-left: 20px;
   padding-right: 20px;
 
@@ -115,19 +115,23 @@ const ScLinkComp = css`
     margin-left: 8px;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     display: inline-block;
     border: none;
     margin-bottom: 0;
     margin-right: 8px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-radius: 20px;
 
     > span {
       display: none;
     }
   }
+`;
+
+const ScNavA = styled.a`
+  ${ScLinkComp}
 `;
 
 const ScNavLink = styled(Link)`
@@ -144,7 +148,7 @@ const ScMenuButton = styled.button`
   margin-left: 8px;
   margin-right: -12px;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     display: none;
   }
 `;
@@ -167,7 +171,7 @@ const ScLogo = styled(Link)`
 `;
 
 const ScMobileOnly = styled.div`
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1040px) {
     display: none;
   }
 `;
@@ -236,14 +240,24 @@ export const NavBar = () => {
 
             <ScNavBarContent>
               <ScNavBarLeft>
+                <ScNavLink to="/lottery/">Lottery</ScNavLink>
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
                 <ScNavLink to="/vn/">VN🇻🇳</ScNavLink>
                 {walletClient ? (
-                  <ScNavLink to="#" onClick={addDezIntoMetamask}>
-                    Add $DEZ to your wallet
-                  </ScNavLink>
+                  <>
+                    <ScNavA
+                      href="https://spooky.fi/#/swap?outputCurrency=0x3C5BD56dF41A4a7f6c3BaFe5FFFd3d832d699f4F&inputCurrency=ETH"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Buy $DEZ
+                    </ScNavA>
+                    <ScNavLink to="#" onClick={addDezIntoMetamask}>
+                      + $DEZ -> Metamask
+                    </ScNavLink>
+                  </>
                 ) : null}
               </ScNavBarLeft>
 
