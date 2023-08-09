@@ -138,6 +138,10 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <meta name="twitter:site" content={name} />
         <meta property="og:image:width" content="1500" />
         <meta property="og:image:height" content="500" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8804973181721405"
+          crossOrigin="anonymous" />
       </Helmet>
       <GlobalStyle />
 
