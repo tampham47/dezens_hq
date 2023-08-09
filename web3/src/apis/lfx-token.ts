@@ -1,15 +1,14 @@
 import { ethers } from 'ethers';
 import { contractConfig } from '../contracts';
 import { getNumber } from './utils';
+import { socketProvider } from './provider';
 
 class LfxTokenClass {
   provider: ethers.Provider;
   contract: ethers.Contract;
 
   constructor() {
-    this.provider = new ethers.JsonRpcProvider(
-      process.env.GATSBY_ETHER_RPC_URL
-    );
+    this.provider = socketProvider;
 
     this.contract = new ethers.Contract(
       contractConfig.Lfx.Token,
