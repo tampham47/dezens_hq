@@ -242,17 +242,16 @@ export const BetMuskMark = () => {
   const markPercentage = 100 - muskPercentage;
 
   const updateUserInfo = useCallback(async () => {
-    if (!walletClient) return;
-
-    const address = walletClient.account.address;
+    const address = walletClient?.account.address || ethers.ZeroAddress;
     const _ref = await DezRefs.getRef(address);
-    const info = await DezMM.getInformation(walletClient.account.address);
 
-    setUserInfo(info);
     if (_ref) {
       setRef(_ref);
       setRefAddress(_ref);
     }
+
+    const info = await DezMM.getInformation(address);
+    setUserInfo(info);
   }, [walletClient]);
 
   const betOnMusk = async () => {
@@ -328,11 +327,7 @@ export const BetMuskMark = () => {
   }, [walletClient]);
 
   useEffect(() => {
-    if (!walletClient) {
-      return;
-    }
-
-    const address = walletClient.account.address;
+    const address = walletClient?.account.address || ethers.ZeroAddress;
 
     updateUserInfo();
 
