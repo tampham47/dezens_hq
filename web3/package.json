@@ -8,7 +8,7 @@
     "gatsby"
   ],
   "scripts": {
-    "build": "gatsby build",
+    "build": "env-cmd -f .env.ftm gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "develop": "env-cmd -f .env.local gatsby develop",
