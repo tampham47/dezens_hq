@@ -37,7 +37,7 @@ const PostTemplate = ({ pageContext: context }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet titleTemplate="%s | Blog" key={post.slug}>
+        <Helmet>
           <title>{post.title}</title>
           <meta property="og:image" content={cover} />
           <meta property="og:url" content={link} />

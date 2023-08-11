@@ -108,8 +108,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
   const name = 'Dezens';
   const title = 'Dezens';
   const description = 'Truly decentralized applications for dezen generation';
-  const link = 'https://Dezens.io';
-  const cover = '/images/social-share.webp';
+  const link = 'https://dezens.io';
+  const cover = `${link}/images/social-share.webp`;
 
   return (
     <main>
@@ -141,7 +141,8 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8804973181721405"
-          crossOrigin="anonymous" />
+          crossOrigin="anonymous"
+        />
       </Helmet>
       <GlobalStyle />
 
@@ -152,7 +153,7 @@ export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
           {process.env.GATSBY_NETWORK !== 'polygon' &&
           process.env.GATSBY_NETWORK !== 'bsc' &&
           process.env.GATSBY_NETWORK !== 'ftm' ? (
-            <Container style={{marginTop: 24}}>
+            <Container style={{ marginTop: 24 }}>
               <MobileWrapper>
                 <Alert
                   icon={<IconAlertCircle size="1rem" />}

@@ -110,7 +110,7 @@ export const createPages = ({ actions, graphql }: any) => {
         return {
           ...node,
           ...frontmatter,
-          cover: frontmatter.cover,
+          cover: node.featuredImg.childImageSharp.fluid.srcWebp,
           markdown: true,
         };
       })
