@@ -37,8 +37,7 @@ const PostTemplate = ({ pageContext: context }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet>
-          <title>{post.title}</title>
+        <Helmet title={post.title} defer={false}>
           <meta property="og:image" content={cover} />
           <meta property="og:url" content={link} />
           <meta property="og:title" content={post.title} />
