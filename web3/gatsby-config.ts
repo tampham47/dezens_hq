@@ -33,9 +33,9 @@ const config: GatsbyConfig = {
         ],
       },
     },
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-styled-components',
     'gatsby-plugin-mantine',
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
@@ -51,7 +51,6 @@ const config: GatsbyConfig = {
         icon: 'src/images/icon.png',
       },
     },
-    // "gatsby-plugin-mdx",
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     {
