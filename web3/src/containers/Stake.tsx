@@ -245,7 +245,7 @@ export const Stake = () => {
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getAutoRoundNumber(vaultInfo?.yieldPerTokenPerDay)} DEZ
+                {getAutoRoundNumber(vaultInfo?.yieldPerTokenPerDay ?? 0)} DEZ
               </ScInfoValue>
               <ScInfoLabel>Yield / Token / Day</ScInfoLabel>
             </ScInfoBlock>

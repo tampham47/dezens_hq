@@ -222,7 +222,7 @@ export const Airdrop = () => {
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getAutoRoundNumber(airdropInfo?.totalSupply)} {rootTokenName}
+                {getAutoRoundNumber(airdropInfo?.totalSupply ?? 0)} {rootTokenName}
               </ScInfoValue>
               <ScInfoLabel>Total {rootTokenName} deposited</ScInfoLabel>
             </ScInfoBlock>
