@@ -31,22 +31,24 @@ const ScFeature = styled.div`
 
 const PostTemplate = ({ pageContext: context }: any) => {
   const post = context.post;
-  const cover = post.cover;
-  const link = `https://dezens.io/blog/${post.slug}`;
+  const url = 'https://dezens.io';
+  const link = `${url}/blog/${post.slug}`;
+  const cover = `${url}${post.cover}`;
 
   return (
     <Layout>
+      <Helmet>
+        <title>{post.title}</title>
+        <meta property="og:image" content={cover} />
+        <meta property="og:url" content={link} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.summary} />
+        <meta name="twitter:image" content={cover} />
+        <meta name="twitter:url" content={link} />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.summary} />
+      </Helmet>
       <ScRoot>
-        <Helmet title={post.title} defer={false}>
-          <meta property="og:image" content={cover} />
-          <meta property="og:url" content={link} />
-          <meta property="og:title" content={post.title} />
-          <meta property="og:description" content={post.summary} />
-          <meta name="twitter:image" content={cover} />
-          <meta name="twitter:url" content={link} />
-          <meta name="twitter:title" content={post.title} />
-          <meta name="twitter:description" content={post.summary} />
-        </Helmet>
         <Container>
           <ScMain>
             <ScHeaderWrapper>
