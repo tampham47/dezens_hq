@@ -5,6 +5,9 @@ const { PRIVATE_KEY_01 } = process.env;
 
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
+  etherscan: {
+    apiKey: 'PVCGQQ6DWRWCX5YJ6KH5XK79HXIIGBBGAE',
+  },
   networks: {
     'bsc-testnet': {
       url: `https://data-seed-prebsc-1-s1.binance.org:8545`,
