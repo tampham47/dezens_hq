@@ -349,7 +349,7 @@ export const BetMuskMark = () => {
         <ScFrame>
           <ScFloatHeader>
             <h3>
-              Musk vs. Mark
+              Musk vs. Zuck
               <br />
               Bet BIG - Win BIG
             </h3>
@@ -436,7 +436,7 @@ export const BetMuskMark = () => {
                     onClick={betOnMark}
                     loading={loadingMark}
                   >
-                    Mark
+                    Zuck
                   </Button>
                 </ScFormItem>
               </ScFormRow>
