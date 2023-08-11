@@ -46,6 +46,7 @@ export const ScContent = styled.section`
   margin-right: auto;
   color: rgba(255, 255, 255, 0.8);
   font-size: 16px;
+  line-height: 1.4;
 
   h1,
   h2,
@@ -87,11 +88,16 @@ export const ScContent = styled.section`
     font-size: 16px;
   }
 
-  p {
-    font-size: 16px;
+  p,
+  ul {
+    font-size: 18px;
+    line-height: 1.4;
     color: rgba(255, 255, 255, 0.8);
     margin-top: 1em;
     margin-bottom: 1em;
+  }
+  ul li {
+    line-height: 1.6;
   }
 
   img {
