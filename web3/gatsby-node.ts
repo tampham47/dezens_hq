@@ -55,6 +55,7 @@ export const createPages = ({ actions, graphql }: any) => {
       ) {
         edges {
           node {
+            html
             featuredImg {
               childImageSharp {
                 fluid(maxWidth: 800, quality: 100) {
@@ -69,11 +70,6 @@ export const createPages = ({ actions, graphql }: any) => {
               }
             }
             frontmatter {
-              slug
-              status {
-                name
-              }
-              title
               author {
                 name
               }
@@ -89,7 +85,12 @@ export const createPages = ({ actions, graphql }: any) => {
               publish_date {
                 start(formatString: "MMMM DD, YYYY")
               }
+              slug
+              status {
+                name
+              }
               summary
+              title
               lang {
                 name
               }
@@ -121,6 +122,7 @@ export const createPages = ({ actions, graphql }: any) => {
         component: path.resolve(`./src/templates/post.tsx`),
         context: {
           slug: post.slug,
+          post: post,
         },
       });
     });

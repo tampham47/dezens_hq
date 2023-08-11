@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
 import { Container } from '../components/Grid';
@@ -13,7 +12,6 @@ import {
   ScHeader,
   ScMain,
 } from './styled';
-import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -31,45 +29,43 @@ const ScFeature = styled.div`
   }
 `;
 
-const PostTemplate = ({ data }: any) => {
-  const { markdownRemark } = data; // data.markdownRemark holds our post data
-  const { frontmatter: frontmatterSrc, html } = markdownRemark;
-  const frontmatter = normalizeNotionFrontMatter(frontmatterSrc);
-  const cover = frontmatter.cover;
-  const link = `https://dezens.io/blog/${frontmatter.slug}`;
+const PostTemplate = ({ pageContext: context }: any) => {
+  const post = context.post;
+  const cover = post.cover;
+  const link = `https://dezens.io/blog/${post.slug}`;
 
   return (
     <Layout>
       <ScRoot>
         <Helmet titleTemplate="%s | Blog">
-          <title>{frontmatter.title}</title>
+          <title>{post.title}</title>
           <meta property="og:image" content={cover} />
           <meta property="og:url" content={link} />
-          <meta property="og:title" content={frontmatter.title} />
-          <meta property="og:description" content={frontmatter.summary} />
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={post.summary} />
           <meta name="twitter:image" content={cover} />
           <meta name="twitter:url" content={link} />
-          <meta name="twitter:title" content={frontmatter.title} />
-          <meta name="twitter:description" content={frontmatter.summary} />
+          <meta name="twitter:title" content={post.title} />
+          <meta name="twitter:description" content={post.summary} />
         </Helmet>
         <Container>
           <ScMain>
             <ScHeaderWrapper>
-              <ScHeader>{frontmatter.title}</ScHeader>
-              <ScCategoryText>{frontmatter.date}</ScCategoryText>
+              <ScHeader>{post.title}</ScHeader>
+              <ScCategoryText>{post.date}</ScCategoryText>
             </ScHeaderWrapper>
 
             <ScFeature>
               <Img
-                fluid={markdownRemark.featuredImg.childImageSharp.fluid}
-                alt={frontmatter.title}
+                fluid={post.featuredImg.childImageSharp.fluid}
+                alt={post.title}
               />
             </ScFeature>
 
             <ScContent className="post-full-content">
               <div
                 className="post-content"
-                dangerouslySetInnerHTML={{ __html: html }}
+                dangerouslySetInnerHTML={{ __html: post.html }}
               />
             </ScContent>
           </ScMain>
@@ -80,50 +76,3 @@ const PostTemplate = ({ data }: any) => {
 };
 
 export default PostTemplate;
-
-export const pageQuery = graphql`
-  query ($slug: String!) {
-    markdownRemark(frontmatter: { slug: { eq: $slug } }) {
-      html
-      featuredImg {
-        childImageSharp {
-          fluid(maxWidth: 800, quality: 100) {
-            base64
-            aspectRatio
-            src
-            srcSet
-            srcWebp
-            srcSetWebp
-            sizes
-          }
-        }
-      }
-      frontmatter {
-        author {
-          name
-        }
-        category {
-          name
-        }
-        cover {
-          file {
-            url
-          }
-          name
-        }
-        publish_date {
-          start(formatString: "MMMM DD, YYYY")
-        }
-        slug
-        status {
-          name
-        }
-        summary
-        title
-        lang {
-          name
-        }
-      }
-    }
-  }
-`;
