@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 
 import { Card } from '../components/Card';
 import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
-import { graphql } from 'gatsby';
+import { HeadFC, graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { Airdrop } from '../containers/Airdrop';
+import { SEO } from '../components/SEO';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -95,10 +95,6 @@ const AirdropPage = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet>
-          <title>Airdrop | Dezens</title>
-        </Helmet>
-
         <Container>
           <ScMain>
             <Airdrop />
@@ -119,5 +115,9 @@ const AirdropPage = ({ data }: any) => {
     </Layout>
   );
 };
+
+export const Head: HeadFC = () => (
+  <SEO title="Airdrop | Dezens" />
+);
 
 export default AirdropPage;

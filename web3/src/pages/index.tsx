@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 
 import { Card } from '../components/Card';
 import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
-import { graphql } from 'gatsby';
+import { HeadFC, graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { BetMuskMark } from '../containers/BetMuskMark';
+import { SEO } from '../components/SEO';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -95,10 +95,6 @@ const BlogTemplate = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet titleTemplate="%s">
-          <title>Dezens</title>
-        </Helmet>
-
         <Container>
           <ScMain>
             <BetMuskMark />
@@ -119,5 +115,7 @@ const BlogTemplate = ({ data }: any) => {
     </Layout>
   );
 };
+
+export const Head: HeadFC = () => <SEO title="Dezens" />;
 
 export default BlogTemplate;

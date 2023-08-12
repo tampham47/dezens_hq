@@ -4,8 +4,8 @@ const { NOTION_TOKEN, NOTION_DATABASE_ID } = process.env;
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `gatsby notion`,
-    siteUrl: `https://xaolonist.com/`,
+    title: `Dezens`,
+    siteUrl: `https://dezens.io/`,
   },
 
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.

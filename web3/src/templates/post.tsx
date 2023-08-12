@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 import Img from 'gatsby-image';
 
 import { Container } from '../components/Grid';
@@ -12,6 +11,7 @@ import {
   ScHeader,
   ScMain,
 } from './styled';
+import { SEO } from '../components/SEO';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -31,23 +31,9 @@ const ScFeature = styled.div`
 
 const PostTemplate = ({ pageContext: context }: any) => {
   const post = context.post;
-  const url = 'https://dezens.io';
-  const link = `${url}/blog/${post.slug}`;
-  const cover = `${url}${post.cover}`;
 
   return (
     <Layout>
-      <Helmet>
-        <title>{post.title}</title>
-        <meta property="og:image" content={cover} />
-        <meta property="og:url" content={link} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.summary} />
-        <meta name="twitter:image" content={cover} />
-        <meta name="twitter:url" content={link} />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.summary} />
-      </Helmet>
       <ScRoot>
         <Container>
           <ScMain>
@@ -74,6 +60,17 @@ const PostTemplate = ({ pageContext: context }: any) => {
       </ScRoot>
     </Layout>
   );
+};
+
+export const Head = ({ pageContext: context }: any) => {
+  const post = context.post;
+  const url = 'https://dezens.io';
+  const link = `${url}/blog/${post.slug}`;
+  const cover = `${url}${post.cover}`;
+  const title = post.title;
+  const desc = post.summary;
+
+  return <SEO title={title} cover={cover} desc={desc} url={link} />;
 };
 
 export default PostTemplate;

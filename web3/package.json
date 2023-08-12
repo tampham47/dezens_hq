@@ -33,7 +33,7 @@
     "@web3modal/react": "^2.7.0",
     "babel-plugin-styled-components": "^2.0.7",
     "ethers": "^6.6.4",
-    "gatsby": "^5.9.0",
+    "gatsby": "^5.11.0",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-google-tagmanager": "4.20.0",
     "gatsby-plugin-image": "^2.22.0",

@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import { graphql } from 'gatsby';
+import { HeadFC, graphql } from 'gatsby';
 
 import { Card } from '../components/Card';
 import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { Stake } from '../containers/Stake';
+import { SEO } from '../components/SEO';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -95,10 +95,6 @@ const StakePage = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet>
-          <title>Stake | Dezens</title>
-        </Helmet>
-
         <Container>
           <ScMain>
             <Stake />
@@ -119,5 +115,9 @@ const StakePage = ({ data }: any) => {
     </Layout>
   );
 };
+
+export const Head: HeadFC = () => (
+  <SEO title='Stake | Dezens' />
+);
 
 export default StakePage;

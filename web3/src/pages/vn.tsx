@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
 
 import { Card } from '../components/Card';
 import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
-import { graphql } from 'gatsby';
+import { HeadFC, graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
+import { SEO } from '../components/SEO';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
@@ -94,10 +94,6 @@ const BlogTemplate = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <Helmet>
-          <title>Blog VN | Lotte.Fan</title>
-        </Helmet>
-
         <Container>
           <ScMain>
             <h2>Blog VN</h2>
@@ -113,5 +109,9 @@ const BlogTemplate = ({ data }: any) => {
     </Layout>
   );
 };
+
+export const Head: HeadFC = () => (
+  <SEO title="Blog VN | Dezens" />
+);
 
 export default BlogTemplate;
