@@ -11,6 +11,10 @@ const ScContent = styled(ScContentSrc)`
   margin-left: initial;
   max-width: 780px;
 
+  p {
+    font-size: 16px;
+  }
+
   h3,
   h4 {
     margin-top: 1em;
