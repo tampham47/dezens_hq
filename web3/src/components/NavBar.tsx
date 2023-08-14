@@ -240,11 +240,10 @@ export const NavBar = () => {
 
             <ScNavBarContent>
               <ScNavBarLeft>
+                <ScNavLink to="/betmz/">Bet Musk vs. Zuck</ScNavLink>
                 <ScNavLink to="/lottery/">Lottery</ScNavLink>
                 <ScNavLink to="/stake/">Stake</ScNavLink>
-                <ScNavLink to="/airdrop/">Airdrop</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
-                <ScNavLink to="/vn/">VN🇻🇳</ScNavLink>
                 {walletClient ? (
                   <>
                     <ScNavA

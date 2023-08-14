@@ -355,7 +355,7 @@ export const BetMuskMark = () => {
             </h3>
           </ScFloatHeader>
 
-          <ScImg src="images/mm/mm04.jpg" />
+          <ScImg src="/images/mm/mm04.jpg" />
 
           <ScFloatBody>
             <div style={{ marginBottom: 24 }}>

@@ -6,17 +6,12 @@ import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
 import { HeadFC, graphql } from 'gatsby';
 import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
+import { BetMuskMark } from '../containers/BetMuskMark';
 import { SEO } from '../components/SEO';
-import { DezensIntro } from '../containers/dezens/dezens';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);
   padding-top: 1px;
-  margin-top: 2rem;
-
-  @media screen and (min-width: 992px) {
-    margin-top: 4rem;
-  }
 `;
 
 const ScPostList = styled.div`
@@ -100,7 +95,11 @@ const BlogTemplate = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <DezensIntro />
+        <Container>
+          <ScMain>
+            <BetMuskMark />
+          </ScMain>
+        </Container>
 
         <Container>
           <ScMain>
@@ -117,11 +116,6 @@ const BlogTemplate = ({ data }: any) => {
   );
 };
 
-export const Head: HeadFC = () => (
-  <SEO title="Dezens">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <link rel="preload" href="/dezens/man-working-on-nft-blockchain.json" as="fetch" />
-  </SEO>
-);
+export const Head: HeadFC = () => <SEO title="Bet Musk vs. Zuck" />;
 
 export default BlogTemplate;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'gatsby';
 
 import { Container } from './Grid';
 import { ScContent as ScContentSrc } from '../templates/styled';
@@ -28,6 +29,10 @@ const ScGroup = styled.div`
   display: flex;
   flex-direction: column-reverse;
 
+  > div {
+    margin-bottom: 2rem;
+  }
+
   @media screen and (min-width: 992px) {
     display: flex;
     flex-direction: row;
@@ -35,6 +40,7 @@ const ScGroup = styled.div`
     > div {
       flex: 1;
       margin-right: 24px;
+      margin-bottom: 1rem;
 
       &:first-child {
         flex: 2;
@@ -115,6 +121,14 @@ export const Footer = () => {
               >
                 Official Contracts
               </a>
+              <br />
+              😤 <Link to="/blog/faq">FAQ</Link>
+            </ScContent>
+          </div>
+          <div>
+            <ScContent>
+              <h3>Apps</h3>
+              💦 <Link to="/airdrop">Airdrop Round #1</Link>
             </ScContent>
           </div>
         </ScGroup>
