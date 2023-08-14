@@ -119,8 +119,8 @@ const BlogTemplate = ({ data }: any) => {
 
 export const Head: HeadFC = () => (
   <SEO title="Dezens">
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <link rel="preload" href="/dezens/man-working-on-nft-blockchain.json" as="fetch" />
+    <script src="https://unpkg.com/@dotlottie/player-component@1.0.0/dist/dotlottie-player.js"></script>
+    <link rel="preload" href="/dezens/llayhwtg.lottie" as="fetch" />
   </SEO>
 );
 
