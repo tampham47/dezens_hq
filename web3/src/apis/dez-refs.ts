@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
 import { contractConfig } from '../contracts';
-import { socketProvider } from './provider';
+import { provider } from './provider';
 
 class DezRefsClass {
   provider: ethers.Provider;
   contract: ethers.Contract;
 
   constructor() {
-    this.provider = socketProvider;
+    this.provider = provider;
 
     this.contract = new ethers.Contract(
       contractConfig.DezRefs.Token,

@@ -100,8 +100,21 @@ export const Footer = () => {
           <div>
             <ScContent>
               <h3>Links</h3>
-              🌍 <a href="https://dezens.io/blog/dezens-white-paper/" target="_blank">Dezens Whitepaper</a><br/>
-              ⛓️ <a href="https://dezens.io/blog/official-contracts/" target="_blank">Official Contracts</a>
+              🌍 
+              <a
+                href="https://dezens.io/blog/dezens-white-paper/"
+                target="_blank"
+              >
+                Dezens White Paper
+              </a>
+              <br />
+              ⛓️ 
+              <a
+                href="https://dezens.io/blog/official-contracts/"
+                target="_blank"
+              >
+                Official Contracts
+              </a>
             </ScContent>
           </div>
         </ScGroup>

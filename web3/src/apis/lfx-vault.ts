@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { contractConfig } from '../contracts';
 import { getNumber } from './utils';
-import { socketProvider } from './provider';
+import { provider } from './provider';
 
 export type VaultInfo = {
   totalSupply: number;
@@ -14,7 +14,7 @@ class LfxVaultClass {
   contract: ethers.Contract;
 
   constructor() {
-    this.provider = socketProvider;
+    this.provider = provider;
 
     this.contract = new ethers.Contract(
       contractConfig.LfxVault.Token,

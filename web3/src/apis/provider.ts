@@ -5,5 +5,9 @@ export const rpcProvider = new ethers.JsonRpcProvider(
 );
 
 export const socketProvider = new ethers.WebSocketProvider(
-  process.env.GATSBY_ETHER_WSS_URL
+  process.env.GATSBY_ETHER_WSS_URL ?? ''
 );
+
+export const provider = process.env.GATSBY_ETHER_WSS_URL
+  ? new ethers.WebSocketProvider(process.env.GATSBY_ETHER_WSS_URL ?? '')
+  : new ethers.JsonRpcProvider(process.env.GATSBY_ETHER_RPC_URL);
