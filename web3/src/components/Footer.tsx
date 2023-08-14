@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StaticQuery, graphql } from 'gatsby';
 
 import { Container } from './Grid';
-import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
-import { Post } from '../types/Post';
 import { ScContent as ScContentSrc } from '../templates/styled';
 
 const ScContent = styled(ScContentSrc)`
@@ -65,122 +62,56 @@ const ScMark = styled.div`
 
 export const Footer = () => {
   return (
-    <StaticQuery
-      query={graphql`
-        {
-          allMarkdownRemark(
-            sort: { frontmatter: { publish_date: { start: DESC } } }
-            limit: 1000
-          ) {
-            edges {
-              node {
-                html
-                featuredImg {
-                  childImageSharp {
-                    fluid(maxWidth: 800, quality: 100) {
-                      base64
-                      aspectRatio
-                      src
-                      srcSet
-                      srcWebp
-                      srcSetWebp
-                      sizes
-                    }
-                  }
-                }
-                frontmatter {
-                  slug
-                  status {
-                    name
-                  }
-                  title
-                  author {
-                    name
-                  }
-                  category {
-                    name
-                  }
-                  cover {
-                    file {
-                      url
-                    }
-                    name
-                  }
-                  publish_date {
-                    start(formatString: "MMMM DD, YYYY")
-                  }
-                  summary
-                  lang {
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      `}
-      render={(data) => {
-        const posts: Post[] = data.allMarkdownRemark.edges
-          .map(({ node }: any) => {
-            const frontmatter = normalizeNotionFrontMatter(node.frontmatter);
-            return {
-              ...node,
-              ...frontmatter,
-              cover: frontmatter.cover,
-              markdown: true,
-            };
-          })
-          .filter((i: any) => i.status === 'published');
+    <ScMain>
+      <Container>
+        <ScGroup>
+          <div>
+            <ScContent>
+              <h3>Dezens</h3>
+              <p>
+                <span>Truly decentralized applications for degens</span>
+              </p>
+            </ScContent>
+          </div>
+          <div>
+            <ScContent>
+              <h3>Contact</h3>
+              🔥{' '}
+              <a href="https://t.me/dezens_io" target="_blank">
+                Telegram
+              </a>
+              <br />
+              🐦{' '}
+              <a href="https://twitter.com/heydezens" target="_blank">
+                Twitter
+              </a>
+              <br />
+              🍏{' '}
+              <a href="https://t.me/xaolonist" target="_blank">
+                OTC Trading - DM
+              </a>
+              <br />
+              💌{' '}
+              <a href="mailto:heydezens@gmail.com" target="_blank">
+                heydezens@gmail.com
+              </a>
+            </ScContent>
+          </div>
+          <div>
+            <ScContent>
+              <h3>Links</h3>
+              🌍 <a href="https://dezens.io/blog/dezens-white-paper/" target="_blank">Dezens Whitepaper</a><br/>
+              ⛓️ <a href="https://dezens.io/blog/official-contracts/" target="_blank">Official Contracts</a>
+            </ScContent>
+          </div>
+        </ScGroup>
+      </Container>
 
-        const contactPost = posts.find((i) => i.slug === 'x-footer01');
-        const servicePost = posts.find((i) => i.slug === 'x-footer02');
-        const partnerPost = posts.find((i) => i.slug === 'x-footer03');
-
-        return (
-          <ScMain>
-            <Container>
-              <ScGroup>
-                <div>
-                  <ScContent>
-                    <div
-                      className="post-content"
-                      dangerouslySetInnerHTML={{
-                        __html: contactPost?.html ?? '',
-                      }}
-                    />
-                  </ScContent>
-                </div>
-                <div>
-                  <ScContent>
-                    <div
-                      className="post-content"
-                      dangerouslySetInnerHTML={{
-                        __html: servicePost?.html ?? '',
-                      }}
-                    />
-                  </ScContent>
-                </div>
-                <div>
-                  <ScContent>
-                    <div
-                      className="post-content"
-                      dangerouslySetInnerHTML={{
-                        __html: partnerPost?.html ?? '',
-                      }}
-                    />
-                  </ScContent>
-                </div>
-              </ScGroup>
-            </Container>
-
-            <Container>
-              <ScContent>
-                <ScMark>@2023 Dezens</ScMark>
-              </ScContent>
-            </Container>
-          </ScMain>
-        );
-      }}
-    />
+      <Container>
+        <ScContent>
+          <ScMark>@2023 Dezens</ScMark>
+        </ScContent>
+      </Container>
+    </ScMain>
   );
 };
