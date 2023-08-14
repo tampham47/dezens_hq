@@ -1237,7 +1237,7 @@
     "@emotion/utils" "^1.2.1"
     csstype "^3.0.2"
 
-"@emotion/server@^11.4.0":
+"@emotion/server@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/server/-/server-11.11.0.tgz#35537176a2a5ed8aed7801f254828e636ec3bd6e"
   integrity sha512-6q89fj2z8VBTx9w93kJ5n51hsmtYuFPtZgnc1L8VzRx9ti4EU6EyvF6Nn1H1x3vcCQCF7u2dB2lY4AYJwUW4PA==
@@ -1728,21 +1728,13 @@
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-6.0.19.tgz#39f61434304f687d3ba7bf0040c5adf380c7c4b3"
   integrity sha512-YkmuB6kmoenU1PVuE8tLBA+6RJIY9hIsGyIQG1yuPAy6SLWNFT8g2T9YvI/psqsUbVIYGaNEXg8zq42xbxnD8Q==
 
-"@mantine/ssr@^5.0.0":
-  version "5.10.5"
-  resolved "https://registry.yarnpkg.com/@mantine/ssr/-/ssr-5.10.5.tgz#781d0ba44b13c4430746ee3574381673b4424377"
-  integrity sha512-sp2ZnDHEaxsF0YNwrqBYTTGX7wL2DaHGOSVeZxnGX1lcOBkv5ksshdGnOU2cM2M8kKZumaDaAxbNiPKOnLsy3A==
+"@mantine/ssr@^6.0.19":
+  version "6.0.19"
+  resolved "https://registry.yarnpkg.com/@mantine/ssr/-/ssr-6.0.19.tgz#4169dcbb935606e0fafee44178fa8908b2179288"
+  integrity sha512-NS4t4brMeaBzM5LKk/1zTc2wpqgcUSMCfTmqlKUh278CjBW9Le9Uaq3MVV94c1Q9Sky6N2E1BTWRAXuG3EvkJA==
   dependencies:
-    "@mantine/styles" "5.10.5"
+    "@mantine/styles" "6.0.19"
     html-react-parser "1.4.12"
-
-"@mantine/styles@5.10.5":
-  version "5.10.5"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.10.5.tgz#ace82a71b4fe3d14ee14638f1735d5680d93d36d"
-  integrity sha512-0NXk8c/XGzuTUkZc6KceF2NaTCMEu5mHR4ru0x+ttb9DGnLpHuGWduTHjSfr4hl6eAJgedD0zauO+VAhDzO9zA==
-  dependencies:
-    clsx "1.1.1"
-    csstype "3.0.9"
 
 "@mantine/styles@6.0.19":
   version "6.0.19"
@@ -7086,14 +7078,6 @@ gatsby-plugin-manifest@^4.22.0:
     semver "^7.3.7"
     sharp "^0.30.7"
 
-gatsby-plugin-mantine@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-mantine/-/gatsby-plugin-mantine-5.0.0.tgz#f6d8f7416c166f7257d62f5b1a935ec5c188327b"
-  integrity sha512-7NQen/M6HrSE71CXBojDCe4LxmjT3IdeiMKJgprF+HJ+K57FmfXCtNace7LvpUFlKkXI31VlVMiW/SpGrQiEEw==
-  dependencies:
-    "@emotion/server" "^11.4.0"
-    "@mantine/ssr" "^5.0.0"
-
 gatsby-plugin-mdx@^4.1.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-mdx/-/gatsby-plugin-mdx-4.4.0.tgz#c2088dfe9877a4a6dadbf13110dd3e91bcaeac4d"
@@ -7135,13 +7119,6 @@ gatsby-plugin-page-creator@^5.11.0:
     gatsby-telemetry "^4.11.0"
     globby "^11.1.0"
     lodash "^4.17.21"
-
-gatsby-plugin-react-helmet@^5.22.0:
-  version "5.25.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet/-/gatsby-plugin-react-helmet-5.25.0.tgz#6849d405bfbc0846e73449d4425b45f84ec58fbb"
-  integrity sha512-sU/xae/sGuYFcFDpqUxwXnaOmx8xrU2Q+XSULqAapji0uTBhW6al6CJsaPFigi8IOG2bQX8ano2iWWcGF3/GHw==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
 
 gatsby-plugin-sharp@^4.24.0:
   version "4.25.1"

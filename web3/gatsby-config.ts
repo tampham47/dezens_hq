@@ -33,9 +33,7 @@ const config: GatsbyConfig = {
         ],
       },
     },
-    'gatsby-plugin-mantine',
     'gatsby-plugin-styled-components',
-    'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
