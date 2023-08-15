@@ -6,9 +6,9 @@ import { Link } from 'gatsby';
 
 import { Container as ContainerSrc, ScMain } from '../../components/Grid';
 
-import iconDice from './icon-dice.png';
-import iconLottery from './icon-lottery.png';
-import iconVault from './icon-vault.png';
+import iconStrategy from './icon-strategy.png';
+import iconMoneyBag from './icon-money-bag.png';
+import iconPiggyBank from './icon-piggy-bank.png';
 
 const ScBanner = styled.div`
   position: relative;
@@ -222,13 +222,13 @@ export const DezensIntro = ({ data }: any) => {
                 </h1>
                 <ScLinkList>
                   <ScLink to="/betmz/">
-                    <img src={iconDice} /> Bet
+                    <img src={iconStrategy} /> Bet
                   </ScLink>
                   <ScLink to="/lottery/">
-                    <img src={iconLottery} /> Lottery
+                    <img src={iconMoneyBag} /> Lottery
                   </ScLink>
                   <ScLink to="/stake/">
-                    <img src={iconVault} /> Stake
+                    <img src={iconPiggyBank} /> Stake
                   </ScLink>
                 </ScLinkList>
               </ScHeaderContent>
