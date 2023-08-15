@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { DotLottiePlayer } from '@johanaarstein/dotlottie-player';
 import GatsbyImage from 'gatsby-image';
+import { Link } from 'gatsby';
 
 import { Container as ContainerSrc, ScMain } from '../../components/Grid';
+
+import iconDice from './icon-dice.png';
+import iconLottery from './icon-lottery.png';
+import iconVault from './icon-vault.png';
 
 const ScBanner = styled.div`
   position: relative;
@@ -143,6 +148,35 @@ const ScRowContent = styled.div`
   }
 `;
 
+const ScLinkList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const ScLink = styled(Link)`
+  padding: 4px 8px;
+  margin-right: 4px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+
+  img {
+    width: 28px;
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  &:hover {
+    text-decoration: none;
+    border-color: #0c356a;
+    background-color: #0c356a;
+  }
+`;
+
 export const DezensIntro = ({ data }: any) => {
   const refPlayer = useRef<DotLottiePlayer | undefined>(undefined);
   const [animationLoaded, setAnimationLoaded] = useState<boolean>(false);
@@ -186,6 +220,17 @@ export const DezensIntro = ({ data }: any) => {
                 <h1>
                   Truly decentralized applications <em>for&nbsp;degens.</em>
                 </h1>
+                <ScLinkList>
+                  <ScLink to="/betmz/">
+                    <img src={iconDice} /> Bet
+                  </ScLink>
+                  <ScLink to="/lottery/">
+                    <img src={iconLottery} /> Lottery
+                  </ScLink>
+                  <ScLink to="/stake/">
+                    <img src={iconVault} /> Stake
+                  </ScLink>
+                </ScLinkList>
               </ScHeaderContent>
             </ScHeader>
           </ScMain>
