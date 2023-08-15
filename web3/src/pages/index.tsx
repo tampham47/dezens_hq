@@ -30,7 +30,28 @@ const ScPostList = styled.div`
 
 export const pageQuery = graphql`
   query IndexPageQuery {
-    banner: file(relativePath: { eq: "dezens/cover-bg.png" }) {
+    imgBanner: file(relativePath: { eq: "dezens/cover-bg.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 500, quality: 100) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    imgDezens: file(relativePath: { eq: "dezens/star-shape.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 500, quality: 100) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    imgDez: file(relativePath: { eq: "dezens/circle-shape.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 500, quality: 100) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    imgEcosystem: file(relativePath: { eq: "dezens/spring-shape.png" }) {
       childImageSharp {
         fluid(maxWidth: 500, quality: 100) {
           ...GatsbyImageSharpFluid_withWebp

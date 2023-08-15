@@ -5,10 +5,6 @@ import GatsbyImage from 'gatsby-image';
 
 import { Container as ContainerSrc, ScMain } from '../../components/Grid';
 
-import imgDezens from './star-shape.png';
-import imgDez from './circle-shape.png';
-import imgEcosystem from './spring-shape.png';
-
 const ScBanner = styled.div`
   position: relative;
   .background01,
@@ -132,7 +128,7 @@ const ScRowImg = styled.div`
   flex: 2;
   text-align: center;
 
-  img {
+  & > div {
     width: 70%;
     max-width: 220px;
   }
@@ -170,7 +166,7 @@ export const DezensIntro = ({ data }: any) => {
               <ScHeaderImg>
                 {!animationLoaded ? (
                   <GatsbyImage
-                    fluid={data.banner.childImageSharp.fluid}
+                    fluid={data.imgBanner.childImageSharp.fluid}
                     loading="eager"
                   />
                 ) : null}
@@ -198,7 +194,7 @@ export const DezensIntro = ({ data }: any) => {
         <ScMain>
           <ScRow>
             <ScRowImg>
-              <img src={imgDezens} />
+              <GatsbyImage fluid={data.imgDezens.childImageSharp.fluid} />
             </ScRowImg>
             <ScRowContent>
               <h3>About Dezens</h3>
@@ -211,7 +207,7 @@ export const DezensIntro = ({ data }: any) => {
 
           <ScRowReverse>
             <ScRowImg>
-              <img src={imgDez} />
+              <GatsbyImage fluid={data.imgDez.childImageSharp.fluid} />
             </ScRowImg>
             <ScRowContent>
               <h3>$DEZ Token</h3>
@@ -223,7 +219,7 @@ export const DezensIntro = ({ data }: any) => {
 
           <ScRow>
             <ScRowImg>
-              <img src={imgEcosystem} />
+              <GatsbyImage fluid={data.imgEcosystem.childImageSharp.fluid} />
             </ScRowImg>
             <ScRowContent>
               <h3>Ecosystem</h3>
