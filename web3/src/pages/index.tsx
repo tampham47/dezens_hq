@@ -119,7 +119,7 @@ const BlogTemplate = ({ data }: any) => {
 
 export const Head: HeadFC = () => (
   <SEO title="Dezens">
-    <script src="https://unpkg.com/@dotlottie/player-component@1.0.0/dist/dotlottie-player.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@1.0.0/dist/dotlottie-player.js" />
     <link rel="preload" href="/dezens/llayhwtg.lottie" as="fetch" />
   </SEO>
 );

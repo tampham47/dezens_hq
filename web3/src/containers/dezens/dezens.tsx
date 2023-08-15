@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import type { DotLottiePlayer } from '@johanaarstein/dotlottie-player';
 
 import { Container as ContainerSrc, ScMain } from '../../components/Grid';
 
+import imgCoverBg from './cover-bg.png';
 import imgDezens from './star-shape.png';
 import imgDez from './circle-shape.png';
 import imgEcosystem from './spring-shape.png';
@@ -82,8 +84,7 @@ const ScHeaderImg = styled.div`
 
   & > img {
     position: absolute;
-    width: 384px;
-    height: 384px;
+    width: 100%;
   }
 
   @media screen and (min-width: 960px) {
@@ -147,6 +148,17 @@ const ScRowContent = styled.div`
 `;
 
 export const DezensIntro = () => {
+  const refPlayer = useRef<DotLottiePlayer | undefined>(undefined);
+  const [animationLoaded, setAnimationLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!refPlayer.current) return;
+
+    refPlayer.current.addEventListener('ready', () => {
+      setAnimationLoaded(true);
+    });
+  }, [refPlayer.current]);
+
   return (
     <>
       <Container>
@@ -156,14 +168,15 @@ export const DezensIntro = () => {
           <ScMain>
             <ScHeader>
               <ScHeaderImg>
+                {!animationLoaded ? <img src={imgCoverBg} /> : null}
                 <dotlottie-player
                   src="/dezens/llayhwtg.lottie"
                   style={{ width: '100%', height: '100%' }}
-                  speed="1"
-                  direction="1"
-                  mode="normal"
+                  speed={1}
+                  direction={1}
                   loop
                   autoplay
+                  ref={refPlayer}
                 />
               </ScHeaderImg>
               <ScHeaderContent>
