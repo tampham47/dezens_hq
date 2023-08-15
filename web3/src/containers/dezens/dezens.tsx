@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { DotLottiePlayer } from '@johanaarstein/dotlottie-player';
+import GatsbyImage from 'gatsby-image';
 
 import { Container as ContainerSrc, ScMain } from '../../components/Grid';
 
-import imgCoverBg from './cover-bg.png';
 import imgDezens from './star-shape.png';
 import imgDez from './circle-shape.png';
 import imgEcosystem from './spring-shape.png';
@@ -147,7 +147,7 @@ const ScRowContent = styled.div`
   }
 `;
 
-export const DezensIntro = () => {
+export const DezensIntro = ({ data }: any) => {
   const refPlayer = useRef<DotLottiePlayer | undefined>(undefined);
   const [animationLoaded, setAnimationLoaded] = useState<boolean>(false);
 
@@ -168,9 +168,14 @@ export const DezensIntro = () => {
           <ScMain>
             <ScHeader>
               <ScHeaderImg>
-                {!animationLoaded ? <img src={imgCoverBg} /> : null}
+                {!animationLoaded ? (
+                  <GatsbyImage
+                    fluid={data.banner.childImageSharp.fluid}
+                    loading="eager"
+                  />
+                ) : null}
                 <dotlottie-player
-                  src="/dezens/llayhwtg.lottie"
+                  src="/images/dezens/llayhwtg.lottie"
                   style={{ width: '100%', height: '100%' }}
                   speed={1}
                   direction={1}

@@ -29,7 +29,14 @@ const ScPostList = styled.div`
 `;
 
 export const pageQuery = graphql`
-  {
+  query IndexPageQuery {
+    banner: file(relativePath: { eq: "dezens/cover-bg.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 500, quality: 100) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
     allMarkdownRemark(
       sort: { frontmatter: { publish_date: { start: DESC } } }
       limit: 1000
@@ -100,7 +107,7 @@ const BlogTemplate = ({ data }: any) => {
   return (
     <Layout>
       <ScRoot>
-        <DezensIntro />
+        <DezensIntro data={data} />
 
         <Container>
           <ScMain>
@@ -120,7 +127,7 @@ const BlogTemplate = ({ data }: any) => {
 export const Head: HeadFC = () => (
   <SEO title="Dezens">
     <script src="https://unpkg.com/@dotlottie/player-component@1.0.0/dist/dotlottie-player.js" />
-    <link rel="preload" href="/dezens/llayhwtg.lottie" as="fetch" />
+    <link rel="preload" href="/images/dezens/llayhwtg.lottie" as="fetch" />
   </SEO>
 );
 
