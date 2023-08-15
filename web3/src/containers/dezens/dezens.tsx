@@ -77,15 +77,15 @@ const ScHeader = styled.div`
 const ScHeaderImg = styled.div`
   flex: 2;
   position: relative;
-
-  & > img {
-    position: absolute;
-    width: 100%;
-  }
+  min-height: 374px;
 
   @media screen and (min-width: 960px) {
     min-height: 384px;
   }
+`;
+const ScHeaderImgPlaceholder = styled.div`
+  position: absolute;
+  width: 100%;
 `;
 const ScHeaderContent = styled.div`
   flex: 3;
@@ -165,10 +165,12 @@ export const DezensIntro = ({ data }: any) => {
             <ScHeader>
               <ScHeaderImg>
                 {!animationLoaded ? (
-                  <GatsbyImage
-                    fluid={data.imgBanner.childImageSharp.fluid}
-                    loading="eager"
-                  />
+                  <ScHeaderImgPlaceholder>
+                    <GatsbyImage
+                      fluid={data.imgBanner.childImageSharp.fluid}
+                      loading="eager"
+                    />
+                  </ScHeaderImgPlaceholder>
                 ) : null}
                 <dotlottie-player
                   src="/images/dezens/llayhwtg.lottie"
