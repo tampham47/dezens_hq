@@ -100,6 +100,7 @@ const ScHeaderContent = styled.div`
   h1 {
     line-height: 1.4;
     font-size: 28px;
+    font-weight: normal;
   }
 
   em {
@@ -225,7 +226,8 @@ export const DezensIntro = ({ data }: any) => {
               </ScHeaderImg>
               <ScHeaderContent>
                 <h1>
-                  Truly decentralized applications <em>for&nbsp;degens.</em>
+                  <b>Dezens</b>, take the <em>lead</em>, take&nbsp;your&nbsp;
+                  <em>profits</em>.
                 </h1>
                 <ScLinkList>
                   <ScLink to="/betmz/">
