@@ -42,7 +42,7 @@ const ScStackAside = styled(ScStackAsideSrc)`
   background: #141e30;
 
   @media screen and (min-width: 960px) {
-    background: linear-gradient(to right, #243b55, #141e30);
+    background: linear-gradient(to right, #243b55, #141e30 50%);
   }
 `;
 

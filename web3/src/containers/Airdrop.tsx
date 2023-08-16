@@ -43,7 +43,7 @@ const ScStackAside = styled(ScStackAsideSrc)`
   background: #141e30;
 
   @media screen and (min-width: 960px) {
-    background: linear-gradient(to right, #243b55, #141e30);
+    background: linear-gradient(to right, #243b55, #141e30 50%);
   }
 `;
 
@@ -55,7 +55,7 @@ const ScInfo = styled(ScStackAside)`
   }
 
   background: #003973;
-  background: linear-gradient(to bottom, #e5e5be, #003973);
+  background: linear-gradient(to bottom, #e5e5be, #003973 50%);
 
   @media screen and (min-width: 960px) {
     margin-right: 0;
@@ -117,7 +117,10 @@ export const Airdrop = () => {
   const rootTokenName = process.env.GATSBY_ROOT_TOKEN_NAME;
   const participantCount = airdropInfo?.participantCount ?? 0;
   const maxParticipant = airdropInfo?.maxParticipant ?? 100;
-  const joinPercent = Math.max(5, Math.ceil(participantCount * 100 / maxParticipant));
+  const joinPercent = Math.max(
+    5,
+    Math.ceil((participantCount * 100) / maxParticipant)
+  );
   let network = 'Polygon';
 
   if (rootTokenName === 'FTM') {
@@ -222,7 +225,8 @@ export const Airdrop = () => {
             </ScInfoBlock>
             <ScInfoBlock>
               <ScInfoValue>
-                {getAutoRoundNumber(airdropInfo?.totalSupply ?? 0)} {rootTokenName}
+                {getAutoRoundNumber(airdropInfo?.totalSupply ?? 0)}{' '}
+                {rootTokenName}
               </ScInfoValue>
               <ScInfoLabel>Total {rootTokenName} deposited</ScInfoLabel>
             </ScInfoBlock>
