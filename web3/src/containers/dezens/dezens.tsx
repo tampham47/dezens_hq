@@ -9,6 +9,7 @@ import { Container as ContainerSrc, ScMain } from '../../components/Grid';
 import iconStrategy from './icon-strategy.png';
 import iconMoneyBag from './icon-money-bag.png';
 import iconPiggyBank from './icon-piggy-bank.png';
+import iconSend from './icon-send.png';
 
 const ScBanner = styled.div`
   position: relative;
@@ -153,10 +154,10 @@ const ScLinkList = styled.div`
   align-items: center;
 `;
 const ScLink = styled(Link)`
-  padding: 4px 8px;
-  margin-right: 4px;
+  padding: 4px 4px;
+  margin-right: 0px;
+  font-size: 12px;
   text-align: center;
-  font-size: 14px;
   font-weight: bold;
   border: 1px solid transparent;
   border-radius: 20px;
@@ -167,13 +168,19 @@ const ScLink = styled(Link)`
   img {
     width: 28px;
     display: inline-block;
-    margin-right: 6px;
+    margin-right: 4px;
   }
 
   &:hover {
     text-decoration: none;
     border-color: #0c356a;
     background-color: #0c356a;
+  }
+
+  @media screen and (min-width: 960px) {
+    font-size: 14px;
+    padding: 4px 8px;
+    margin-right: 4px;
   }
 `;
 
@@ -229,6 +236,9 @@ export const DezensIntro = ({ data }: any) => {
                   </ScLink>
                   <ScLink to="/stake/">
                     <img src={iconPiggyBank} /> Stake
+                  </ScLink>
+                  <ScLink to="/blog/dezens-white-paper/">
+                    <img src={iconSend} /> More
                   </ScLink>
                 </ScLinkList>
               </ScHeaderContent>

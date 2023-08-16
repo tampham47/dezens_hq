@@ -92,9 +92,14 @@ export const Footer = () => {
                 Twitter
               </a>
               <br />
+              💬{' '}
+              <a href="https://discord.gg/xpyAVzYSA" target="_blank">
+                Discord
+              </a>
+              <br />
               🍏{' '}
               <a href="https://t.me/xaolonist" target="_blank">
-                OTC Trading - DM
+                OTC Trading
               </a>
               <br />
               💌{' '}
