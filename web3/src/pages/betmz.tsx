@@ -102,6 +102,23 @@ const BlogTemplate = ({ data }: any) => {
         </Container>
 
         <Container>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8804973181721405"
+            crossOrigin="anonymous"
+          ></script>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client="ca-pub-8804973181721405"
+            data-ad-slot="9390937807"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </Container>
+
+        <Container>
           <ScMain>
             <h3>News</h3>
             <ScPostList>
