@@ -46,6 +46,12 @@ export const SEO = ({
       <meta name="twitter:url" content={displayedUrl} />
       <meta name="twitter:image" content={displayedCover} />
 
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8804973181721405"
+        crossOrigin="anonymous"
+      />
+
       {children ? children : null}
     </>
   );
