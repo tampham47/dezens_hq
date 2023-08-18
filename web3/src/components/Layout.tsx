@@ -453,11 +453,6 @@ const wagmiConfig = createConfig({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export const Layout = ({ children }: React.PropsWithChildren<{}>) => {
-  const title = 'Dezens';
-  const link = 'https://dezens.io';
-  const description = 'Truly decentralized applications for degens';
-  const cover = `${link}/images/social-share.webp`;
-
   return (
     <main>
       <GlobalStyle />
