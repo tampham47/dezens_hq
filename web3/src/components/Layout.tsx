@@ -1,23 +1,23 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
+import { Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons-react';
 import {
   EthereumClient,
   w3mConnectors,
   w3mProvider,
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { WagmiConfig, configureChains, createConfig } from 'wagmi';
 import {
+  bsc,
+  bscTestnet,
+  fantom,
+  fantomTestnet,
   polygon,
   polygonMumbai,
-  bscTestnet,
-  bsc,
-  fantomTestnet,
-  fantom,
 } from 'wagmi/chains';
-import { Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons-react';
 
 import { Footer } from './Footer';
 import { NavBar } from './NavBar';

@@ -1,12 +1,12 @@
+import { IconMenu } from '@tabler/icons-react';
+import { Web3Button } from '@web3modal/react';
+import { Link } from 'gatsby';
 import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'gatsby';
-import { Web3Button } from '@web3modal/react';
-import { IconMenu } from '@tabler/icons-react';
 
-import { Container } from './Grid';
 import { useWalletClient } from 'wagmi';
 import { contractConfig } from '../contracts';
+import { Container } from './Grid';
 
 const ScHeader = styled.header`
   font-family: 'Inter', sans-serif;
@@ -244,6 +244,7 @@ export const NavBar = () => {
                 <ScNavLink to="/lottery/">Lottery</ScNavLink>
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>
+                <ScNavLink to="/game/">Game</ScNavLink>
                 {walletClient ? (
                   <>
                     <ScNavA

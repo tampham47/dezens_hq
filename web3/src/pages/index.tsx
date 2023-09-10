@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { HeadFC, graphql } from 'gatsby';
 import { Card } from '../components/Card';
 import { Container, ScMain } from '../components/Grid';
 import { Layout } from '../components/Layout';
-import { HeadFC, graphql } from 'gatsby';
-import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 import { SEO } from '../components/SEO';
 import { DezensIntro } from '../containers/dezens/dezens';
+import { normalizeNotionFrontMatter } from '../utils/normalizeNotionBlog';
 
 const ScRoot = styled.div`
   background-color: var(--darkmode);

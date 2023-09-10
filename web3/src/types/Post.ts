@@ -9,5 +9,5 @@ export type Post = {
   cover: string;
   html: string;
   markdown: boolean;
-  status: "draft" | "published";
+  status: 'draft' | 'published';
 };
