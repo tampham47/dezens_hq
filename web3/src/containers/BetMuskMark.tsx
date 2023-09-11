@@ -5,8 +5,6 @@ import { Button, Input } from '@mantine/core';
 import { useWalletClient } from 'wagmi';
 import { contractConfig } from '../contracts';
 import { Contract, ethers } from 'ethers';
-import { LfxToken } from '../apis/lfx-token';
-import { wait } from '../utils/time';
 import { DezMM, DezMmInformation } from '../apis/dez-mm';
 import { CountDownWithDay } from '../components/CountDownWithDay';
 import { getAutoRoundNumber } from '../utils/number';
@@ -230,9 +228,7 @@ export const BetMuskMark = () => {
   const [dezMm, setDezMm] = useState<Contract>();
   const [lfxToken, setLfxToken] = useState<Contract>();
   const [userInfo, setUserInfo] = useState<DezMmInformation>();
-
-  const [loadingMusk, setLoadingMusk] = useState<boolean>(false);
-  const [loadingMark, setLoadingMark] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const totalMusk = userInfo?.totalMusk ?? 0;
   const totalMark = userInfo?.totalMark ?? 0;
@@ -254,55 +250,16 @@ export const BetMuskMark = () => {
     setUserInfo(info);
   }, [walletClient]);
 
-  const betOnMusk = async () => {
+  const claim = async () => {
     if (!walletClient || !dezMm || !lfxToken) return;
 
     try {
-      setLoadingMusk(true);
-      const spender = walletClient.account.address;
-      const amount = ethers.parseEther(betAmount);
-
-      const allowance = await LfxToken.allowance(
-        spender,
-        contractConfig.DezMM.Token
-      );
-
-      if (allowance < amount) {
-        await lfxToken.approve(contractConfig.DezMM.Token, amount);
-        await wait(10000);
-      }
-
-      await dezMm.betOnMusk(amount, refAddress || ethers.ZeroAddress);
+      setLoading(true);
+      await dezMm.withdraw();
     } catch (err) {
       console.log('ERR', err);
     } finally {
-      setLoadingMusk(false);
-      setBetAmount('');
-    }
-  };
-  const betOnMark = async () => {
-    if (!walletClient || !dezMm || !lfxToken) return;
-
-    try {
-      setLoadingMark(true);
-      const spender = walletClient.account.address;
-      const amount = ethers.parseEther(betAmount);
-
-      const allowance = await LfxToken.allowance(
-        spender,
-        contractConfig.DezMM.Token
-      );
-
-      if (allowance < amount) {
-        await lfxToken.approve(contractConfig.DezMM.Token, amount);
-        await wait(10000);
-      }
-
-      await dezMm.betOnMark(amount, refAddress || ethers.ZeroAddress);
-    } catch (err) {
-      console.log('ERR', err);
-    } finally {
-      setLoadingMark(false);
+      setLoading(false);
       setBetAmount('');
     }
   };
@@ -392,27 +349,10 @@ export const BetMuskMark = () => {
               <ScFormRow>
                 <ScFormItem>
                   <Input
-                    placeholder="Input your referral address"
-                    style={{ width: '100%', color: 'white' }}
-                    size="sm"
-                    value={refAddress}
-                    onChange={(e) => {
-                      setRefAddress(e.target.value);
-                    }}
-                    disabled={!!ref}
-                  />
-                </ScFormItem>
-              </ScFormRow>
-              <ScFormRow>
-                <ScFormItem>
-                  <Input
-                    placeholder="DEZ Amount"
                     style={{ width: '100%' }}
                     size="lg"
-                    value={betAmount}
-                    onChange={(e) => {
-                      setBetAmount(e.target.value);
-                    }}
+                    value={`Your Prizes: ${userInfo?.prizes ?? '0'} DEZ`}
+                    disabled
                   />
                 </ScFormItem>
               </ScFormRow>
@@ -422,21 +362,10 @@ export const BetMuskMark = () => {
                     color="dark"
                     size="xl"
                     style={{ width: '100%' }}
-                    onClick={betOnMusk}
-                    loading={loadingMusk}
+                    onClick={claim}
+                    loading={loading}
                   >
-                    Musk
-                  </Button>
-                </ScFormItem>
-                <ScFormItem>
-                  <Button
-                    color="red"
-                    size="xl"
-                    style={{ width: '100%' }}
-                    onClick={betOnMark}
-                    loading={loadingMark}
-                  >
-                    Zuck
+                    Claim
                   </Button>
                 </ScFormItem>
               </ScFormRow>

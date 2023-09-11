@@ -240,7 +240,6 @@ export const NavBar = () => {
 
             <ScNavBarContent>
               <ScNavBarLeft>
-                <ScNavLink to="/betmz/">Bet Musk vs. Zuck</ScNavLink>
                 <ScNavLink to="/lottery/">Lottery</ScNavLink>
                 <ScNavLink to="/stake/">Stake</ScNavLink>
                 <ScNavLink to="/blog/">Blog</ScNavLink>

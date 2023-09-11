@@ -4,8 +4,6 @@
     "new-wallet": "npx @yerofey/cryptowallet-cli",
     "node": "env-cmd -f .env npx hardhat node",
     "deploy:local": "NODE_ENV=local env-cmd -f .env npx hardhat run scripts/deploy.ts --network localhost",
-    "deploy:polygon-test": "NODE_ENV=polygon-test env-cmd -f .env npx hardhat run scripts/deploy.ts --network polygon-test",
-    "deploy:bsc-testnet": "NODE_ENV=bsc-testnet env-cmd -f .env npx hardhat run scripts/deploy.ts --network bsc-testnet",
     "deploy:ftm-testnet": "NODE_ENV=ftm-testnet env-cmd -f .env npx hardhat run scripts/deploy.ts --network ftm-testnet",
     "test:lotte": "env-cmd -f .env npx hardhat test --grep \"Lotte\"",
     "test:mock-lotte": "env-cmd -f .env npx hardhat test --grep \"MockLotte\"",

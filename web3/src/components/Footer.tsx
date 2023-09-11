@@ -134,6 +134,8 @@ export const Footer = () => {
             <ScContent>
               <h3>Apps</h3>
               💦 <Link to="/airdrop">Airdrop Round #1</Link>
+              <br />
+              🖖 <Link to="/betmz">Bet Musk vs. Zuck</Link>
             </ScContent>
           </div>
         </ScGroup>
