@@ -14,7 +14,7 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     {
-      resolve: 'gatsby-source-notion-api',
+      resolve: 'gatsby-notion-api',
       options: {
         token: NOTION_TOKEN,
         databaseId: NOTION_DATABASE_ID,

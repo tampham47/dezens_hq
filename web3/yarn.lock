@@ -1172,13 +1172,6 @@
     stream-browserify "^3.0.0"
     util "^0.12.4"
 
-"@dotlottie/player-component@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-2.2.0.tgz#43b48b522ee55560ba9efc835594bc39d1b21d9a"
-  integrity sha512-mKBHDZYjkhV7g79FxBCmlhYZkK6CwIPCePw6ExhY2432KbsdReS+ZiiIL59mqK8dC5IYcNURccR+8v3SYiL5Qw==
-  dependencies:
-    lit "^2.7.5"
-
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz#c2d872b6a7767a9d176d007f5b31f7d504bb5d6c"
@@ -7271,6 +7264,15 @@ gatsby-link@^5.11.0:
     gatsby-page-utils "^3.11.0"
     prop-types "^15.8.1"
 
+gatsby-notion-api@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/gatsby-notion-api/-/gatsby-notion-api-1.0.3.tgz#2628f211d84bf68635a38123e91d9eba0879d6dd"
+  integrity sha512-ORo/VKR/qI7lUb0YnE2GaZZWU3MdIv6MBFWMwwKNUFfr5wZ4p4rp8ZqMxREi+39e+obC8lVdqYMk6g2/NZ3dcw==
+  dependencies:
+    node-fetch "^2.6.1"
+    or-pipets "^1.0.1"
+    yaml "^1.10.2"
+
 gatsby-page-utils@^3.11.0:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/gatsby-page-utils/-/gatsby-page-utils-3.11.0.tgz#f7d63757f30fa9f0cadaa5c3fd18462ee152d0b8"
@@ -7525,15 +7527,6 @@ gatsby-source-filesystem@^4.24.0:
     pretty-bytes "^5.4.1"
     valid-url "^1.0.9"
     xstate "4.32.1"
-
-gatsby-source-notion-api@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-source-notion-api/-/gatsby-source-notion-api-0.11.0.tgz#457a61b87df3a695d10584041c13a2c7a2c4ff36"
-  integrity sha512-u+Bb+/4A1zKNCVxc6htxK17FhkpDEdO8MOiVl0hPz2nHVDxh64TTDu6uRC1z5lDI6OnR5eEXcNiOA+fUdhj3aA==
-  dependencies:
-    node-fetch "^2.6.1"
-    or-pipets "^1.0.1"
-    yaml "^1.10.2"
 
 gatsby-telemetry@^4.11.0:
   version "4.11.0"
@@ -9283,7 +9276,7 @@ lit@2.7.6:
     lit-element "^3.3.0"
     lit-html "^2.7.0"
 
-lit@^2.7.5, lit@^2.8.0:
+lit@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/lit/-/lit-2.8.0.tgz#4d838ae03059bf9cafa06e5c61d8acc0081e974e"
   integrity sha512-4Sc3OFX9QHOJaHbmTMk28SYgVxLN3ePDjg7hofEft2zWlehFL3LiAuapWc4U/kYwMYJSh2hTCPZ6/LIC7ii0MA==
